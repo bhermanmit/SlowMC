@@ -1,0 +1,23 @@
+# Compiled objects and modules
+*.o
+*.mod
+*.log
+*.out
+
+# Compiler python objects
+*.pyc
+
+# OpenMC executable
+src/openmc
+
+# emacs backups
+*~
+
+# Documentation builds
+docs/build
+
+# xml-fortran reader
+src/xml-fortran/xmlreader
+
+# Modules built from XML templates
+src/xml-fortran/templates/*.f90
