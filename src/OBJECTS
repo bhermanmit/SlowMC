@@ -1,1 +1,7 @@
 objects = \
+global.o \
+main.o \
+materials.o \
+particle.o \
+physics.o \
+tally.o
