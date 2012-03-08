@@ -1,4 +1,4 @@
-program = openmc
+program = slowmc 
 
 templates = $(wildcard xml-fortran/templates/*.o)
 xml_fort = xml-fortran/xmlparse.o \
@@ -15,7 +15,7 @@ include OBJECTS
 # User Options
 #===============================================================================
 
-COMPILER = gnu 
+COMPILER = gnu
 DEBUG    = no
 PROFILE  = no
 OPTIMIZE = no
@@ -27,7 +27,7 @@ USE_HDF5 = yes
 #===============================================================================
 
 ifeq ($(COMPILER),gnu)
-  F90 = gfortran
+  F90 = gfortran 
   F90FLAGS := -cpp -fbacktrace
   LDFLAGS =
 
@@ -191,7 +191,7 @@ endif
 
 all: xml-fortran $(program)
 xml-fortran:
-	cd xml-fortran; make MACHINE=$(MACHINE) F90=$(F90X) F90FLAGS="$(F90XFLAGS)"
+	cd xml-fortran; make MACHINE=$(MACHINE) F90=$(F90) F90FLAGS="$(F90FLAGS)"
 	cd xml-fortran/templates; make F90=$(F90) F90FLAGS="$(F90FLAGS)"
 $(program): $(objects)
 	$(F90) $(objects) $(templates) $(xml_fort) -o $@ $(LDFLAGS)
@@ -207,10 +207,10 @@ neat:
 # Rules
 #===============================================================================
 
-.SUFFIXES: .F90 .o
+.SUFFIXES: .f90 .o
 .PHONY: all xml-fortran clean neat distclean 
 
-%.o: %.F90
+%.o: %.f90
 	$(F90) $(F90FLAGS) -Ixml-fortran -Ixml-fortran/templates -c $<
 
 #===============================================================================

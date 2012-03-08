@@ -1,3 +1,9 @@
 global.o: materials.o
 global.o: particle.o
 global.o: tally.o
+
+physics.o: global.o
+
+main.o: global.o
+main.o: physics.o
+main.o: tally.o

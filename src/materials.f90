@@ -3,14 +3,20 @@ module materials
   implicit none
   private
 
-  type, public ::  material_type
+  type :: source_type
 
-    type(source_type)           :: source        ! the source of neutrons
-    type(iso_type), allocatable :: isotopes(:)   ! 1-D array of isotopes in mat
-    integer                     :: nisotopes     ! number of isotopes in mat
-    real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
+    real(8), allocatable :: E         ! energy range for fission source
+    real(8)              :: cdf_width ! width of cdf bins from 0 to 1
 
-  end type material_type
+  end type source_type
+
+  type :: thermal_type
+
+    real(8), allocatable  :: kTvec(:)  ! vector of kT values
+    real(8), allocatable  :: Erat(:,:) ! energy
+    real(8)               :: cdf_width ! width of cdf interval from 0 to 1 
+    
+  end type thermal_type
 
   type :: iso_type
 
@@ -25,20 +31,15 @@ module materials
 
   end type iso_type
 
-  type :: thermal_type
+  type, public ::  material_type
 
-    real(8), allocatable  :: kTvec(:)  ! vector of kT values
-    real(8), allocatable  :: Erat(:,:) ! energy
-    real(8)               :: cdf_width ! width of cdf interval from 0 to 1 
-    
-  end type thermal_type
+    type(source_type)           :: source        ! the source of neutrons
+    type(iso_type), allocatable :: isotopes(:)   ! 1-D array of isotopes in mat
+    integer                     :: nisotopes     ! number of isotopes in mat
+    integer                     :: npts          ! number of energy points
+    real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
 
-  type :: source_type
-
-    real(8), allocatable :: E         ! energy range for fission source
-    real(8)              :: cdf_width ! width of cdf bins from 0 to 1
-
-  end type source type
+  end type material_type
 
 contains
 
@@ -48,6 +49,10 @@ contains
 !===============================================================================
 
   subroutine set_up_material(this,nisotopes)
+
+    ! formal variables
+    type(material_type) :: this      ! a material
+    integer             :: nisotopes ! number of isotopes
 
     ! allocate isotopes array
     if (.not. allocated(this%isotopes)) allocate(this%isotopes(nisotopes))
@@ -62,7 +67,7 @@ contains
 ! Doxygen comment
 !===============================================================================
 
-  subroutine load_isotope(this,path,N,A)
+  subroutine load_isotope() !(path,N,A)
 
     ! open up hdf5 file
 
@@ -85,9 +90,8 @@ contains
 ! Doxygen comment
 !===============================================================================
 
-  subroutine load_source(this,source_type)
+  subroutine load_source(source_type)
 
-    type(material_type) :: this        ! a material 
     integer             :: source_type ! 0 - fixed, 1 - fission
 
   end subroutine load_source
@@ -100,26 +104,39 @@ contains
   subroutine compute_totxs(this)
 
     ! formal variables
-    type(material_type) :: this  ! a material
+    type(material_type),target :: this ! a material
 
     ! local variables
     integer                 :: i   ! loop counter
     type(iso_type), pointer :: iso ! pointer to current isotope
 
+    ! allocate total xs
+    if (.not.allocated(this%totalxs))                                          &
+   &                            allocate(this%totalxs(this%npts,this%nisotopes))
+
     ! zero out total xs
     this%totalxs = 0.0_8
 
     ! begin loop over isotopes
-    do i = 1:this%nisotopes
+    do i = 1,this%nisotopes
 
       ! set pointer to isotope
-      iso => this%isotope(i)
+      iso => this%isotopes(i)
 
       ! multiply microscopic cross section by number density and append
-      this%totalxs = this%totalxs + iso%N*(iso%xs_capt + iso%xs_scat)
+      this%totalxs(:,i) = iso%N*(iso%xs_capt + iso%xs_scat)
 
     end do
 
   end subroutine compute_totxs
+
+!===============================================================================
+! DEALLOCATE_MATERIAL
+! Doxygen comment
+!===============================================================================
+
+  subroutine deallocate_material()
+
+  end subroutine deallocate_material
 
 end module materials
