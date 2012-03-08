@@ -8,7 +8,7 @@
 *.pyc
 
 # OpenMC executable
-src/openmc
+src/slowmc
 
 # emacs backups
 *~
