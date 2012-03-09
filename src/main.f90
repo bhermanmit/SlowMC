@@ -60,7 +60,7 @@ contains
     use hdf5
     use global,    only: seed,allocate_problem,mat,tal,emax,emin
     use input,     only: read_input
-    use materials, only: compute_totxs
+    use materials, only: compute_macroxs
     use output,    only: print_heading
     use tally,     only: setup_tallies
 
@@ -83,8 +83,8 @@ contains
     ! allocate problem
     call allocate_problem()
 
-    ! precompute total cross section of materials
-    call compute_totxs(mat)
+    ! precompute macroscopic cross section of materials
+    call compute_macroxs(mat)
 
     ! set up tally structure
     call setup_tallies(tal,size(tal),emax,emin)

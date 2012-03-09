@@ -10,7 +10,7 @@ module materials
 
   implicit none
   private
-  public :: setup_material,load_source,load_isotope,compute_totxs,             &
+  public :: setup_material,load_source,load_isotope,compute_macroxs,           &
  &          deallocate_material
 
   type :: source_type
@@ -54,6 +54,8 @@ module materials
     real(8)                     :: E_min         ! min energy
     real(8)                     :: E_max         ! max energy
     real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
+    real(8), allocatable        :: scattxs(:,:)  ! array of macroscopic scat xs
+    real(8), allocatable        :: absorxs(:,:)  ! array of macroscopic abs xs
 
   end type material_type
 
@@ -261,11 +263,11 @@ contains
   end subroutine load_source
 
 !===============================================================================
-! COMPUTE_TOTXS
-!> @brief routine to pre-compute macroscopic total xs
+! COMPUTE_MACROXS
+!> @brief routine to pre-compute macroscopic cross sections 
 !===============================================================================
 
-  subroutine compute_totxs(this)
+  subroutine compute_macroxs(this)
 
     ! formal variables
     type(material_type),target :: this ! a material
@@ -274,9 +276,13 @@ contains
     integer                 :: i   ! loop counter
     type(iso_type), pointer :: iso ! pointer to current isotope
 
-    ! allocate total xs
+    ! allocate xs arrays
     if (.not.allocated(this%totalxs))                                          &
    &                            allocate(this%totalxs(this%npts,this%nisotopes))
+    if (.not.allocated(this%scattxs))                                          &
+   &                            allocate(this%scattxs(this%npts,this%nisotopes))
+    if (.not.allocated(this%absorxs))                                          &
+   &                            allocate(this%absorxs(this%npts,this%nisotopes))
 
     ! zero out total xs
     this%totalxs = 0.0_8
@@ -288,11 +294,13 @@ contains
       iso => this%isotopes(i)
 
       ! multiply microscopic cross section by number density and append
+      this%scattxs(:,i) = iso%N*(iso%xs_scat)
+      this%absorxs(:,i) = iso%N*(iso%xs_capt)
       this%totalxs(:,i) = iso%N*(iso%xs_capt + iso%xs_scat)
 
     end do
 
-  end subroutine compute_totxs
+  end subroutine compute_macroxs
 
 !===============================================================================
 ! DEALLOCATE_MATERIAL
@@ -330,8 +338,10 @@ contains
     ! deallocate isotopes
     if (allocated(this%isotopes)) deallocate(this%isotopes) 
 
-    ! deallocate totalxs
+    ! deallocate macro xs
     if (allocated(this%totalxs)) deallocate(this%totalxs)
+    if (allocated(this%scattxs)) deallocate(this%scattxs)
+    if (allocated(this%absorxs)) deallocate(this%absorxs)
 
   end subroutine deallocate_material
 
