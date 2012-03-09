@@ -13,11 +13,15 @@
 
   <variable name="settings_" tag="settings" type="settings_xml" />
 
-  <typedef name="material_xml">
+  <typedef name="nuclide_xml">
     <component name="N" type="double" />
     <component name="A" type="double" />
     <component name="path" type="word" length="255" />
     <component name="thermal" type="logical" /> 
+  </typedef>
+
+  <typedef name="material_xml">
+    <component name="nuclides" tag="nuclide" type="nuclide_xml" dimension="1"/>
   </typedef>
 
   <variable name="material_" tag="material" type="material_xml" dimension="1" />

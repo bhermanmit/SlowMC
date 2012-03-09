@@ -63,13 +63,13 @@ contains
     call setup_material(mat,emin,emax)
 
     ! begin loop over isotope materials
-    do i = 1,size(material_)
+    do i = 1,size(material_(1)%nuclides)
 
       ! extract info
-      N = material_(i)%N
-      A = material_(i)%A
-      path = material_(i)%path
-      thermal = material_(i)%thermal
+      N = material_(1)%nuclides(i)%N
+      A = material_(1)%nuclides(i)%A
+      path = material_(1)%nuclides(i)%path
+      thermal = material_(1)%nuclides(i)%thermal
 
       ! load the isotope into memory
       call load_isotope(mat,N,A,path,thermal)

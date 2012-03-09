@@ -11,24 +11,19 @@
   </settings>
 
   <material>
-    <N> 1 </N>
-    <A> 1 </A>
-    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
-    <thermal> true </thermal>
-  </material>
 
-  <material>
-    <N> 1 </N>
-    <A> 1 </A>
-    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
-    <thermal> false </thermal>
-  </material>
+    <nuclide N="1" A="1" thermal="true" >
+      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
+    </nuclide>
 
-  <material>
-    <N> 0.1 </N>
-    <A> 238 </A>
-    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238.h5 </path>
-    <thermal> false </thermal>
+    <nuclide N="1" A="1" thermal="false" >
+      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
+    </nuclide>
+
+    <nuclide N="0.1" A="238" thermal="false" >
+      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238.h5 </path>
+    </nuclide>
+
   </material>
 
 </input>
