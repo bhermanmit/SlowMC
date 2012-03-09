@@ -52,6 +52,8 @@
 Functions/Subroutines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">allocate_problem</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates global variables for calculation  <a href="#ae42e2eadb6d745fd7bceefd6896f41b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">deallocates global variables  <a href="#a8298c51c0bdaf90c3d0f5360452de1f1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#af676482a3ce4ddeaeeb9f43f5d146382">VERSION_MAJOR</a> = 0</td></tr>
@@ -101,6 +103,48 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="namespaceglobal_ae42e2eadb6d745fd7bceefd6896f41b3_icgraph.png" border="0" usemap="#namespaceglobal_ae42e2eadb6d745fd7bceefd6896f41b3_icgraph" alt=""/></div>
 <map name="namespaceglobal_ae42e2eadb6d745fd7bceefd6896f41b3_icgraph" id="namespaceglobal_ae42e2eadb6d745fd7bceefd6896f41b3_icgraph">
 <area shape="rect" id="node3" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="216,5,285,35"/><area shape="rect" id="node5" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="333,5,384,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8298c51c0bdaf90c3d0f5360452de1f1"></a><!-- doxytag: member="global::deallocate_problem" ref="a8298c51c0bdaf90c3d0f5360452de1f1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine global::deallocate_problem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>deallocates global variables </p>
+
+<p>Definition at line <a class="el" href="global_8f90_source.html#l00062">62</a> of file <a class="el" href="global_8f90_source.html">global.f90</a>.</p>
+
+<p>References <a class="el" href="materials_8f90_source.html#l00302">materials::deallocate_material()</a>, <a class="el" href="tally_8f90_source.html#l00134">tally::deallocate_tallies()</a>, <a class="el" href="global_8f90_source.html#l00024">mat</a>, and <a class="el" href="global_8f90_source.html#l00026">tal</a>.</p>
+
+<p>Referenced by <a class="el" href="main_8f90_source.html#l00156">finalize()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_cgraph.png" border="0" usemap="#namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_cgraph" alt=""/></div>
+<map name="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_cgraph" id="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_cgraph">
+<area shape="rect" id="node3" href="namespacematerials.html#a578514b55aa8e9254c090a5ba8ca019a" title="routine to deallocate a material" alt="" coords="229,5,424,35"/><area shape="rect" id="node5" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c" title="routine to deallocate tally types" alt="" coords="249,59,404,88"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_icgraph.png" border="0" usemap="#namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_icgraph" alt=""/></div>
+<map name="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_icgraph" id="namespaceglobal_a8298c51c0bdaf90c3d0f5360452de1f1_icgraph">
+<area shape="rect" id="node3" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21" title="routine that finalizes the problem" alt="" coords="231,5,292,35"/><area shape="rect" id="node5" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="341,5,392,35"/></map>
 </div>
 </p>
 
@@ -188,7 +232,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="global_8f90_source.html#l00024">24</a> of file <a class="el" href="global_8f90_source.html">global.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="physics_8f90_source.html#l00210">physics::elastic_scattering()</a>, <a class="el" href="physics_8f90_source.html#l00084">physics::get_eidx()</a>, <a class="el" href="main_8f90_source.html#l00058">initialize()</a>, <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>, <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>, <a class="el" href="physics_8f90_source.html#l00110">physics::sample_isotope()</a>, <a class="el" href="physics_8f90_source.html#l00166">physics::sample_reaction()</a>, and <a class="el" href="physics_8f90_source.html#l00022">physics::sample_source()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00062">deallocate_problem()</a>, <a class="el" href="physics_8f90_source.html#l00210">physics::elastic_scattering()</a>, <a class="el" href="physics_8f90_source.html#l00084">physics::get_eidx()</a>, <a class="el" href="main_8f90_source.html#l00058">initialize()</a>, <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>, <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>, <a class="el" href="physics_8f90_source.html#l00110">physics::sample_isotope()</a>, <a class="el" href="physics_8f90_source.html#l00166">physics::sample_reaction()</a>, and <a class="el" href="physics_8f90_source.html#l00022">physics::sample_source()</a>.</p>
 
 </div>
 </div>
@@ -273,7 +317,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="global_8f90_source.html#l00026">26</a> of file <a class="el" href="global_8f90_source.html">global.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00050">allocate_problem()</a>, <a class="el" href="main_8f90_source.html#l00058">initialize()</a>, and <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00050">allocate_problem()</a>, <a class="el" href="global_8f90_source.html#l00062">deallocate_problem()</a>, <a class="el" href="main_8f90_source.html#l00058">initialize()</a>, and <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>.</p>
 
 </div>
 </div>
@@ -329,7 +373,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 22:16:51 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

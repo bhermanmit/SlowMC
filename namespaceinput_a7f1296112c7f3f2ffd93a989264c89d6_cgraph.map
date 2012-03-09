@@ -1,5 +1,15 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="180,5,335,35"/>
-<area shape="rect" id="node5" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="181,59,333,88"/>
-<area shape="rect" id="node7" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="173,112,341,141"/>
+<area shape="rect" id="node3" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="223,5,377,35"/>
+<area shape="rect" id="node5" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="224,59,376,88"/>
+<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="175,112,425,141"/>
+<area shape="rect" id="node27" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="216,165,384,195"/>
+<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#aeb2bc977516800f3fbd0003f8369ccd6" title="xml_data_input_t::init_xml_file_input_t" alt="" coords="519,59,761,88"/>
+<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="475,112,805,141"/>
+<area shape="rect" id="node23" href="$namespacexml__data__input__t.html#abc2b56e6da9d791b34353a254e79507c" title="xml_data_input_t::read_xml_type_settings_xml" alt="" coords="493,165,787,195"/>
+<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="855,112,1148,141"/>
+<area shape="rect" id="node15" href="$namespacexml__data__input__t.html#aafa3c5d70dec0ada63bd0ed68a4e36fc" title="xml_data_input_t::init_xml_type_material_xml" alt="" coords="1219,85,1504,115"/>
+<area shape="rect" id="node17" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="1199,139,1524,168"/>
+<area shape="rect" id="node19" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="1573,139,1864,168"/>
+<area shape="rect" id="node21" href="$namespacexml__data__input__t.html#a6e82ef897b263ca156c1a0ab8ef119c3" title="xml_data_input_t::init_xml_type_nuclide_xml" alt="" coords="1912,139,2195,168"/>
+<area shape="rect" id="node25" href="$namespacexml__data__input__t.html#ac2ce2e638d25ba3e886667034e1f031c" title="xml_data_input_t::init_xml_type_settings_xml" alt="" coords="859,165,1144,195"/>
 </map>

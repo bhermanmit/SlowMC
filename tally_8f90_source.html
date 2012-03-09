@@ -54,7 +54,7 @@
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011   <span class="keyword">implicit none</span>
 <a name="l00012"></a>00012   <span class="keywordtype">private</span>
-<a name="l00013"></a>00013   <span class="keywordtype">public</span> :: <a class="code" href="namespacetally.html#a8205446404514c24eafd27afac38b0df">setup_tallies</a>,<a class="code" href="namespacetally.html#ad940737be69d683a73c478fd8fc7c32b">add_to_tally</a>,<a class="code" href="namespacetally.html#a951c5051826a25e1bbb6338773a23f66">bank_tally</a>
+<a name="l00013"></a>00013   <span class="keywordtype">public</span> :: <a class="code" href="namespacetally.html#a8205446404514c24eafd27afac38b0df">setup_tallies</a>,<a class="code" href="namespacetally.html#ad940737be69d683a73c478fd8fc7c32b">add_to_tally</a>,<a class="code" href="namespacetally.html#a951c5051826a25e1bbb6338773a23f66">bank_tally</a>,<a class="code" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">deallocate_tallies</a>
 <a name="l00014"></a>00014 
 <a name="l00015"></a>00015   <span class="keyword">type</span>, public :: tally_type
 <a name="l00016"></a>00016 
@@ -157,14 +157,42 @@
 <a name="l00119"></a>00119       this(i)%sum    = this(i)%sum    + this(i)%val
 <a name="l00120"></a>00120       this(i)%sum_sq = this(i)%sum_sq + this(i)%val**2
 <a name="l00121"></a>00121 
-<a name="l00122"></a>00122     <span class="keyword">end do</span>
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124 <span class="keyword"> end subroutine bank_tally</span>
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126 <span class="keyword">end module tally</span>
+<a name="l00122"></a>00122       <span class="comment">! zero out temp value</span>
+<a name="l00123"></a>00123       this(i)%val = 0.0_8
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125     <span class="keyword">end do</span>
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127 <span class="keyword">  end subroutine bank_tally</span>
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129 <span class="comment">!===============================================================================</span>
+<a name="l00130"></a>00130 <span class="comment">! DEALLOCATE_TALLIES</span>
+<a name="l00133"></a>00133 
+<a name="l00134"></a><a class="code" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">00134</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">deallocate_tallies</a>(this,n)
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136     <span class="comment">! formal variables</span>
+<a name="l00137"></a>00137     <span class="keywordtype">integer</span>          :: n       <span class="comment">! size of tallies</span>
+<a name="l00138"></a>00138     <span class="keywordtype">type(tally_type)</span> :: this(n) <span class="comment">! array of tallies </span>
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140     <span class="comment">! local variables</span>
+<a name="l00141"></a>00141     <span class="keywordtype">integer</span> :: i    <span class="comment">! iteration counter</span>
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="comment">! begin loop over tallies</span>
+<a name="l00144"></a>00144     <span class="keyword">do</span> i = 1,n
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146       <span class="comment">! deallocate all</span>
+<a name="l00147"></a>00147       <span class="keyword">if</span> (<span class="keyword">allocated</span>(this(i)%E)) <span class="keyword">deallocate</span>(this(i)%E)
+<a name="l00148"></a>00148       <span class="keyword">if</span> (<span class="keyword">allocated</span>(this(i)%val)) <span class="keyword">deallocate</span>(this(i)%val)
+<a name="l00149"></a>00149       <span class="keyword">if</span> (<span class="keyword">allocated</span>(this(i)%sum)) <span class="keyword">deallocate</span>(this(i)%sum)
+<a name="l00150"></a>00150       <span class="keyword">if</span> (<span class="keyword">allocated</span>(this(i)%sum_sq)) <span class="keyword">deallocate</span>(this(i)%sum_sq)
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152     <span class="keyword">end do</span>
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 <span class="keyword">  end subroutine deallocate_tallies</span>
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156 <span class="keyword">end module tally</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 22:16:50 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

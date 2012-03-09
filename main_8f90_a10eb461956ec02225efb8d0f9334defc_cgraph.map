@@ -3,9 +3,19 @@
 <area shape="rect" id="node5" href="$namespacematerials.html#ad483c44c0e35e4f11df9bd8184b96288" title="routine to pre&#45;compute macroscopic total xs" alt="" coords="124,59,292,88"/>
 <area shape="rect" id="node7" href="$namespaceoutput.html#a715bb39dcd636418aea44557be794b3e" title="prints the code heading and run information" alt="" coords="137,112,279,141"/>
 <area shape="rect" id="node11" href="$namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="149,165,267,195"/>
-<area shape="rect" id="node19" href="$namespacetally.html#a8205446404514c24eafd27afac38b0df" title="routine to initialize all tallies" alt="" coords="145,219,271,248"/>
-<area shape="rect" id="node9" href="$namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec" title="calculates information about date/time of run" alt="" coords="364,85,487,115"/>
-<area shape="rect" id="node13" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="348,139,503,168"/>
-<area shape="rect" id="node15" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="349,192,501,221"/>
-<area shape="rect" id="node17" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="341,245,509,275"/>
+<area shape="rect" id="node39" href="$namespacetally.html#a8205446404514c24eafd27afac38b0df" title="routine to initialize all tallies" alt="" coords="145,219,271,248"/>
+<area shape="rect" id="node9" href="$namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec" title="calculates information about date/time of run" alt="" coords="407,59,529,88"/>
+<area shape="rect" id="node13" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="391,112,545,141"/>
+<area shape="rect" id="node15" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="392,165,544,195"/>
+<area shape="rect" id="node17" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="343,219,593,248"/>
+<area shape="rect" id="node37" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="384,272,552,301"/>
+<area shape="rect" id="node19" href="$namespacexml__data__input__t.html#aeb2bc977516800f3fbd0003f8369ccd6" title="xml_data_input_t::init_xml_file_input_t" alt="" coords="687,165,929,195"/>
+<area shape="rect" id="node21" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="643,219,973,248"/>
+<area shape="rect" id="node33" href="$namespacexml__data__input__t.html#abc2b56e6da9d791b34353a254e79507c" title="xml_data_input_t::read_xml_type_settings_xml" alt="" coords="661,272,955,301"/>
+<area shape="rect" id="node23" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="1023,219,1316,248"/>
+<area shape="rect" id="node25" href="$namespacexml__data__input__t.html#aafa3c5d70dec0ada63bd0ed68a4e36fc" title="xml_data_input_t::init_xml_type_material_xml" alt="" coords="1387,192,1672,221"/>
+<area shape="rect" id="node27" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="1367,245,1692,275"/>
+<area shape="rect" id="node29" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="1741,245,2032,275"/>
+<area shape="rect" id="node31" href="$namespacexml__data__input__t.html#a6e82ef897b263ca156c1a0ab8ef119c3" title="xml_data_input_t::init_xml_type_nuclide_xml" alt="" coords="2080,245,2363,275"/>
+<area shape="rect" id="node35" href="$namespacexml__data__input__t.html#ac2ce2e638d25ba3e886667034e1f031c" title="xml_data_input_t::init_xml_type_settings_xml" alt="" coords="1027,272,1312,301"/>
 </map>

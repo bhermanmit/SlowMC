@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$namespacexml__data__input__t.html#a35d50e836beb4c7b635068b2446a4dbd" title="xml_data_input_t::write_xml_type_material_xml_array" alt="" coords="311,5,644,35"/>
+<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a78f25cb17529413b7289b6851da65250" title="xml_data_input_t::write_xml_type_settings_xml" alt="" coords="328,59,627,88"/>
+<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#a516afaca21fe582086bfc84cf25b864a" title="xml_data_input_t::write_xml_type_material_xml" alt="" coords="693,5,992,35"/>
+<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#afd92b176afa70525d29407a238535d90" title="xml_data_input_t::write_xml_type_nuclide_xml_array" alt="" coords="1041,5,1369,35"/>
+<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#ac27fd4fafc6a40955edababd03cd8648" title="xml_data_input_t::write_xml_type_nuclide_xml" alt="" coords="1419,5,1712,35"/>
+</map>

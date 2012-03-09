@@ -85,33 +85,33 @@
 <a name="l00043"></a>00043     <span class="keyword">else</span>
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045       <span class="comment">! tell user</span>
-<a name="l00046"></a>00046       <span class="keyword">write</span>(*,*) <span class="stringliteral">&quot;Reading INPUT XML file...&quot;</span>
+<a name="l00046"></a>00046       <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(A/)&#39;</span>) <span class="stringliteral">&quot;Reading INPUT XML file...&quot;</span>
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048     <span class="keyword">end if</span>
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050     <span class="comment">! read in input file</span>
-<a name="l00051"></a>00051     call read_xml_file_input_t(trim(filename))
+<a name="l00051"></a>00051     call <a class="code" href="namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04">read_xml_file_input_t</a>(trim(filename))
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053     <span class="comment">! read in settings</span>
-<a name="l00054"></a>00054     <a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a> = settings_%histories
-<a name="l00055"></a>00055     <a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a> = settings_%seed
-<a name="l00056"></a>00056     <a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a> = settings_%source_type
-<a name="l00057"></a>00057     <a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%nisotopes = settings_%nisotopes
+<a name="l00054"></a>00054     <a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%histories
+<a name="l00055"></a>00055     <a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%seed
+<a name="l00056"></a>00056     <a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_type
+<a name="l00057"></a>00057     <a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%nisotopes = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides)
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059     <span class="comment">! load the source</span>
-<a name="l00060"></a>00060     call <a class="code" href="namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4">load_source</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,<a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a>,settings_%source_path)
+<a name="l00060"></a>00060     call <a class="code" href="namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4">load_source</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,<a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a>,<a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_path)
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062     <span class="comment">! set up the material object</span>
 <a name="l00063"></a>00063     call <a class="code" href="namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917">setup_material</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>,<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>)
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065     <span class="comment">! begin loop over isotope materials</span>
-<a name="l00066"></a>00066     <span class="keyword">do</span> i = 1,<span class="keyword">size</span>(material_)
+<a name="l00066"></a>00066     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%nisotopes
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068       <span class="comment">! extract info</span>
-<a name="l00069"></a>00069       N = material_(i)%N
-<a name="l00070"></a>00070       A = material_(i)%A
-<a name="l00071"></a>00071       path = material_(i)%path
-<a name="l00072"></a>00072       thermal = material_(i)%thermal
+<a name="l00069"></a>00069       N = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%N
+<a name="l00070"></a>00070       A = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%A
+<a name="l00071"></a>00071       path = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%path
+<a name="l00072"></a>00072       thermal = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%thermal
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074       <span class="comment">! load the isotope into memory</span>
 <a name="l00075"></a>00075       call <a class="code" href="namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3">load_isotope</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,N,A,path,thermal)
@@ -123,7 +123,7 @@
 <a name="l00081"></a>00081 <span class="keyword">end module input</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 22:16:50 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -59,6 +59,8 @@ Functions/Subroutines</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to add quantities during transport of a particle  <a href="#ad940737be69d683a73c478fd8fc7c32b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a951c5051826a25e1bbb6338773a23f66">bank_tally</a> (this, n)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to bank a histories tallies  <a href="#a951c5051826a25e1bbb6338773a23f66"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">deallocate_tallies</a> (this, n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to deallocate tally types  <a href="#aa1ed5fec2995055d713abdb124f4df5c"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Contains information about tallying quantities. </p>
@@ -160,6 +162,48 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="aa1ed5fec2995055d713abdb124f4df5c"></a><!-- doxytag: member="tally::deallocate_tallies" ref="aa1ed5fec2995055d713abdb124f4df5c" args="(this, n)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine,public tally::deallocate_tallies </td>
+          <td>(</td>
+          <td class="paramtype">type(tally_type),dimension(n)&#160;</td>
+          <td class="paramname"><em>this</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>routine to deallocate tally types </p>
+
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00134">134</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00062">global::deallocate_problem()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespacetally_aa1ed5fec2995055d713abdb124f4df5c_icgraph.png" border="0" usemap="#namespacetally_aa1ed5fec2995055d713abdb124f4df5c_icgraph" alt=""/></div>
+<map name="namespacetally_aa1ed5fec2995055d713abdb124f4df5c_icgraph" id="namespacetally_aa1ed5fec2995055d713abdb124f4df5c_icgraph">
+<area shape="rect" id="node3" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1" title="deallocates global variables" alt="" coords="208,5,384,35"/><area shape="rect" id="node5" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21" title="routine that finalizes the problem" alt="" coords="433,5,495,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="544,5,595,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a8205446404514c24eafd27afac38b0df"></a><!-- doxytag: member="tally::setup_tallies" ref="a8205446404514c24eafd27afac38b0df" args="(this, n, emax, emin)" -->
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +259,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 22:16:51 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:39 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

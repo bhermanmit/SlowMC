@@ -92,14 +92,31 @@
 <a name="l00050"></a><a class="code" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">00050</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">allocate_problem</a>()
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052     <span class="comment">! allocate tallies</span>
-<a name="l00053"></a>00053     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">allocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(1))
+<a name="l00053"></a>00053     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">allocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(1))
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055 <span class="keyword">  end subroutine allocate_problem</span>
 <a name="l00056"></a>00056 
-<a name="l00057"></a>00057 <span class="keyword">end module global </span>
+<a name="l00057"></a>00057 <span class="comment">!===============================================================================</span>
+<a name="l00058"></a>00058 <span class="comment">! DEALLOCATE_PROBLEM</span>
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">00062</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a>()
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     use <span class="keywordflow">materials</span>, only: deallocate_material
+<a name="l00065"></a>00065     use <span class="keywordflow">tally</span>,     only: deallocate_tallies
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067     <span class="comment">! deallocate material</span>
+<a name="l00068"></a>00068     call <a class="code" href="namespacematerials.html#a578514b55aa8e9254c090a5ba8ca019a">deallocate_material</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>)
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="comment">! deallocate tallies</span>
+<a name="l00071"></a>00071     call <a class="code" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">deallocate_tallies</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>))
+<a name="l00072"></a>00072     <span class="keyword">if</span> (<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">deallocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074 <span class="keyword">  end subroutine deallocate_problem</span>
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="keyword">end module global </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 22:16:50 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
