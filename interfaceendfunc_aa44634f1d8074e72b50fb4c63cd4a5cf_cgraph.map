@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$namespacexmlparse.html#a5e7902dcce63348252ee46fe07959eaf" title="xmlparse::xml_close" alt="" coords="380,88,521,118"/>
+<area shape="rect" id="node5" href="$namespacexmlparse.html#a47a7f67bb20b74010c1e1c36b84fec73" title="xmlparse::xml_error" alt="" coords="185,35,321,64"/>
+<area shape="rect" id="node7" href="$namespacexmlparse.html#a282354b1e411ce4bad44768c57138777" title="xmlparse::xml_get" alt="" coords="189,88,317,118"/>
+<area shape="rect" id="node10" href="$namespacexmlparse.html#a2a906a54d0b5956b8aa809c90aa82c38" title="xmlparse::xml_ok" alt="" coords="191,142,316,171"/>
+<area shape="rect" id="node12" href="$namespacexmlparse.html#ae06195e892d5b0715d0654adec1b9b10" title="xmlparse::xml_open" alt="" coords="184,195,323,224"/>
+<area shape="rect" id="node15" href="$namespacexmlparse.html#a2d3794efad3eeed77896df25f0f91bca" title="xmlparse::xml_options" alt="" coords="177,248,329,278"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$xmlreader_8f90.html#aa8c9a11ca28b1ede2a9be94c44eabc37" title="add_begin_loop" alt="" coords="364,26,476,55"/>
+<area shape="rect" id="node5" href="$xmlreader_8f90.html#ad4ebeea0fdbbd5ae906ed5b33b1834f0" title="add_placeholder" alt="" coords="153,106,268,135"/>
+<area shape="rect" id="node10" href="$xmlreader_8f90.html#a0d4c0b96aed4f686ec75542ed9c8c01e" title="open_tmp_files" alt="" coords="365,158,475,187"/>
+<area shape="rect" id="node14" href="$xmlreader_8f90.html#aa47d469919b171944994a78b3e9ac048" title="add_typedef" alt="" coords="164,210,257,239"/>
+<area shape="rect" id="node19" href="$xmlreader_8f90.html#afef67cabfe69dc511d8fe06ef921a51d" title="add_variable" alt="" coords="164,263,257,293"/>
+<area shape="rect" id="node22" href="$xmlreader_8f90.html#a997ec57f386db45f4934ad33def2efca" title="append_files" alt="" coords="373,363,467,393"/>
+<area shape="rect" id="node24" href="$xmlreader_8f90.html#a281485a4b84d9661d3b0c26446d0b277" title="close_placeholder" alt="" coords="148,421,273,450"/>
+<area shape="rect" id="node29" href="$xmlreader_8f90.html#aabb75ff9c02902a838fdd97cd8ac2e63" title="close_typedef" alt="" coords="160,367,261,397"/>
+<area shape="rect" id="node33" href="$xmlreader_8f90.html#a749f0ad768591d470d09730ee7d44db3" title="get_global_options" alt="" coords="145,575,276,605"/>
+<area shape="rect" id="node35" href="$xmlreader_8f90.html#a11d0d26158fd59056145256cb88b73f2" title="set_options" alt="" coords="376,470,464,499"/>
+<area shape="rect" id="node39" href="$namespacexmlparse.html#a282354b1e411ce4bad44768c57138777" title="xmlparse::xml_get" alt="" coords="356,523,484,553"/>
+<area shape="rect" id="node42" href="$namespacexmlparse.html#a2a906a54d0b5956b8aa809c90aa82c38" title="xmlparse::xml_ok" alt="" coords="357,681,483,710"/>
+<area shape="rect" id="node44" href="$namespacexmlparse.html#ae06195e892d5b0715d0654adec1b9b10" title="xmlparse::xml_open" alt="" coords="351,627,489,657"/>
+<area shape="rect" id="node47" href="$xmlreader_8f90.html#a6389fe3b7c8a6014f81db3ca740c7e3a" title="merge_files" alt="" coords="167,730,255,759"/>
+<area shape="rect" id="node51" href="$xmlreader_8f90.html#adc42635b06990dc0b52ab774961136d6" title="write_prolog" alt="" coords="165,53,256,82"/>
+<area shape="rect" id="node54" href="$namespacexmlparse.html#a47a7f67bb20b74010c1e1c36b84fec73" title="xmlparse::xml_error" alt="" coords="143,783,279,813"/>
+<area shape="rect" id="node59" href="$namespacexmlparse.html#a2d3794efad3eeed77896df25f0f91bca" title="xmlparse::xml_options" alt="" coords="135,837,287,866"/>
+<area shape="rect" id="node8" href="$xmlreader_8f90.html#abc8f04613aa2829685f5c907e6443153" title="add_end_loop" alt="" coords="369,105,471,134"/>
+<area shape="rect" id="node12" href="$namespacexmlparse.html#ac197863b0c6820b348aeb8cc46e08255" title="xmlparse::xml_find_attrib" alt="" coords="336,211,504,241"/>
+<area shape="rect" id="node27" href="$xmlreader_8f90.html#afa5569ea1a3d70f4d3fa00bd102ab729" title="close_tmp_files" alt="" coords="364,417,476,446"/>
+<area shape="rect" id="node37" href="$namespacexmlparse.html#a5e7902dcce63348252ee46fe07959eaf" title="xmlparse::xml_close" alt="" coords="553,575,695,605"/>
+</map>

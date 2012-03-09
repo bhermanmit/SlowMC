@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3" title="allocates global variables for calculation" alt="" coords="127,5,289,35"/>
+<area shape="rect" id="node5" href="$namespacematerials.html#ad483c44c0e35e4f11df9bd8184b96288" title="routine to pre&#45;compute macroscopic total xs" alt="" coords="124,59,292,88"/>
+<area shape="rect" id="node7" href="$namespaceoutput.html#a715bb39dcd636418aea44557be794b3e" title="prints the code heading and run information" alt="" coords="137,112,279,141"/>
+<area shape="rect" id="node11" href="$namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="149,165,267,195"/>
+<area shape="rect" id="node19" href="$namespacetally.html#a8205446404514c24eafd27afac38b0df" title="routine to initialize all tallies" alt="" coords="145,219,271,248"/>
+<area shape="rect" id="node9" href="$namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec" title="calculates information about date/time of run" alt="" coords="364,85,487,115"/>
+<area shape="rect" id="node13" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="348,139,503,168"/>
+<area shape="rect" id="node15" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="349,192,501,221"/>
+<area shape="rect" id="node17" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="341,245,509,275"/>
+</map>

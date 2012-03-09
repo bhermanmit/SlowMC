@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="180,5,335,35"/>
+<area shape="rect" id="node5" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="181,59,333,88"/>
+<area shape="rect" id="node7" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="173,112,341,141"/>
+</map>
