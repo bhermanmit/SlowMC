@@ -21,3 +21,6 @@ src/xml-fortran/xmlreader
 
 # Modules built from XML templates
 src/xml-fortran/templates/*.f90
+
+# Fortran output file
+fort*
