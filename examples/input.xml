@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<input>
+
+<!-- Settings Information -->
+  <settings>
+    <histories> 1000000 </histories>
+    <seed> 5 </seed>
+    <source_type> 1 </source_type>
+    <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
+    <nisotopes> 3 </nisotopes>
+  </settings>
+
+  <material>
+    <N> 1 </N>
+    <A> 1 </A>
+    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
+    <thermal> true </thermal>
+  </material>
+
+  <material>
+    <N> 1 </N>
+    <A> 1 </A>
+    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
+    <thermal> false </thermal>
+  </material>
+
+  <material>
+    <N> 0.1 </N>
+    <A> 238 </A>
+    <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238.h5 </path>
+    <thermal> false </thermal>
+  </material>
+
+</input>
