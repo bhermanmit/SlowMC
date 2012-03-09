@@ -16,7 +16,7 @@ include OBJECTS
 #===============================================================================
 
 COMPILER = gnu
-DEBUG    = no
+DEBUG    = no 
 PROFILE  = no
 OPTIMIZE = no
 USE_MPI  = no 
@@ -33,8 +33,8 @@ ifeq ($(COMPILER),gnu)
 
   # Debugging
   ifeq ($(DEBUG),yes)
-    F90FLAGS += -g -Wall -pedantic -std=f2008 -fbounds-check \
-                -ffpe-trap=invalid,overflow,underflow
+    F90FLAGS += -g -Wall -pedantic -fbounds-check \
+                -ffpe-trap=invalid,overflow,underflow,zero
     LDFLAGS  += -g
   endif
 

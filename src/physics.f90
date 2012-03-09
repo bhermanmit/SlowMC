@@ -2,9 +2,41 @@ module physics
 
   implicit none
   private
-  public :: perform_physics
+  public :: sample_source,perform_physics,get_eidx
 
 contains
+
+!===============================================================================
+! SAMPLE_SOURCE
+! Doxygen comment
+!===============================================================================
+
+  subroutine sample_source()
+
+    use global, only: mat,neut
+
+    ! local variables
+    integer :: idx ! index for sampling
+    real(8) :: rn  ! sampled random number
+
+    ! sample a random number
+    rn = rand(0)
+
+    ! compute index in cdf
+    idx = ceiling(rn / mat%source%cdf_width) + 1
+
+    ! bounds checker
+    if (idx > size(mat%source%E)) then
+      write(*,*) 'Bounds error on source samplings'
+      write(*,*) 'Random number:',rn
+      write(*,*) 'Index Location:',idx
+      stop
+    end if
+
+    ! extract that E and set it to neutron
+    neut%E = mat%source%E(idx)
+
+  end subroutine sample_source
 
 !===============================================================================
 ! PERFORM_PHYSICS
@@ -13,13 +45,10 @@ contains
 
   subroutine perform_physics()
 
-    use global, only: neut,eidx
+    use global, only: neut
 
     integer :: isoidx   ! isotope index
     integer :: reactid  ! reaction id
-
-    ! get energy index
-    eidx = get_eidx()
 
     ! sample isotope
     isoidx = sample_isotope()
@@ -44,10 +73,24 @@ contains
 ! Doxygen comment
 !===============================================================================
 
-  function get_eidx() result(eidx)
+  function get_eidx(E) result(eidx)
+
+    use global, only: mat
 
     ! formal variables
-    integer :: eidx
+    real(8)             :: E    ! neutron's energy
+    integer             :: eidx ! the energy index
+
+    ! compute index
+    eidx = ceiling((log10(E) - log10(mat%E_min))/mat%E_width) + 1
+
+    ! check bounds
+    if (eidx == 0 .or. eidx >=mat%npts) then
+      write(*,*) 'Energy index out of bounds!'
+      write(*,*) 'Energy:',E
+      write(*,*) 'Width:',mat%E_width
+      stop
+   end if
 
   end function get_eidx
 
@@ -95,6 +138,11 @@ contains
         exit
       end if
     end do
+
+    ! check iso
+    if (isoidx == 0) then
+      isoidx = 1 
+    end if
 
     ! deallocate pmf and cdf
     if (allocated(pmf)) deallocate(pmf)
@@ -153,19 +201,74 @@ contains
 
   subroutine elastic_scattering(isoidx)
 
-    use global, only: neut,mat
+    use global, only: neut,mat,kT
 
     ! formal variables
     integer :: isoidx ! isotope sampled index
 
     ! local variables
-    real(8) :: rn ! sampled random number
+    integer :: i     ! iteration counter
+    integer :: idx   ! index in cdf vector
+    integer :: kTidx ! index in kT vector
+    real(8) :: rn    ! sampled random number
+    real(8) :: EkT   ! energy / kT
+    real(8) :: Eint  ! interpolated E value
+    real(8), allocatable :: Evec(:)
 
     ! sample random number
     rn = rand(0)
 
-    ! perform asymptotic elastic scattering
-    neut%E = neut%E - neut%E*(1-mat%isotopes(isoidx)%alpha)*rn;
+    ! check for thermal scattering
+    if (neut%E < 4e-6_8 .and. mat%isotopes(isoidx)%thermal) then
+
+      ! get index in cdf
+      idx = ceiling(rn/mat%isotopes(isoidx)%thermal_lib%cdf_width)
+
+      ! check index
+      if (idx == 0) idx = 1
+
+      ! preallocate energy vector
+      if (.not.allocated(Evec))                                                &
+     & allocate(Evec(size(mat%isotopes(isoidx)%thermal_lib%kTvec)))
+
+      ! set possible energy ratios vector
+      Evec = mat%isotopes(isoidx)%thermal_lib%Erat(idx,:)
+
+      ! get energy in kT units
+      EkT = neut%E/kT
+
+      ! find index in kT space
+      do i = 1,size(mat%isotopes(isoidx)%thermal_lib%kTvec)
+        if (EkT < mat%isotopes(isoidx)%thermal_lib%kTvec(i)) then
+          kTidx = i
+          exit
+        end if
+      end do 
+
+      ! interpolate on energy value
+      if (kTidx == 1) then
+        neut%E = Evec(kTidx)
+      else
+        ! perform linear interplation on kT value
+        Eint = Evec(kTidx-1) + (EkT -                                          &
+       &       mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1))*((Evec(kTidx)  &
+       &     - Evec(kTidx-1))/(mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx)   &
+       &     - mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1)))
+
+       ! multiply by incoming energy
+       neut%E = neut%E*Eint
+
+      end if
+
+      ! deallocate energy vector
+      if(allocated(Evec)) deallocate(Evec)
+
+    else
+
+      ! perform asymptotic elastic scattering
+      neut%E = neut%E - neut%E*(1-mat%isotopes(isoidx)%alpha)*rn;
+
+    end if
 
   end subroutine elastic_scattering
 

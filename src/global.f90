@@ -7,6 +7,11 @@ module global
   implicit none
   save
 
+  ! version information
+  integer :: VERSION_MAJOR   = 0
+  integer :: VERSION_MINOR   = 1
+  integer :: VERSION_RELEASE = 1
+
   ! list all types
   type(material_type)           :: mat
   type(particle_type)           :: neut
@@ -19,8 +24,26 @@ module global
 
   ! list global vars that are set during run
   integer :: eidx   ! energy index for cross sections
-  integer :: ntals  ! number of tallies in problem
+
+  ! set max and min energy
+  real(8) :: emin = 1e-11_8
+  real(8) :: emax = 20.0_8
+
+  ! kT value base on 300K
+  real(8) :: kT = 8.6173324e-5_8*300*1.0e-6_8
 
 contains
+
+!==============================================================================
+! ALLOCATE_PROBLEM
+! Doxygen comment
+!==============================================================================
+
+  subroutine allocate_problem()
+
+    ! allocate tallies
+    if(.not.allocated(tal)) allocate(tal(1))
+
+  end subroutine allocate_problem
 
 end module global 

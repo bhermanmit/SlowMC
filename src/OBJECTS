@@ -1,7 +1,9 @@
 objects = \
 global.o \
+input.o \
 main.o \
 materials.o \
+output.o \
 particle.o \
 physics.o \
 tally.o

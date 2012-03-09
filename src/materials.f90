@@ -2,16 +2,19 @@ module materials
 
   implicit none
   private
+  public :: setup_material,load_source,load_isotope,compute_totxs
 
   type :: source_type
 
-    real(8), allocatable :: E         ! energy range for fission source
+    real(8), allocatable :: E(:)      ! energy range for fission source
     real(8)              :: cdf_width ! width of cdf bins from 0 to 1
 
   end type source_type
 
   type :: thermal_type
 
+    integer               :: kTsize    ! size of kT vector
+    integer               :: cdfsize   ! size of cdf
     real(8), allocatable  :: kTvec(:)  ! vector of kT values
     real(8), allocatable  :: Erat(:,:) ! energy
     real(8)               :: cdf_width ! width of cdf interval from 0 to 1 
@@ -36,7 +39,11 @@ module materials
     type(source_type)           :: source        ! the source of neutrons
     type(iso_type), allocatable :: isotopes(:)   ! 1-D array of isotopes in mat
     integer                     :: nisotopes     ! number of isotopes in mat
-    integer                     :: npts          ! number of energy points
+    integer                     :: curr_iso      ! the current isotope
+    integer                     :: npts          ! number of points in energy
+    real(8)                     :: E_width       ! width of energy interval
+    real(8)                     :: E_min         ! min energy
+    real(8)                     :: E_max         ! max energy
     real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
 
   end type material_type
@@ -48,40 +55,142 @@ contains
 ! Doxygen comment
 !===============================================================================
 
-  subroutine set_up_material(this,nisotopes)
+  subroutine setup_material(this,emin,emax)
 
     ! formal variables
     type(material_type) :: this      ! a material
-    integer             :: nisotopes ! number of isotopes
+    real(8)             :: emin      ! minimum energy to consider
+    real(8)             :: emax      ! maximum energy to consider
 
     ! allocate isotopes array
-    if (.not. allocated(this%isotopes)) allocate(this%isotopes(nisotopes))
+    if (.not. allocated(this%isotopes)) allocate(this%isotopes(this%nisotopes))
 
-    ! set size
-    this%nisotopes = nisotopes
+    ! set up current isotope index
+    this%curr_iso = 1
 
-  end subroutine set_up_material
+    ! set energy bounds
+    this%E_min = emin
+    this%E_max = emax
+
+  end subroutine setup_material
 
 !===============================================================================
 ! LOAD_ISOTOPE
 ! Doxygen comment
 !===============================================================================
 
-  subroutine load_isotope() !(path,N,A)
+  subroutine load_isotope(this,N,A,path,thermal)
+
+    use hdf5
+
+    ! formal variables
+    type(material_type),target :: this    ! a material
+    real(8)                    :: N       ! number density
+    real(8)                    :: A       ! atomic weight
+    character(len=255)         :: path    ! path to isotope
+    logical                    :: thermal ! contains a thermal lib
+
+    ! local variables
+    integer                        :: error        ! hdf5 error 
+    integer(HID_T)                 :: hdf5_file    ! hdf5 file id
+    integer(HID_T)                 :: dataset_id   ! hdf5 dataset id
+    integer(HSIZE_T), dimension(1) :: dim1         ! dimension of hdf5 var
+    integer(HSIZE_T), dimension(2) :: dim2         ! dimension of hdf5 var
+    integer                        :: vecsize      ! vector size
+    type(thermal_type), pointer    :: therm
+
+    ! display to user
+    write(*,*) 'Loading isotope:',this%curr_iso
+
+    ! set parameters
+    this%isotopes(this%curr_iso)%N = N
+    this%isotopes(this%curr_iso)%A = A
+    this%isotopes(this%curr_iso)%alpha = ((A-1)/(A+1))**2 
+    this%isotopes(this%curr_iso)%thermal = thermal
 
     ! open up hdf5 file
+    call h5fopen_f(trim(path),H5F_ACC_RDWR_F,hdf5_file,error)
 
     ! read size of vector
+    call h5dopen_f(hdf5_file,"/vecsize",dataset_id,error)
+    dim1 = (/1/)
+    call h5dread_f(dataset_id,H5T_NATIVE_INTEGER,vecsize,dim1,error)
+    call h5dclose_f(dataset_id,error)
 
     ! allocate all xs vectors
+    if (.not.allocated(this%isotopes(this%curr_iso)%xs_scat))                  &
+   &         allocate(this%isotopes(this%curr_iso)%xs_scat(vecsize))
+    if (.not.allocated(this%isotopes(this%curr_iso)%xs_capt))                  &
+   &         allocate(this%isotopes(this%curr_iso)%xs_capt(vecsize))
+
+    ! keep the size
+    this%npts = vecsize
 
     ! zero out xs vectors
+    this%isotopes(this%curr_iso)%xs_scat = 0.0_8
+    this%isotopes(this%curr_iso)%xs_capt = 0.0_8
 
     ! read in xs
+    call h5dopen_f(hdf5_file,"/xs_scat",dataset_id,error)
+    dim1 = (/vecsize/)
+    call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,                               &
+   &     this%isotopes(this%curr_iso)%xs_scat,dim1,error)
+    call h5dclose_f(dataset_id,error)
+    call h5dopen_f(hdf5_file,"/xs_capt",dataset_id,error)
+    dim1 = (/vecsize/)
+    call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,                               &
+   &     this%isotopes(this%curr_iso)%xs_capt,dim1,error)
+    call h5dclose_f(dataset_id,error)
 
-    ! set other parameters
+    ! get energy interval width
+    call h5dopen_f(hdf5_file,"/E_width",dataset_id,error)
+    dim1 = (/1/)
+    call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,this%E_width,dim1,error)
+    call h5dclose_f(dataset_id,error)
 
     ! check for thermal scattering kernel and load that
+    if (this%isotopes(this%curr_iso)%thermal) then
+
+      ! set pointer
+      therm => this%isotopes(this%curr_iso)%thermal_lib
+
+      ! load sizes
+      call h5dopen_f(hdf5_file,"/kTsize",dataset_id,error)
+      dim1 = (/1/)
+      call h5dread_f(dataset_id,H5T_NATIVE_INTEGER,therm%kTsize,dim1,error)
+      call h5dclose_f(dataset_id,error)
+      call h5dopen_f(hdf5_file,"/cdfsize",dataset_id,error)
+      dim1 = (/1/)
+      call h5dread_f(dataset_id,H5T_NATIVE_INTEGER,therm%cdfsize,dim1,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! read in cdf width
+      call h5dopen_f(hdf5_file,"/cdf_width",dataset_id,error)
+      dim1 = (/1/)
+      call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,therm%cdf_width,dim1,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! preallocate vectors
+      if(.not.allocated(therm%kTvec)) allocate(therm%kTvec(therm%kTsize))
+      if(.not.allocated(therm%Erat)) allocate(therm%Erat(therm%cdfsize,therm%kTsize))
+
+      ! read in vectors
+      call h5dopen_f(hdf5_file,"/kT",dataset_id,error)
+      dim1 = (/therm%kTsize/)
+      call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,therm%kTvec,dim1,error)
+      call h5dclose_f(dataset_id,error)
+      call h5dopen_f(hdf5_file,"/Erat",dataset_id,error)
+      dim2 = (/therm%cdfsize,therm%kTsize/)
+      call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,therm%Erat,dim2,error)
+      call h5dclose_f(dataset_id,error)
+
+    end if
+
+    ! close hdf5 file
+    call h5fclose_f(hdf5_file,error)
+
+    ! increment isotope counter
+    this%curr_iso = this%curr_iso + 1
 
   end subroutine load_isotope
 
@@ -90,9 +199,55 @@ contains
 ! Doxygen comment
 !===============================================================================
 
-  subroutine load_source(source_type)
+  subroutine load_source(this,source_type,source_path)
 
+    use hdf5 
+
+    ! formal variables
+    type(material_type) :: this        ! a material
     integer             :: source_type ! 0 - fixed, 1 - fission
+    character(len=255)  :: source_path ! path to source file
+
+    ! local variables
+    integer                        :: error        ! hdf5 error 
+    integer(HID_T)                 :: hdf5_file    ! hdf5 file id
+    integer(HID_T)                 :: dataset_id   ! hdf5 dataset id
+    integer(HSIZE_T), dimension(1) :: dim1         ! dimension of hdf5 var
+    integer                        :: vecsize      ! vector size for fission
+
+
+    ! check for fission source
+    if (source_type == 1) then
+
+      ! open the fission source file
+      call h5fopen_f(trim(source_path),H5F_ACC_RDWR_F,hdf5_file,error)
+
+      ! open dataset and read in vector size
+      call h5dopen_f(hdf5_file,"/vecsize",dataset_id,error)
+      dim1 = (/1/)
+      call h5dread_f(dataset_id,H5T_NATIVE_INTEGER,vecsize,dim1,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! open dataset and read in width of cdf interval
+      call h5dopen_f(hdf5_file,"/cdf_width",dataset_id,error)
+      dim1 = (/1/)
+      call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,this%source%cdf_width,dim1,  &
+     &               error)
+      call h5dclose_f(dataset_id,error)
+
+      ! preallocate vectors in source object
+      if(.not.allocated(this%source%E)) allocate(this%source%E(vecsize))
+
+      ! open dataset and read in energy vector
+      call h5dopen_f(hdf5_file,"/E",dataset_id,error)
+      dim1 = (/vecsize/)
+      call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,this%source%E,dim1,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! close the file
+      call h5fclose_f(hdf5_file,error)
+
+    end if
 
   end subroutine load_source
 

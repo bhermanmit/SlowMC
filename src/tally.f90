@@ -2,7 +2,7 @@ module tally
 
   implicit none
   private
-  public :: add_to_tally,bank_tally
+  public :: setup_tallies,add_to_tally,bank_tally
 
   type, public :: tally_type
 
@@ -11,23 +11,59 @@ module tally
     real(8), allocatable :: sum(:)    ! the sum for the mean and var
     real(8), allocatable :: sum_sq(:) ! the sum for the variable
     logical :: flux_tally             ! is this the flux tally
+    integer :: nbins                  ! number of tally regions
     real(8) :: width                  ! the uniform width
+    real(8) :: emax                   ! max e
+    real(8) :: emin                   ! min e
 
   end type tally_type
 
 contains
 
 !===============================================================================
+! SETUP_TALLIES
+! Doxygen comment
+!===============================================================================
+
+  subroutine setup_tallies(this,n,emax,emin)
+
+    ! formal variables
+    integer          :: n       ! number of tally arrays
+    type(tally_type) :: this(n) ! array of tallies
+    real(8)          :: emax    ! max e
+    real(8)          :: emin    ! min e
+
+    ! set up automatic flux tally
+    this(1)%flux_tally = .true.
+    this(1)%nbins = 1000
+    this(1)%emax = emax
+    this(1)%emin = emin
+    this(1)%width = (log10(emax) - log10(emin))/dble(this(1)%nbins)
+
+    ! preallocate vectors
+    if(.not.allocated(this(1)%val)) allocate(this(1)%val(1000)) 
+    if(.not.allocated(this(1)%sum)) allocate(this(1)%sum(1000))
+    if(.not.allocated(this(1)%sum_sq)) allocate(this(1)%sum_sq(1000)) 
+
+    ! zero out tallies
+    this(1)%val = 0.0_8
+    this(1)%sum = 0.0_8
+    this(1)%sum_sq = 0.0_8
+
+  end subroutine setup_tallies
+
+!===============================================================================
 ! ADD_TO_TALLY
 ! Doxygen comment
 !===============================================================================
 
-  subroutine add_to_tally(this,n,totxs)
+  subroutine add_to_tally(this,n,totxs,E)
 
     ! formal variables
-    type(tally_type) :: this(n)  ! array of  tallies
-    real(8)          :: totxs    ! totalxs
     integer          :: n        ! size of tallies
+    type(tally_type) :: this(n)  ! array of tallies
+    real(8)          :: totxs    ! totalxs
+    real(8)          :: E        ! neutron energy
 
     ! local variables
     integer :: i    ! iteration counter
@@ -40,12 +76,15 @@ contains
       if (this(i)%flux_tally) then
 
         ! calculate index
-        idx = ceiling(abs(log10(20.0_8) - log10(1.0e-11_8))/this(i)%width);
+        idx = ceiling((log10(E) - log10(this(i)%emin))/this(i)%width)
 
+      else
+        write(*,*) 'Something is wrong right now'
+        stop
       end if
 
       ! add to tally
-      this(i)%val(idx) = this(i)%val(idx) + 1/totxs
+      this(i)%val(idx) = this(i)%val(idx) + 1.0_8/totxs
 
     end do
 
@@ -59,8 +98,8 @@ contains
   subroutine bank_tally(this,n)
 
     ! formal variables
-    type(tally_type) :: this(n) ! array of tallies 
     integer          :: n       ! size of tallies
+    type(tally_type) :: this(n) ! array of tallies 
 
     ! local variables
     integer :: i    ! iteration counter
@@ -73,7 +112,6 @@ contains
       this(i)%sum_sq = this(i)%sum_sq + this(i)%val**2
 
     end do
-
-  end subroutine bank_tally
+ end subroutine bank_tally
 
 end module tally

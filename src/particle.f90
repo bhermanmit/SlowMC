@@ -2,6 +2,7 @@ module particle
 
   implicit none
   private
+  public :: init_particle
 
   type, public :: particle_type
 
@@ -11,5 +12,21 @@ module particle
   end type particle_type
 
 contains
+
+!===============================================================================
+! INIT_PARTICLE
+! Doxygen comment
+!===============================================================================
+
+  subroutine init_particle(this)
+
+    ! formal variables
+    type(particle_type) :: this ! a particle
+
+    ! initialize
+    this%E = 0.0_8
+    this%alive = .true.
+
+  end subroutine init_particle
 
 end module particle
