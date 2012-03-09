@@ -24,3 +24,9 @@ src/xml-fortran/templates/*.f90
 
 # Fortran output file
 fort*
+
+# Doxygen folder
+doxygen
+
+# gh-pages folder
+gh-pages
