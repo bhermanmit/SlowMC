@@ -10,7 +10,7 @@ module tally
 
   implicit none
   private
-  public :: setup_tallies,add_to_tally,bank_tally
+  public :: setup_tallies,add_to_tally,bank_tally,deallocate_tallies
 
   type, public :: tally_type
 
@@ -124,6 +124,33 @@ contains
 
     end do
 
- end subroutine bank_tally
+  end subroutine bank_tally
+
+!===============================================================================
+! DEALLOCATE_TALLIES
+!> @brief routine to deallocate tally types
+!===============================================================================
+
+  subroutine deallocate_tallies(this,n)
+
+    ! formal variables
+    integer          :: n       ! size of tallies
+    type(tally_type) :: this(n) ! array of tallies 
+
+    ! local variables
+    integer :: i    ! iteration counter
+
+    ! begin loop over tallies
+    do i = 1,n
+
+      ! deallocate all
+      if (allocated(this(i)%E)) deallocate(this(i)%E)
+      if (allocated(this(i)%val)) deallocate(this(i)%val)
+      if (allocated(this(i)%sum)) deallocate(this(i)%sum)
+      if (allocated(this(i)%sum_sq)) deallocate(this(i)%sum_sq)
+
+    end do
+
+  end subroutine deallocate_tallies
 
 end module tally

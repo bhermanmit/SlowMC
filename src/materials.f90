@@ -10,7 +10,8 @@ module materials
 
   implicit none
   private
-  public :: setup_material,load_source,load_isotope,compute_totxs
+  public :: setup_material,load_source,load_isotope,compute_totxs,             &
+ &          deallocate_material
 
   type :: source_type
 
@@ -298,7 +299,39 @@ contains
 !> @brief routine to deallocate a material
 !===============================================================================
 
-  subroutine deallocate_material()
+  subroutine deallocate_material(this)
+
+    ! formal variables
+    type(material_type) :: this ! a material
+
+    ! local variables
+    integer :: i ! loop counter
+
+    ! deallocate source information
+    if (allocated(this%source%E)) deallocate(this%source%E)
+
+    ! begin loop over isotopes for deallocation
+    do i = 1,this%nisotopes
+
+      ! deallocate thermal library
+      if (allocated(this%isotopes(i)%thermal_lib%kTvec)) deallocate            &
+     &             (this%isotopes(i)%thermal_lib%kTvec)
+      if (allocated(this%isotopes(i)%thermal_lib%Erat)) deallocate             &
+     &             (this%isotopes(i)%thermal_lib%Erat)
+
+      ! deallocate xs
+      if (allocated(this%isotopes(i)%xs_scat)) deallocate                      &
+     &             (this%isotopes(i)%xs_scat)
+      if (allocated(this%isotopes(i)%xs_capt)) deallocate                      &
+     &             (this%isotopes(i)%xs_capt)
+
+    end do
+
+    ! deallocate isotopes
+    if (allocated(this%isotopes)) deallocate(this%isotopes) 
+
+    ! deallocate totalxs
+    if (allocated(this%totalxs)) deallocate(this%totalxs)
 
   end subroutine deallocate_material
 

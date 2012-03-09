@@ -155,6 +155,7 @@ end do
 
   subroutine finalize()
 
+    use global, only: deallocate_problem
     use hdf5
 
     ! local variables
@@ -163,6 +164,7 @@ end do
     ! write output
 
     ! deallocate problem
+    call deallocate_problem()
 
     ! close the fortran interface
     call h5close_f(error)

@@ -50,8 +50,27 @@ contains
   subroutine allocate_problem()
 
     ! allocate tallies
-    if(.not.allocated(tal)) allocate(tal(1))
+    if (.not.allocated(tal)) allocate(tal(1))
 
   end subroutine allocate_problem
+
+!===============================================================================
+! DEALLOCATE_PROBLEM
+!> @brief deallocates global variables
+!===============================================================================
+
+  subroutine deallocate_problem()
+
+    use materials, only: deallocate_material
+    use tally,     only: deallocate_tallies
+
+    ! deallocate material
+    call deallocate_material(mat)
+
+    ! deallocate tallies
+    call deallocate_tallies(tal,size(tal))
+    if (allocated(tal)) deallocate(tal)
+
+  end subroutine deallocate_problem
 
 end module global 
