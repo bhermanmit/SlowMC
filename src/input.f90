@@ -43,7 +43,7 @@ contains
     else
 
       ! tell user
-      write(*,*) "Reading INPUT XML file..."
+      write(*,'(A/)') "Reading INPUT XML file..."
 
     end if
 
