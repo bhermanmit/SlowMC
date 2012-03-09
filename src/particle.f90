@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: particle
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains information about the particle that is transporting
+!==============================================================================!
+
 module particle
 
   implicit none
@@ -15,7 +23,7 @@ contains
 
 !===============================================================================
 ! INIT_PARTICLE
-! Doxygen comment
+!> @brief routine to initialize a particle
 !===============================================================================
 
   subroutine init_particle(this)

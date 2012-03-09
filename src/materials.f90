@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: materials
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains information about the isotopics of problem
+!==============================================================================!
+
 module materials
 
   implicit none
@@ -52,7 +60,7 @@ contains
 
 !===============================================================================
 ! SET_UP_MATERIALS
-! Doxygen comment
+!> @brief routine that initializes the materials
 !===============================================================================
 
   subroutine setup_material(this,emin,emax)
@@ -76,7 +84,7 @@ contains
 
 !===============================================================================
 ! LOAD_ISOTOPE
-! Doxygen comment
+!> @brief routine that loads isotope properties, xs, etc. into memory
 !===============================================================================
 
   subroutine load_isotope(this,N,A,path,thermal)
@@ -196,7 +204,7 @@ contains
 
 !===============================================================================
 ! LOAD_SOURCE
-! Doxygen comment
+!> @brief routine to load fission source into memory
 !===============================================================================
 
   subroutine load_source(this,source_type,source_path)
@@ -253,7 +261,7 @@ contains
 
 !===============================================================================
 ! COMPUTE_TOTXS
-! Doxygen comment
+!> @brief routine to pre-compute macroscopic total xs
 !===============================================================================
 
   subroutine compute_totxs(this)
@@ -287,7 +295,7 @@ contains
 
 !===============================================================================
 ! DEALLOCATE_MATERIAL
-! Doxygen comment
+!> @brief routine to deallocate a material
 !===============================================================================
 
   subroutine deallocate_material()

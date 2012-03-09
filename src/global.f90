@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: global 
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains all of the global variables
+!==============================================================================!
+
 module global
 
   use materials, only: material_type
@@ -36,7 +44,7 @@ contains
 
 !==============================================================================
 ! ALLOCATE_PROBLEM
-! Doxygen comment
+!> @brief allocates global variables for calculation
 !==============================================================================
 
   subroutine allocate_problem()

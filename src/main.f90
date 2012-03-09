@@ -1,8 +1,40 @@
 program main
+!==============================================================================!
+!> @mainpage SlowMC: Slowing Down Monte Carlo 
+!>
+!> @section Overview
+!>
+!> This program solves the slowing down neutron transport equation in either
+!> infinite medium or effective two-region collision probability theory. It 
+!> models parts of the same physics performed by the NJOY data processing code.
+!> This code is for strictly academic purposes and allows the user to see the
+!> relative impact of physics in the generation of multigroup cross sections
+!> and on flux spectra. This code currently uses the following external 
+!> libraries:
+!>  - HDF5 v1.8.# 
+!>
+!> The package HDF5 can be downloaded from http://www.hdfgroup.org/HDF5/ 
+!>
+!> @section Compiling
+!>
+!> Compiling is as easy as running the Makefile with:
+!>
+!> @verbatim
+!>   make xml-fortran
+!>   make slowmc
+!> @endverbatim
+!>
+!> @section Running
+!>
+!> To run SlowMC, execute the following:
+!>
+!> @verbatim
+!>   slowmc
+!> @endverbatim
+!>
+!==============================================================================!
 
   implicit none
-
-  ! print header information
 
   ! initialize problem
   call initialize()
@@ -20,7 +52,7 @@ contains
 
 !===============================================================================
 ! INTIALIZE
-! Doxygen comment
+!> @brief high level routine for intializing problem 
 !===============================================================================
 
   subroutine initialize()
@@ -61,7 +93,7 @@ contains
 
 !===============================================================================
 ! RUN_PROBLEM
-! Doxygen comment
+!> @brief main routine for executing the transport calculation
 !===============================================================================
 
   subroutine run_problem()
@@ -113,7 +145,7 @@ end do
 
 !===============================================================================
 ! FINALIZE
-! Doxygen comment
+!> @brief routine that finalizes the problem
 !===============================================================================
 
   subroutine finalize()

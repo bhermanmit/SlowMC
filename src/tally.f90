@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: tally 
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains information about tallying quantities 
+!==============================================================================!
+
 module tally
 
   implicit none
@@ -22,7 +30,7 @@ contains
 
 !===============================================================================
 ! SETUP_TALLIES
-! Doxygen comment
+!> @brief routine to initialize all tallies 
 !===============================================================================
 
   subroutine setup_tallies(this,n,emax,emin)
@@ -54,7 +62,7 @@ contains
 
 !===============================================================================
 ! ADD_TO_TALLY
-! Doxygen comment
+!> @brief routine to add quantities during transport of a particle 
 !===============================================================================
 
   subroutine add_to_tally(this,n,totxs,E)
@@ -92,7 +100,7 @@ contains
 
 !===============================================================================
 ! BANK_TALLY
-! Doxygen comment
+!> @brief routine to bank a histories tallies
 !===============================================================================
 
   subroutine bank_tally(this,n)
@@ -112,6 +120,7 @@ contains
       this(i)%sum_sq = this(i)%sum_sq + this(i)%val**2
 
     end do
+
  end subroutine bank_tally
 
 end module tally

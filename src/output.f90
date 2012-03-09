@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: output 
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains routines for outputtting major info to user
+!==============================================================================!
+
 module output
 
   implicit none
@@ -8,7 +16,7 @@ contains
 
 !===============================================================================
 ! PRINT_HEADING
-! Doxygen comment
+!> @brief prints the code heading and run information
 !===============================================================================
 
   subroutine print_heading()
@@ -50,7 +58,7 @@ contains
 
 !===============================================================================
 ! GET_TODAY
-! Doxygen commment 
+!> @brief calculates information about date/time of run
 !===============================================================================
 
   subroutine get_today(today_date, today_time)

@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: physics
+!
+!> @author Bryan Herman
+!>
+!> @brief Contains routines to model the physics of the problem
+!==============================================================================!
+
 module physics
 
   implicit none
@@ -8,7 +16,7 @@ contains
 
 !===============================================================================
 ! SAMPLE_SOURCE
-! Doxygen comment
+!> @brief routine to sample source from cdf
 !===============================================================================
 
   subroutine sample_source()
@@ -40,7 +48,7 @@ contains
 
 !===============================================================================
 ! PERFORM_PHYSICS
-! Doxygen comment
+!> @brief high level routine to perform transport physics
 !===============================================================================
 
   subroutine perform_physics()
@@ -70,7 +78,7 @@ contains
 
 !===============================================================================
 ! GET_EIDX
-! Doxygen comment
+!> @brief function to compute the index in unionized energy grid
 !===============================================================================
 
   function get_eidx(E) result(eidx)
@@ -96,7 +104,7 @@ contains
 
 !===============================================================================
 ! SAMPLE_ISOTOPE
-! Doxygen comment
+!> @brief function to sample interaction isotope
 !===============================================================================
 
   function sample_isotope() result(isoidx)
@@ -152,7 +160,7 @@ contains
 
 !===============================================================================
 ! SAMPLE_REACTION
-! Doxygen comment
+!> @brief function to sample reaction type
 !===============================================================================
 
   function sample_reaction(isoidx) result(reactid)
@@ -196,7 +204,7 @@ contains
 
 !===============================================================================
 ! ELASTIC_SCATTERING
-! Doxygen comment
+!> @brief routine to perform thermal/asymptotic elastic scattering physics 
 !===============================================================================
 
   subroutine elastic_scattering(isoidx)

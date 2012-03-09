@@ -1,3 +1,11 @@
+!==============================================================================!
+! MODULE: input
+!
+!> @author Bryan Herman
+!>
+!> @brief Handles reading in the input xml file and intializing global vars
+!==============================================================================!
+
 module input
 
   implicit none
@@ -8,7 +16,7 @@ contains
 
 !===============================================================================
 ! READ_INPUT
-! Doxygen comment
+!> @brief Reads the input xml file and sets global variables
 !===============================================================================
 
   subroutine read_input
