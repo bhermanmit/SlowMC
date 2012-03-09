@@ -8,7 +8,6 @@
     <component name="seed" type="integer" />
     <component name="source_type" type="integer" />
     <component name="source_path" type="word" length="255" />
-    <component name="nisotopes" type="integer" />
   </typedef>
 
   <variable name="settings_" tag="settings" type="settings_xml" />

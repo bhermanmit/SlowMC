@@ -54,7 +54,7 @@ contains
     nhistories = settings_%histories
     seed = settings_%seed
     source_type = settings_%source_type
-    mat%nisotopes = settings_%nisotopes
+    mat%nisotopes = size(material_(1)%nuclides)
 
     ! load the source
     call load_source(mat,source_type,settings_%source_path)
@@ -63,7 +63,7 @@ contains
     call setup_material(mat,emin,emax)
 
     ! begin loop over isotope materials
-    do i = 1,size(material_(1)%nuclides)
+    do i = 1,mat%nisotopes
 
       ! extract info
       N = material_(1)%nuclides(i)%N

@@ -7,7 +7,6 @@
     <seed> 5 </seed>
     <source_type> 1 </source_type>
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
-    <nisotopes> 3 </nisotopes>
   </settings>
 
   <material>
