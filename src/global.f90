@@ -31,7 +31,8 @@ module global
   integer :: source_type
 
   ! list global vars that are set during run
-  integer :: eidx   ! energy index for cross sections
+  integer :: eidx      ! energy index for cross sections
+  integer :: n_tallies ! number of tallies
 
   ! set max and min energy
   real(8) :: emin = 1e-11_8
@@ -47,10 +48,13 @@ contains
 !> @brief allocates global variables for calculation
 !==============================================================================
 
-  subroutine allocate_problem()
+  subroutine allocate_problem(n)
+
+    ! formal variables
+    integer :: n ! size of tallies
 
     ! allocate tallies
-    if (.not.allocated(tal)) allocate(tal(1))
+    if (.not.allocated(tal)) allocate(tal(n))
 
   end subroutine allocate_problem
 
@@ -62,15 +66,74 @@ contains
   subroutine deallocate_problem()
 
     use materials, only: deallocate_material
-    use tally,     only: deallocate_tallies
+    use tally,     only: deallocate_tally
+
+    ! local variables
+    integer :: i  ! loop counter
 
     ! deallocate material
     call deallocate_material(mat)
 
-    ! deallocate tallies
-    call deallocate_tallies(tal,size(tal))
+    ! deallocate within tallies
+    do i = 1,n_tallies
+
+      ! deallocate tally
+      call deallocate_tally(tal(i))
+
+    end do
+
+    ! deallocate tally variable
     if (allocated(tal)) deallocate(tal)
 
   end subroutine deallocate_problem
+
+!===============================================================================
+! ADD_TO_TALLIES
+!> @brief routine that adds temporary value to tallies
+!===============================================================================
+
+  subroutine add_to_tallies()
+
+    use tally, only: add_to_tally
+
+    ! local variables
+    integer :: i            ! loop counter
+    real(8) :: fact = 1.0_8 ! multiplier factor
+    real(8) :: totxs        ! total macroscopic xs of material
+
+    ! compute macroscopic cross section
+    totxs = sum(mat%totalxs(eidx,:))
+
+    ! begin loop over tallies
+    do i = 1,n_tallies
+
+      ! call routine to add tally
+      call add_to_tally(tal(i),fact,totxs,neut%E)
+
+    end do
+
+  end subroutine add_to_tallies
+
+!===============================================================================
+! BANK_TALLIES
+!> @brief routine that record temporary history information in tallies 
+!===============================================================================
+
+  subroutine bank_tallies()
+
+    use tally, only: bank_tally
+
+    ! local variables
+    integer :: i  ! loop counter
+
+    ! begin loop over tallies
+    do i = 1,n_tallies
+
+      ! call routine to bank tally
+      call bank_tally(tal(i))
+
+    end do
+
+  end subroutine bank_tallies
 
 end module global 

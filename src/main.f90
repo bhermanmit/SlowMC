@@ -62,7 +62,6 @@ contains
     use input,     only: read_input
     use materials, only: compute_macroxs
     use output,    only: print_heading
-    use tally,     only: setup_tallies
 
     ! local variables
     integer :: error ! hdf5 error
@@ -80,14 +79,8 @@ contains
     ! initalize random number generator
     rn = rand(seed)
 
-    ! allocate problem
-    call allocate_problem()
-
     ! precompute macroscopic cross section of materials
     call compute_macroxs(mat)
-
-    ! set up tally structure
-    call setup_tallies(tal,size(tal),emax,emin)
 
   end subroutine initialize
 
@@ -98,10 +91,10 @@ contains
 
   subroutine run_problem()
 
-    use global,    only: nhistories,mat,neut,tal,eidx,emin
+    use global,    only: nhistories,mat,neut,tal,eidx,emin,add_to_tallies,     &
+   &                     bank_tallies
     use particle,  only: init_particle
     use physics,   only: sample_source,perform_physics,get_eidx
-    use tally,     only: add_to_tally,bank_tally
 
     ! local variables
     integer :: i  ! iteration counter
@@ -122,7 +115,7 @@ contains
         eidx = get_eidx(neut%E)
 
         ! record collision temp tally
-        call add_to_tally(tal,size(tal),sum(mat%totalxs(eidx,:)),neut%E)
+        call add_to_tallies()
 
         ! perform physics
         call perform_physics()
@@ -133,7 +126,7 @@ contains
       end do
 
       ! neutron is dead if out of transport loop (ecut or absorb) --> bank tally
-      call bank_tally(tal,size(tal))
+      call bank_tallies()
 
       ! print update to user
       if (mod(i,nhistories/10) == 0) then
@@ -142,8 +135,8 @@ contains
 
     end do
 
-do i = 1,size(tal(1)%sum)
-  write(101,*) tal(1)%sum(i)
+do i = 1,size(tal(2)%sum)
+  write(101,*) tal(2)%sum(i)
 end do
  
   end subroutine run_problem

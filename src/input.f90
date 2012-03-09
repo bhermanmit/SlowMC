@@ -21,8 +21,10 @@ contains
 
   subroutine read_input
 
-    use global,           only: nhistories,seed,source_type,mat,emin,emax
+    use global,           only: nhistories,seed,source_type,mat,emin,emax,     &
+   &                            allocate_problem,tal,n_tallies
     use materials,        only: setup_material,load_source,load_isotope
+    use tally,            only: set_user_tally,set_spectrum_tally
     use xml_data_input_t
 
     ! local variables
@@ -33,6 +35,8 @@ contains
     character(255)                 :: path         ! path to isotope file
     logical                        :: thermal      ! contains thermal lib
     integer                        :: i            ! iteration counter
+    integer                        :: react_type   ! reaction type
+    real(8), allocatable           :: Ebins(:)     ! tally energy bins
 
     ! check for input file
     filename = "input.xml"
@@ -75,6 +79,49 @@ contains
       call load_isotope(mat,N,A,path,thermal)
 
     end do
+
+    ! get size of tallies
+    if (.not.associated(tallies_%tally)) then
+      n_tallies = 1
+    else
+      n_tallies = size(tallies_%tally) + 1
+    end if
+
+    ! allocate problem
+    call allocate_problem(n_tallies)
+
+    ! begin loop over tallies
+    do i = 1,n_tallies-1
+
+      ! set reaction type
+      select case(trim(tallies_%tally(i)%type))
+        case('flux')
+          react_type = 0
+          print *,'FLUX TALLY'
+        case('absorption')
+          react_type = 1
+        case('scattering')
+          react_type = 2
+        case DEFAULT
+          react_type = 0
+      end select
+
+      ! preallocate Ebins
+      if(.not. allocated(Ebins)) allocate(Ebins(size(tallies_%tally(i)%Ebins)))
+
+      ! set Ebins
+      Ebins = tallies_%tally(i)%Ebins
+
+      ! set up user-defined tallies
+      call set_user_tally(tal(i),Ebins,size(Ebins),react_type) 
+
+      ! deallocate Ebins
+      if(allocated(Ebins)) deallocate(Ebins)
+
+    end do
+
+    ! set up spectrum tally
+    call set_spectrum_tally(tal(n_tallies),emax,emin)
 
   end subroutine read_input
 

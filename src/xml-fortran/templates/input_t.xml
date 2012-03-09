@@ -10,8 +10,6 @@
     <component name="source_path" type="word" length="255" />
   </typedef>
 
-  <variable name="settings_" tag="settings" type="settings_xml" />
-
   <typedef name="nuclide_xml">
     <component name="N" type="double" />
     <component name="A" type="double" />
@@ -20,9 +18,20 @@
   </typedef>
 
   <typedef name="material_xml">
-    <component name="nuclides" tag="nuclide" type="nuclide_xml" dimension="1"/>
+    <component name="nuclides" tag="nuclide" type="nuclide_xml" dimension="1" />
   </typedef>
 
+  <typedef name="tally_xml" />
+    <component name="Ebins" type="double-array" />
+    <component name="type"  type="word" length="255" />
+  </typedef>
+
+  <typedef name="tallies_xml">
+    <component name="tally" tag="tally" type="tally_xml"  dimension="1" />
+  </typedef>
+
+  <variable name="settings_" tag="settings" type="settings_xml" />
   <variable name="material_" tag="material" type="material_xml" dimension="1" />
+  <variable name="tallies_"  tag="tallies"  type="tallies_xml"  />
 
 </template>
