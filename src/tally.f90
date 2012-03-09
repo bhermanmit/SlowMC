@@ -119,6 +119,9 @@ contains
       this(i)%sum    = this(i)%sum    + this(i)%val
       this(i)%sum_sq = this(i)%sum_sq + this(i)%val**2
 
+      ! zero out temp value
+      this(i)%val = 0.0_8
+
     end do
 
  end subroutine bank_tally
