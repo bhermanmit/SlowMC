@@ -1,9 +1,9 @@
 % Single Level Breit Wigner xs generator for U-238
 tic
 % Inputs for user
-isoname = 'U238';  % isotope name
+isoname = 'U_238';  % isotope name
 n_res = 14;        % number of resonances to read from file
-T = 300;           % temperature of resonances
+T = 1200;           % temperature of resonances
 sig_pot = 11.2934; % potential cross section of isotope
 A = 238;           % isotope atomic weight
 maxE = 1000;        % max energy in eV
@@ -99,7 +99,10 @@ toc
 E = E/1e6;
 
 % zero out xs over 1 keV
-xs(:,1) = xs(:,1).*(xs(:,1) > 1e-3);
+xs(:,1) = xs(:,1).*(E <= 1e-3);
+
+% put 0.1 barns after
+xs(:,1) = xs(:,1) + (E > 1e-3)*0.1;
 
 % get size
 sizeE = length(xs(:,1));
@@ -110,13 +113,16 @@ xs_capt = xs(:,1);
 % set scattering to 0
 xs_scat = zeros(sizeE,1);
 
+% filename
+hdfile = horzcat(isoname,'_',num2str(T),'.h5');
+
 % write out hdf5 file
-delete('U_238.h5');
-h5create('U_238.h5','/vecsize',1);
-h5write('U_238.h5','/vecsize',sizeE);
-h5create('U_238.h5','/xs_scat',sizeE);
-h5write('U_238.h5','/xs_scat',xs_scat);
-h5create('U_238.h5','/xs_capt',sizeE);
-h5write('U_238.h5','/xs_capt',xs_capt);
-h5create('U_238.h5','/E_width',1);
-h5write('U_238.h5','/E_width',dE);
+delete(hdfile);
+h5create(hdfile,'/vecsize',1);
+h5write(hdfile,'/vecsize',sizeE);
+h5create(hdfile,'/xs_scat',sizeE);
+h5write(hdfile,'/xs_scat',xs_scat);
+h5create(hdfile,'/xs_capt',sizeE);
+h5write(hdfile,'/xs_capt',xs_capt);
+h5create(hdfile,'/E_width',1);
+h5write(hdfile,'/E_width',dE);
