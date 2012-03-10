@@ -1,0 +1,768 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\date{}
+\usepackage{algorithmic}
+\usepackage[framed]{../latex/mcode}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 0 0 0 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\noindent
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100line%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\shape smallcaps
+\size giant
+Problem Set 2 Solutions
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+22.211 Reactor Physics I
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Due: 29 February 2012
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+Bryan Herman
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100line%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Problem 1.
+\end_layout
+
+\begin_layout Standard
+Generate the H-1 thermal scattering kernels vs.
+ temperature.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename H_1_kernel_pdf.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+H-1 Thermal Scattering Kernels PDF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename H_1_kernel_cdf.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+H-1 Thermal Scattering Kernels CDF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Problem 2.
+\end_layout
+
+\begin_layout Standard
+Generate the C-12 thermal scattering kernels vs.
+ temperature.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename C_12_kernel_pdf.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+C-12 Thermal Scattering Kernels PDF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename C_12_kernel_cdf.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+C-12 Thermal Scattering Kernels CDF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Problem 3.
+\end_layout
+
+\begin_layout Standard
+Compute the spectrum (flux vs.
+ lethargy) in homogeneous H-1 at 300K.
+ Do the following:
+\end_layout
+
+\begin_layout Itemize
+Random fission neutron emission
+\end_layout
+
+\begin_layout Itemize
+Asymptotic elastic slowing down to 4 eV
+\end_layout
+
+\begin_layout Itemize
+ENDF/B-VII H-1 elastic scattering cross section vs.
+ energy
+\end_layout
+
+\begin_layout Itemize
+Free gas hydrogen thermal scattering below 4 eV
+\end_layout
+
+\begin_layout Itemize
+Artificial 1/
+\begin_inset Formula $v$
+\end_inset
+
+ absorber with cross section of 7 barns per H-1 atom
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename spectrum_final.png
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Flux Spectrum with Thermal Scattering and 1/v absorber
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note, in order to get this plot to be smooth with the correct thermal shape,
+ I had to use a spectrum of 
+\begin_inset Formula $kT$
+\end_inset
+
+ values that were shown above.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Problem 4.
+\end_layout
+
+\begin_layout Standard
+Compute the mean number of collisions for neutrons to reach 1.0 eV.
+\end_layout
+
+\begin_layout Standard
+From my code the mean number of collisions for neutrons to reach 1.0 eV is
+ 
+\begin_inset Formula 
+\[
+\boxed{14.95.}
+\]
+
+\end_inset
+
+ The analytical formula predicts
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+n=\mathrm{ln}\left(\frac{E_{i}}{E_{f}}\right)=\mathrm{ln}\left(\frac{2\times10^{6}}{1}\right)=14.51.
+\]
+
+\end_inset
+
+ Therefore, we are in the ball park of the correct answer.
+\end_layout
+
+\begin_layout Paragraph
+Problem 5.
+\end_layout
+
+\begin_layout Standard
+Compute the mean number of collisions per neutron.
+\end_layout
+
+\begin_layout Standard
+From my code the mean number of collisions for neutrons to reach 1.0 eV is
+ 
+\begin_inset Formula 
+\[
+\boxed{21.24.}
+\]
+
+\end_inset
+
+ The analytical formula predicts
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+n=\mathrm{ln}\left(\frac{E_{i}}{E_{f}}\right)=\mathrm{ln}\left(\frac{2\times10^{6}}{0.0001}\right)=23.72.
+\]
+
+\end_inset
+
+ We are again in the ball park of the correct answer.
+ Although we are not as close, the analytical formulation does not account
+ for 1/v absorber or thermal scattering.
+\end_layout
+
+\begin_layout Paragraph
+Problem 6.
+\end_layout
+
+\begin_layout Standard
+Compute the mean neutron lifetime.
+\end_layout
+
+\begin_layout Standard
+From my code I computed the mean neutron lifetime as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tau=\frac{1}{v\sigma_{t}}=6.52577\times10^{-5}\,\mathrm{\frac{s}{m\cdot b}},
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $v$
+\end_inset
+
+ is the velocity given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v=\sqrt{\frac{2E}{m_{n}}}
+\]
+
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{t}$
+\end_inset
+
+ is the total microscopic cross section given by 
+\begin_inset Formula 
+\[
+\sigma_{t}=\sigma_{s}+\sigma_{a}.
+\]
+
+\end_inset
+
+We still need to multiply the microscopic total cross section by the number
+ density of hydrogen.
+ The number density of hydrogen is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{H}=n_{H}N_{H_{2}O}=n_{H}\frac{\rho N_{A}}{M}=2\frac{1\cdot0.6022}{18.01528}=0.066854\,\mathrm{\frac{1}{cm\cdot b}}
+\]
+
+\end_inset
+
+ Therefore, the mean neutron lifetime is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\tau=9.76\,\mathrm{\mu s}.}
+\]
+
+\end_inset
+
+ This time is smaller than the value in the notes of about 15 
+\begin_inset Formula $\mu s$
+\end_inset
+
+.
+ This is due to the fact that we are using a higher density of water and
+ we have a 1/v absorber.
+ But again, we are in the ball park.
+\end_layout
+
+\begin_layout Paragraph
+Problem 7.
+\end_layout
+
+\begin_layout Standard
+Compute the number of absorptions per fission neutron.
+\end_layout
+
+\begin_layout Standard
+Theoretically, since this is an infinite medium, all neutrons should eventually
+ be removed from our system by absorption.
+ However, if you put an energy cutoff into your code there is always a finite
+ probability that a neutron will go below this cutoff.
+ This is even more true when Hydrogen is the moderator.
+ From the code results, the number of neutrons absorbed to that of fissioned
+ was
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\frac{999129}{1000000}==99.91\%.}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+Main Codes
+\end_layout
+
+\begin_layout Subsection
+Thermal Scattering Kernel Generation Code
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/pdfdata/free_gas.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Slowing Down by Particle
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/slowing_down_particle.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Class Files
+\end_layout
+
+\begin_layout Subsection
+Thermal Scattering Library Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/thermal_lib_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Particle Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/particle_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+PDF Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/pdf_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Material Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/material_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cross Section Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/cross_section_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Tally Class
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting{./src/tally_class.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
