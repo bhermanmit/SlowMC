@@ -55,68 +55,175 @@
 <a name="l00011"></a>00011   use <span class="keywordflow">materials</span>, only: material_type
 <a name="l00012"></a>00012   use <span class="keywordflow">particle</span>,  only: particle_type
 <a name="l00013"></a>00013   use <span class="keywordflow">tally</span>,     only: tally_type
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015   <span class="keyword">implicit none</span>
-<a name="l00016"></a>00016   <span class="keywordtype">save</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018   <span class="comment">! version information</span>
-<a name="l00019"></a><a class="code" href="namespaceglobal.html#af676482a3ce4ddeaeeb9f43f5d146382">00019</a>   <span class="keywordtype">integer</span> :: VERSION_MAJOR   = 0
-<a name="l00020"></a><a class="code" href="namespaceglobal.html#ac384fb69c26140c517ee3bdb59c31e99">00020</a>   <span class="keywordtype">integer</span> :: VERSION_MINOR   = 1
-<a name="l00021"></a><a class="code" href="namespaceglobal.html#a8327d6c4ddf2fda8053597e394197a20">00021</a>   <span class="keywordtype">integer</span> :: VERSION_RELEASE = 1
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023   <span class="comment">! list all types</span>
-<a name="l00024"></a><a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">00024</a>   <span class="keywordtype">type(material_type)</span>           :: mat
-<a name="l00025"></a><a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">00025</a>   <span class="keywordtype">type(particle_type)</span>           :: neut
-<a name="l00026"></a><a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">00026</a>   <span class="keywordtype">type(tally_type)</span>, <span class="keywordtype">allocatable</span> :: tal(:)
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028   <span class="comment">! list history input information</span>
-<a name="l00029"></a><a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">00029</a>   <span class="keywordtype">integer</span> :: nhistories
-<a name="l00030"></a><a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">00030</a>   <span class="keywordtype">integer</span> :: seed
-<a name="l00031"></a><a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">00031</a>   <span class="keywordtype">integer</span> :: source_type
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033   <span class="comment">! list global vars that are set during run</span>
-<a name="l00034"></a><a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">00034</a>   <span class="keywordtype">integer</span> :: eidx   <span class="comment">! energy index for cross sections</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036   <span class="comment">! set max and min energy</span>
-<a name="l00037"></a><a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">00037</a>   <span class="keywordtype">real(8)</span> :: emin = 1e-11_8
-<a name="l00038"></a><a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">00038</a>   <span class="keywordtype">real(8)</span> :: emax = 20.0_8
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <span class="comment">! kT value base on 300K</span>
-<a name="l00041"></a><a class="code" href="namespaceglobal.html#a8bb13ab14d8340a122f9856859db2ea6">00041</a>   <span class="keywordtype">real(8)</span> :: kT = 8.6173324e-5_8*300*1.0e-6_8
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="keyword">contains</span>
+<a name="l00014"></a>00014   use <span class="keywordflow">timing</span>,    only: Timer
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016   <span class="keyword">implicit none</span>
+<a name="l00017"></a>00017   <span class="keywordtype">save</span>
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019   <span class="comment">! version information</span>
+<a name="l00020"></a><a class="code" href="namespaceglobal.html#af676482a3ce4ddeaeeb9f43f5d146382">00020</a>   <span class="keywordtype">integer</span> :: VERSION_MAJOR   = 0
+<a name="l00021"></a><a class="code" href="namespaceglobal.html#ac384fb69c26140c517ee3bdb59c31e99">00021</a>   <span class="keywordtype">integer</span> :: VERSION_MINOR   = 1
+<a name="l00022"></a><a class="code" href="namespaceglobal.html#a8327d6c4ddf2fda8053597e394197a20">00022</a>   <span class="keywordtype">integer</span> :: VERSION_RELEASE = 1
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024   <span class="comment">! list all types</span>
+<a name="l00025"></a><a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">00025</a>   <span class="keywordtype">type(material_type)</span>           :: mat
+<a name="l00026"></a><a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">00026</a>   <span class="keywordtype">type(particle_type)</span>           :: neut
+<a name="l00027"></a><a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">00027</a>   <span class="keywordtype">type(tally_type)</span>, <span class="keywordtype">allocatable</span> :: tal(:)
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029   <span class="comment">! list history input information</span>
+<a name="l00030"></a><a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">00030</a>   <span class="keywordtype">integer</span> :: nhistories
+<a name="l00031"></a><a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">00031</a>   <span class="keywordtype">integer</span> :: seed
+<a name="l00032"></a><a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">00032</a>   <span class="keywordtype">integer</span> :: source_type
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   <span class="comment">! list global vars that are set during run</span>
+<a name="l00035"></a><a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">00035</a>   <span class="keywordtype">integer</span> :: eidx      <span class="comment">! energy index for cross sections</span>
+<a name="l00036"></a><a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">00036</a>   <span class="keywordtype">integer</span> :: n_tallies <span class="comment">! number of tallies</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038   <span class="comment">! set max and min energy</span>
+<a name="l00039"></a><a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">00039</a>   <span class="keywordtype">real(8)</span> :: emin = 1e-11_8
+<a name="l00040"></a><a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">00040</a>   <span class="keywordtype">real(8)</span> :: emax = 20.0_8
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <span class="comment">! kT value base on 300K</span>
+<a name="l00043"></a><a class="code" href="namespaceglobal.html#a8bb13ab14d8340a122f9856859db2ea6">00043</a>   <span class="keywordtype">real(8)</span> :: kT = 8.6173324e-5_8*300*1.0e-6_8
 <a name="l00044"></a>00044 
-<a name="l00045"></a>00045 <span class="comment">!==============================================================================</span>
-<a name="l00046"></a>00046 <span class="comment">! ALLOCATE_PROBLEM</span>
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">00050</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">allocate_problem</a>()
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <span class="comment">! allocate tallies</span>
-<a name="l00053"></a>00053     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">allocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(1))
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055 <span class="keyword">  end subroutine allocate_problem</span>
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057 <span class="comment">!===============================================================================</span>
-<a name="l00058"></a>00058 <span class="comment">! DEALLOCATE_PROBLEM</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">00062</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a>()
+<a name="l00045"></a>00045   <span class="comment">! timers</span>
+<a name="l00046"></a><a class="code" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">00046</a>   <span class="keywordtype">type(Timer)</span> :: time_init
+<a name="l00047"></a><a class="code" href="namespaceglobal.html#a0bccc61fe58c03edbe9c92b1061d723e">00047</a>   <span class="keywordtype">type(Timer)</span> :: time_run
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="keyword">contains</span>
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="comment">!==============================================================================</span>
+<a name="l00052"></a>00052 <span class="comment">! ALLOCATE_PROBLEM</span>
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="namespaceglobal.html#a18e52bb343fdad5919d4fd2084223049">00056</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a18e52bb343fdad5919d4fd2084223049">allocate_problem</a>(n)
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058     <span class="comment">! formal variables</span>
+<a name="l00059"></a>00059     <span class="keywordtype">integer</span> :: n <span class="comment">! size of tallies</span>
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <span class="comment">! allocate tallies</span>
+<a name="l00062"></a>00062     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">allocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(n))
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064     use <span class="keywordflow">materials</span>, only: deallocate_material
-<a name="l00065"></a>00065     use <span class="keywordflow">tally</span>,     only: deallocate_tallies
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067     <span class="comment">! deallocate material</span>
-<a name="l00068"></a>00068     call <a class="code" href="namespacematerials.html#a578514b55aa8e9254c090a5ba8ca019a">deallocate_material</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>)
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070     <span class="comment">! deallocate tallies</span>
-<a name="l00071"></a>00071     call <a class="code" href="namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c">deallocate_tallies</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>))
-<a name="l00072"></a>00072     <span class="keyword">if</span> (<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">deallocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="keyword">  end subroutine deallocate_problem</span>
+<a name="l00064"></a>00064 <span class="keyword">  end subroutine allocate_problem</span>
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 <span class="comment">!===============================================================================</span>
+<a name="l00067"></a>00067 <span class="comment">! DEALLOCATE_PROBLEM</span>
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">00071</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a>()
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073     use <span class="keywordflow">materials</span>, only: deallocate_material
+<a name="l00074"></a>00074     use <span class="keywordflow">tally</span>,     only: deallocate_tally
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076 <span class="keyword">end module global </span>
+<a name="l00076"></a>00076     <span class="comment">! local variables</span>
+<a name="l00077"></a>00077     <span class="keywordtype">integer</span> :: i  <span class="comment">! loop counter</span>
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079     <span class="comment">! deallocate material</span>
+<a name="l00080"></a>00080     call <a class="code" href="namespacematerials.html#a578514b55aa8e9254c090a5ba8ca019a">deallocate_material</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>)
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082     <span class="comment">! deallocate within tallies</span>
+<a name="l00083"></a>00083     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">n_tallies</a>
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085       <span class="comment">! deallocate tally</span>
+<a name="l00086"></a>00086       call <a class="code" href="namespacetally.html#a542903033ade511ef77c32491352df5b">deallocate_tally</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i))
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088     <span class="keyword">end do</span>
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090     <span class="comment">! deallocate tally variable</span>
+<a name="l00091"></a>00091     <span class="keyword">if</span> (<span class="keyword">allocated</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)) <span class="keyword">deallocate</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>)
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="keyword">  end subroutine deallocate_problem</span>
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 <span class="comment">!===============================================================================</span>
+<a name="l00096"></a>00096 <span class="comment">! ADD_TO_TALLIES</span>
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06">00100</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06">add_to_tallies</a>()
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102     use <span class="keywordflow">tally</span>, only: add_to_tally
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104     <span class="comment">! local variables</span>
+<a name="l00105"></a>00105     <span class="keywordtype">integer</span> :: i            <span class="comment">! loop counter</span>
+<a name="l00106"></a>00106     <span class="keywordtype">real(8)</span> :: fact = 1.0_8 <span class="comment">! multiplier factor</span>
+<a name="l00107"></a>00107     <span class="keywordtype">real(8)</span> :: totxs        <span class="comment">! total macroscopic xs of material</span>
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109     <span class="comment">! compute macroscopic cross section</span>
+<a name="l00110"></a>00110     totxs = sum(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%totalxs(<a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a>,:))
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112     <span class="comment">! begin loop over tallies</span>
+<a name="l00113"></a>00113     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">n_tallies</a>
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115       <span class="comment">! set multiplier</span>
+<a name="l00116"></a>00116       <span class="keyword">select</span> <span class="keyword">case</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%react_type)
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118         <span class="comment">! flux only</span>
+<a name="l00119"></a>00119         <span class="keyword">case</span>(0)
+<a name="l00120"></a>00120           fact = 1.0_8
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122         <span class="comment">! absorption</span>
+<a name="l00123"></a>00123         <span class="keyword">case</span>(1)
+<a name="l00124"></a>00124           fact = sum(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%absorxs(<a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a>,:))
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126         <span class="comment">! scattering</span>
+<a name="l00127"></a>00127         <span class="keyword">case</span>(2)
+<a name="l00128"></a>00128           fact = sum(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%scattxs(<a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a>,:))
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130         <span class="comment">! micro capture</span>
+<a name="l00131"></a>00131         <span class="keyword">case</span>(3)
+<a name="l00132"></a>00132           fact = <a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%isotopes(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%isotope)%xs_capt(<a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a>)
+<a name="l00133"></a>00133         <span class="keyword">case</span> DEFAULT
+<a name="l00134"></a>00134           fact = 1.0_8
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136       <span class="keyword">end select</span>
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138       <span class="comment">! call routine to add tally</span>
+<a name="l00139"></a>00139       call <a class="code" href="namespacetally.html#a17dd806382c380da7baf563923ebed52">add_to_tally</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i),fact,totxs,<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E)
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141     <span class="keyword">end do</span>
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="keyword">  end subroutine add_to_tallies</span>
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="comment">!===============================================================================</span>
+<a name="l00146"></a>00146 <span class="comment">! BANK_TALLIES</span>
+<a name="l00149"></a>00149 
+<a name="l00150"></a><a class="code" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d">00150</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d">bank_tallies</a>()
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152     use <span class="keywordflow">tally</span>, only: bank_tally
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154     <span class="comment">! local variables</span>
+<a name="l00155"></a>00155     <span class="keywordtype">integer</span> :: i  <span class="comment">! loop counter</span>
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157     <span class="comment">! begin loop over tallies</span>
+<a name="l00158"></a>00158     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">n_tallies</a>
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160       <span class="comment">! call routine to bank tally</span>
+<a name="l00161"></a>00161       call <a class="code" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">bank_tally</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i))
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163     <span class="keyword">end do</span>
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 <span class="keyword">  end subroutine bank_tallies</span>
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167 <span class="comment">!===============================================================================</span>
+<a name="l00168"></a>00168 <span class="comment">! FINALIZE_TALLIES</span>
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="namespaceglobal.html#a9800d7b25477ca0ca221c34686b2c03b">00172</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceglobal.html#a9800d7b25477ca0ca221c34686b2c03b">finalize_tallies</a>()
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174     use <span class="keywordflow">tally</span>, only: calculate_statistics
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176     <span class="comment">! local variables</span>
+<a name="l00177"></a>00177     <span class="keywordtype">integer</span> :: i <span class="comment">! loop counter</span>
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179     <span class="comment">! begin loop over tallies</span>
+<a name="l00180"></a>00180     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">n_tallies</a>
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182       <span class="comment">! call routine to compute statistics</span>
+<a name="l00183"></a>00183       call <a class="code" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">calculate_statistics</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i),<a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a>)
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185     <span class="keyword">end do</span>
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187 <span class="keyword">  end subroutine finalize_tallies</span>
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 <span class="keyword">end module global </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

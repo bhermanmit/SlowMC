@@ -62,10 +62,16 @@ Modules</h2></td></tr>
 </p>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">global::allocate_problem</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates global variables for calculation  <a href="#ae42e2eadb6d745fd7bceefd6896f41b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a18e52bb343fdad5919d4fd2084223049">global::allocate_problem</a> (n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates global variables for calculation  <a href="#a18e52bb343fdad5919d4fd2084223049"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">global::deallocate_problem</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">deallocates global variables  <a href="#a8298c51c0bdaf90c3d0f5360452de1f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06">global::add_to_tallies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that adds temporary value to tallies  <a href="#a8fa311401dba83e9bfa43e9af712ec06"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d">global::bank_tallies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that record temporary history information in tallies  <a href="#a082803bdd82681404cb106c4dbde237d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a9800d7b25477ca0ca221c34686b2c03b">global::finalize_tallies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that calls another routine to compute tally statistics  <a href="#a9800d7b25477ca0ca221c34686b2c03b"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#af676482a3ce4ddeaeeb9f43f5d146382">global::VERSION_MAJOR</a> = 0</td></tr>
@@ -79,12 +85,15 @@ allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">global::seed</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">global::source_type</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">global::eidx</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">global::n_tallies</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">global::emin</a> = 1e-11_8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">global::emax</a> = 20.0_8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8bb13ab14d8340a122f9856859db2ea6">global::kT</a> = 8.6173324e-5_8*300*1.0e-6_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">type(Timer)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">global::time_init</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">type(Timer)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a0bccc61fe58c03edbe9c92b1061d723e">global::time_run</a></td></tr>
 </table>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -54,7 +54,7 @@
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011   <span class="keyword">implicit none</span>
 <a name="l00012"></a>00012   <span class="keywordtype">private</span>
-<a name="l00013"></a>00013   <span class="keywordtype">public</span> :: <a class="code" href="namespaceoutput.html#a715bb39dcd636418aea44557be794b3e">print_heading</a>
+<a name="l00013"></a>00013   <span class="keywordtype">public</span> :: <a class="code" href="namespaceoutput.html#a715bb39dcd636418aea44557be794b3e">print_heading</a>,<a class="code" href="namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b">write_output</a>
 <a name="l00014"></a>00014 
 <a name="l00015"></a>00015 <span class="keyword">contains</span>
 <a name="l00016"></a>00016 
@@ -99,49 +99,133 @@
 <a name="l00057"></a>00057 <span class="keyword">  end subroutine print_heading</span>
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059 <span class="comment">!===============================================================================</span>
-<a name="l00060"></a>00060 <span class="comment">! GET_TODAY</span>
+<a name="l00060"></a>00060 <span class="comment">! WRITE_OUTPUT</span>
 <a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec">00064</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec">get_today</a>(today_date, today_time)
+<a name="l00064"></a><a class="code" href="namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b">00064</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b">write_output</a>()
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066     <span class="keywordtype">character(10)</span>, <span class="keywordtype">intent(out)</span> :: today_date
-<a name="l00067"></a>00067     <span class="keywordtype">character(8)</span>,  <span class="keywordtype">intent(out)</span> :: today_time
+<a name="l00066"></a>00066     use <span class="keywordflow">global</span>, only: time_init,time_run,tal,n_tallies
+<a name="l00067"></a>00067     use <span class="keywordflow">hdf5</span>
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069     <span class="keywordtype">integer</span>       :: val(8)
-<a name="l00070"></a>00070     <span class="keywordtype">character(8)</span>  :: date_
-<a name="l00071"></a>00071     <span class="keywordtype">character(10)</span> :: time_
-<a name="l00072"></a>00072     <span class="keywordtype">character(5)</span>  :: zone
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074     call date_and_time(date_, time_, zone, val)
-<a name="l00075"></a>00075     <span class="comment">! val(1) = year (YYYY)</span>
-<a name="l00076"></a>00076     <span class="comment">! val(2) = month (MM)</span>
-<a name="l00077"></a>00077     <span class="comment">! val(3) = day (DD)</span>
-<a name="l00078"></a>00078     <span class="comment">! val(4) = timezone</span>
-<a name="l00079"></a>00079     <span class="comment">! val(5) = hours (HH)</span>
-<a name="l00080"></a>00080     <span class="comment">! val(6) = minutes (MM)</span>
-<a name="l00081"></a>00081     <span class="comment">! val(7) = seconds (SS)</span>
-<a name="l00082"></a>00082     <span class="comment">! val(8) = milliseconds</span>
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084     <span class="keyword">if</span> (val(2) &lt; 10) <span class="keyword">then</span>
-<a name="l00085"></a>00085        <span class="keyword">if</span> (val(3) &lt; 10) <span class="keyword">then</span>
-<a name="l00086"></a>00086           today_date = date_(6:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(8:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
-<a name="l00087"></a>00087        <span class="keyword">else</span>
-<a name="l00088"></a>00088           today_date = date_(6:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(7:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
-<a name="l00089"></a>00089        <span class="keyword">end if</span>
-<a name="l00090"></a>00090     <span class="keyword">else</span>
-<a name="l00091"></a>00091        <span class="keyword">if</span> (val(3) &lt; 10) <span class="keyword">then</span>
-<a name="l00092"></a>00092           today_date = date_(5:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(8:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
-<a name="l00093"></a>00093        <span class="keyword">else</span>
-<a name="l00094"></a>00094           today_date = date_(5:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(7:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
-<a name="l00095"></a>00095        <span class="keyword">end if</span>
-<a name="l00096"></a>00096     <span class="keyword">end if</span>
-<a name="l00097"></a>00097     today_time = time_(1:2) // <span class="stringliteral">&quot;:&quot;</span> // time_(3:4) // <span class="stringliteral">&quot;:&quot;</span> // time_(5:6)
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099 <span class="keyword">  end subroutine get_today</span>
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 <span class="keyword">end module output</span>
+<a name="l00069"></a>00069     <span class="comment">! local variables</span>
+<a name="l00070"></a>00070     <span class="keywordtype">integer</span>                        :: i            <span class="comment">! loop counter</span>
+<a name="l00071"></a>00071     <span class="keywordtype">integer</span>                        :: error        <span class="comment">! hdf5 error</span>
+<a name="l00072"></a>00072     <span class="keywordtype">integer(HID_T)</span>                 :: hdfile       <span class="comment">! hdf5 file</span>
+<a name="l00073"></a>00073     <span class="keywordtype">integer(HID_T)</span>                 :: dataspace_id <span class="comment">! dataspace identifier</span>
+<a name="l00074"></a>00074     <span class="keywordtype">integer(HID_T)</span>                 :: dataset_id   <span class="comment">! dataset identifier</span>
+<a name="l00075"></a>00075     <span class="keywordtype">integer(HID_T)</span>                 :: group_id     <span class="comment">! group id</span>
+<a name="l00076"></a>00076     <span class="keywordtype">integer(HSIZE_T)</span>, <span class="keywordtype">dimension(1)</span> :: dim1         <span class="comment">! vector for hdf5 dims</span>
+<a name="l00077"></a>00077     <span class="keywordtype">character(11)</span>                  :: talnum       <span class="comment">! tally number</span>
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079     <span class="comment">! write results header</span>
+<a name="l00080"></a>00080     <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(/A,/,A,/)&#39;</span>) <span class="stringliteral">&quot;Results&quot;</span>,<span class="stringliteral">&quot;-----------------------&quot;</span>
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082     <span class="comment">! write timing information</span>
+<a name="l00083"></a>00083     <span class="keyword">write</span>(*,100) <span class="stringliteral">&quot;Initialization time&quot;</span>,<a class="code" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">time_init</a>%elapsed
+<a name="l00084"></a>00084     <span class="keyword">write</span>(*,100) <span class="stringliteral">&quot;Transport time&quot;</span>,<a class="code" href="namespaceglobal.html#a0bccc61fe58c03edbe9c92b1061d723e">time_run</a>%elapsed
+<a name="l00085"></a>00085     <span class="keyword">write</span>(*,*)
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087     <span class="comment">! format for write statements</span>
+<a name="l00088"></a>00088 100 format (1X,A,T35,<span class="stringliteral">&quot;= &quot;</span>,ES11.4,<span class="stringliteral">&quot; seconds&quot;</span>)
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090     <span class="comment">! open up output hdf5 file</span>
+<a name="l00091"></a>00091     call h5fcreate_f(<span class="stringliteral">&quot;output.h5&quot;</span>,H5F_ACC_TRUNC_F,hdfile,error)
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093     <span class="comment">! begin loop around tallies to write out</span>
+<a name="l00094"></a>00094     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">n_tallies</a>
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096       <span class="comment">! get tally number</span>
+<a name="l00097"></a>00097       <span class="keyword">write</span> (talnum, <span class="stringliteral">&#39;(I11)&#39;</span>) i
+<a name="l00098"></a>00098       talnum = adjustl(talnum) 
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100       <span class="comment">! open up a group</span>
+<a name="l00101"></a>00101       call h5gcreate_f(hdfile,<span class="stringliteral">&quot;tally_&quot;</span>//trim(talnum),group_id,error)
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103       <span class="comment">! write mean</span>
+<a name="l00104"></a>00104       dim1 = (/<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%mean)/)
+<a name="l00105"></a>00105       call h5screate_simple_f(1,dim1,dataspace_id,error)
+<a name="l00106"></a>00106       call h5dcreate_f(hdfile,<span class="stringliteral">&quot;tally_&quot;</span>//trim(talnum)//<span class="stringliteral">&quot;/mean&quot;</span>,H5T_NATIVE_DOUBLE&amp;
+<a name="l00107"></a>00107      &amp;                ,dataspace_id,dataset_id,error)
+<a name="l00108"></a>00108       call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%mean,dim1,error)
+<a name="l00109"></a>00109       call h5sclose_f(dataspace_id,error)
+<a name="l00110"></a>00110       call h5dclose_f(dataset_id,error)
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112       <span class="comment">! write standard deviation </span>
+<a name="l00113"></a>00113       dim1 = (/<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%std)/)
+<a name="l00114"></a>00114       call h5screate_simple_f(1,dim1,dataspace_id,error)
+<a name="l00115"></a>00115       call h5dcreate_f(hdfile,<span class="stringliteral">&quot;tally_&quot;</span>//trim(talnum)//<span class="stringliteral">&quot;/std&quot;</span>,H5T_NATIVE_DOUBLE &amp;
+<a name="l00116"></a>00116      &amp;                ,dataspace_id,dataset_id,error)
+<a name="l00117"></a>00117       call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%std,dim1,error)
+<a name="l00118"></a>00118       call h5sclose_f(dataspace_id,error)
+<a name="l00119"></a>00119       call h5dclose_f(dataset_id,error)
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121       <span class="comment">! only write energy edges if a user tally</span>
+<a name="l00122"></a>00122       <span class="keyword">if</span> (.not.<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%flux_tally) <span class="keyword">then</span>
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124         <span class="comment">! write tally data to file</span>
+<a name="l00125"></a>00125         dim1 = (/<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%E)/)
+<a name="l00126"></a>00126         call h5screate_simple_f(1,dim1,dataspace_id,error)
+<a name="l00127"></a>00127         call h5dcreate_f(hdfile,<span class="stringliteral">&quot;tally_&quot;</span>//trim(talnum)//<span class="stringliteral">&quot;/E&quot;</span>,H5T_NATIVE_DOUBLE,&amp;
+<a name="l00128"></a>00128        &amp;                 dataspace_id,dataset_id,error)
+<a name="l00129"></a>00129         call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(i)%E,dim1,error)
+<a name="l00130"></a>00130         call h5sclose_f(dataspace_id,error)
+<a name="l00131"></a>00131         call h5dclose_f(dataset_id,error)
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133       <span class="keyword">end if</span>
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135       <span class="comment">! close the group</span>
+<a name="l00136"></a>00136       call h5gclose_f(group_id,error)
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138     <span class="keyword">end do</span>
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140     <span class="comment">! close the file</span>
+<a name="l00141"></a>00141     call h5fclose_f(hdfile,error)
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="keyword">  end subroutine write_output</span>
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="comment">!===============================================================================</span>
+<a name="l00146"></a>00146 <span class="comment">! GET_TODAY</span>
+<a name="l00149"></a>00149 
+<a name="l00150"></a><a class="code" href="namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec">00150</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec">get_today</a>(today_date, today_time)
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152     <span class="keywordtype">character(10)</span>, <span class="keywordtype">intent(out)</span> :: today_date
+<a name="l00153"></a>00153     <span class="keywordtype">character(8)</span>,  <span class="keywordtype">intent(out)</span> :: today_time
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155     <span class="keywordtype">integer</span>       :: val(8)
+<a name="l00156"></a>00156     <span class="keywordtype">character(8)</span>  :: date_
+<a name="l00157"></a>00157     <span class="keywordtype">character(10)</span> :: time_
+<a name="l00158"></a>00158     <span class="keywordtype">character(5)</span>  :: zone
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160     call date_and_time(date_, time_, zone, val)
+<a name="l00161"></a>00161     <span class="comment">! val(1) = year (YYYY)</span>
+<a name="l00162"></a>00162     <span class="comment">! val(2) = month (MM)</span>
+<a name="l00163"></a>00163     <span class="comment">! val(3) = day (DD)</span>
+<a name="l00164"></a>00164     <span class="comment">! val(4) = timezone</span>
+<a name="l00165"></a>00165     <span class="comment">! val(5) = hours (HH)</span>
+<a name="l00166"></a>00166     <span class="comment">! val(6) = minutes (MM)</span>
+<a name="l00167"></a>00167     <span class="comment">! val(7) = seconds (SS)</span>
+<a name="l00168"></a>00168     <span class="comment">! val(8) = milliseconds</span>
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170     <span class="keyword">if</span> (val(2) &lt; 10) <span class="keyword">then</span>
+<a name="l00171"></a>00171        <span class="keyword">if</span> (val(3) &lt; 10) <span class="keyword">then</span>
+<a name="l00172"></a>00172           today_date = date_(6:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(8:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
+<a name="l00173"></a>00173        <span class="keyword">else</span>
+<a name="l00174"></a>00174           today_date = date_(6:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(7:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
+<a name="l00175"></a>00175        <span class="keyword">end if</span>
+<a name="l00176"></a>00176     <span class="keyword">else</span>
+<a name="l00177"></a>00177        <span class="keyword">if</span> (val(3) &lt; 10) <span class="keyword">then</span>
+<a name="l00178"></a>00178           today_date = date_(5:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(8:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
+<a name="l00179"></a>00179        <span class="keyword">else</span>
+<a name="l00180"></a>00180           today_date = date_(5:6) // <span class="stringliteral">&quot;/&quot;</span> // date_(7:8) // <span class="stringliteral">&quot;/&quot;</span> // date_(1:4)
+<a name="l00181"></a>00181        <span class="keyword">end if</span>
+<a name="l00182"></a>00182     <span class="keyword">end if</span>
+<a name="l00183"></a>00183     today_time = time_(1:2) // <span class="stringliteral">&quot;:&quot;</span> // time_(3:4) // <span class="stringliteral">&quot;:&quot;</span> // time_(5:6)
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185 <span class="keyword">  end subroutine get_today</span>
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187 <span class="keyword">end module output</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

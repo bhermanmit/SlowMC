@@ -1,7 +1,10 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$namespacexml__data__input__t.html#a35d50e836beb4c7b635068b2446a4dbd" title="xml_data_input_t::write_xml_type_material_xml_array" alt="" coords="311,5,644,35"/>
 <area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a78f25cb17529413b7289b6851da65250" title="xml_data_input_t::write_xml_type_settings_xml" alt="" coords="328,59,627,88"/>
-<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#a516afaca21fe582086bfc84cf25b864a" title="xml_data_input_t::write_xml_type_material_xml" alt="" coords="693,5,992,35"/>
-<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#afd92b176afa70525d29407a238535d90" title="xml_data_input_t::write_xml_type_nuclide_xml_array" alt="" coords="1041,5,1369,35"/>
-<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#ac27fd4fafc6a40955edababd03cd8648" title="xml_data_input_t::write_xml_type_nuclide_xml" alt="" coords="1419,5,1712,35"/>
+<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#a44ca5962c372044d0f47f41230d0a9d4" title="xml_data_input_t::write_xml_type_tallies_xml" alt="" coords="335,112,620,141"/>
+<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#a516afaca21fe582086bfc84cf25b864a" title="xml_data_input_t::write_xml_type_material_xml" alt="" coords="700,5,999,35"/>
+<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#afd92b176afa70525d29407a238535d90" title="xml_data_input_t::write_xml_type_nuclide_xml_array" alt="" coords="1055,5,1383,35"/>
+<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#ac27fd4fafc6a40955edababd03cd8648" title="xml_data_input_t::write_xml_type_nuclide_xml" alt="" coords="1432,5,1725,35"/>
+<area shape="rect" id="node15" href="$namespacexml__data__input__t.html#a6b9fa1286470be2f419e25f8da4127e8" title="xml_data_input_t::write_xml_type_tally_xml_array" alt="" coords="693,112,1005,141"/>
+<area shape="rect" id="node17" href="$namespacexml__data__input__t.html#a276159615007a4911f5d47d810443eb8" title="xml_data_input_t::write_xml_type_tally_xml" alt="" coords="1081,112,1356,141"/>
 </map>

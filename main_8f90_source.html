@@ -71,36 +71,36 @@
 <a name="l00058"></a><a class="code" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc">00058</a>   <span class="keyword">subroutine </span><a class="code" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc">initialize</a>()
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060     use <span class="keywordflow">hdf5</span>
-<a name="l00061"></a>00061     use <span class="keywordflow">global</span>,    only: seed,allocate_problem,mat,tal,emax,emin
+<a name="l00061"></a>00061     use <span class="keywordflow">global</span>,    only: seed,allocate_problem,mat,tal,emax,emin,time_init
 <a name="l00062"></a>00062     use <span class="keywordflow">input</span>,     only: read_input
-<a name="l00063"></a>00063     use <span class="keywordflow">materials</span>, only: compute_totxs
+<a name="l00063"></a>00063     use <span class="keywordflow">materials</span>, only: compute_macroxs
 <a name="l00064"></a>00064     use <span class="keywordflow">output</span>,    only: print_heading
-<a name="l00065"></a>00065     use <span class="keywordflow">tally</span>,     only: setup_tallies
+<a name="l00065"></a>00065     use <span class="keywordflow">timing</span>,    only: timer_start,timer_stop
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067     <span class="comment">! local variables</span>
 <a name="l00068"></a>00068     <span class="keywordtype">integer</span> :: error <span class="comment">! hdf5 error</span>
 <a name="l00069"></a>00069     <span class="keywordtype">real(8)</span> :: rn    <span class="comment">! initial random number</span>
 <a name="l00070"></a>00070 
-<a name="l00071"></a>00071     <span class="comment">! initialize the fortran hdf5 interface</span>
-<a name="l00072"></a>00072     call h5open_f(error)
+<a name="l00071"></a>00071     <span class="comment">! begin timer</span>
+<a name="l00072"></a>00072     call <a class="code" href="namespacetiming.html#a5cb4e02e341523b25bc9c89e5b119ed0">timer_start</a>(<a class="code" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">time_init</a>)
 <a name="l00073"></a>00073 
-<a name="l00074"></a>00074     <span class="comment">! print heading information</span>
-<a name="l00075"></a>00075     call <a class="code" href="namespaceoutput.html#a715bb39dcd636418aea44557be794b3e">print_heading</a>()
+<a name="l00074"></a>00074     <span class="comment">! initialize the fortran hdf5 interface</span>
+<a name="l00075"></a>00075     call h5open_f(error)
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077     <span class="comment">! read input</span>
-<a name="l00078"></a>00078     call <a class="code" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6">read_input</a>()
+<a name="l00077"></a>00077     <span class="comment">! print heading information</span>
+<a name="l00078"></a>00078     call <a class="code" href="namespaceoutput.html#a715bb39dcd636418aea44557be794b3e">print_heading</a>()
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080     <span class="comment">! initalize random number generator</span>
-<a name="l00081"></a>00081     rn = rand(<a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a>)
+<a name="l00080"></a>00080     <span class="comment">! read input</span>
+<a name="l00081"></a>00081     call <a class="code" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6">read_input</a>()
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083     <span class="comment">! allocate problem</span>
-<a name="l00084"></a>00084     call <a class="code" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">allocate_problem</a>()
+<a name="l00083"></a>00083     <span class="comment">! initalize random number generator</span>
+<a name="l00084"></a>00084     rn = rand(<a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a>)
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086     <span class="comment">! precompute total cross section of materials</span>
-<a name="l00087"></a>00087     call <a class="code" href="namespacematerials.html#ad483c44c0e35e4f11df9bd8184b96288">compute_totxs</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>)
+<a name="l00086"></a>00086     <span class="comment">! precompute macroscopic cross section of materials</span>
+<a name="l00087"></a>00087     call <a class="code" href="namespacematerials.html#a50f15cd96ae48aa1b4bd5006becf25f3">compute_macroxs</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>)
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089     <span class="comment">! set up tally structure</span>
-<a name="l00090"></a>00090     call <a class="code" href="namespacetally.html#a8205446404514c24eafd27afac38b0df">setup_tallies</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>),<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>)
+<a name="l00089"></a>00089     <span class="comment">! end timer</span>
+<a name="l00090"></a>00090     call <a class="code" href="namespacetiming.html#ab3c9139fe1604b0822ca4b8fb71abb60">timer_stop</a>(<a class="code" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">time_init</a>)
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092 <span class="keyword">  end subroutine initialize</span>
 <a name="l00093"></a>00093 
@@ -109,81 +109,90 @@
 <a name="l00098"></a>00098 
 <a name="l00099"></a><a class="code" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f">00099</a>   <span class="keyword">subroutine </span><a class="code" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f">run_problem</a>()
 <a name="l00100"></a>00100 
-<a name="l00101"></a>00101     use <span class="keywordflow">global</span>,    only: nhistories,mat,neut,tal,eidx,emin
-<a name="l00102"></a>00102     use <span class="keywordflow">particle</span>,  only: init_particle
-<a name="l00103"></a>00103     use <span class="keywordflow">physics</span>,   only: sample_source,perform_physics,get_eidx
-<a name="l00104"></a>00104     use <span class="keywordflow">tally</span>,     only: add_to_tally,bank_tally
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106     <span class="comment">! local variables</span>
-<a name="l00107"></a>00107     <span class="keywordtype">integer</span> :: i  <span class="comment">! iteration counter</span>
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109     <span class="comment">! begin loop over histories</span>
-<a name="l00110"></a>00110     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a>
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112       <span class="comment">! intialize history</span>
-<a name="l00113"></a>00113       call <a class="code" href="namespaceparticle.html#a1c0ff1c009064732181383e76f1ec597">init_particle</a>(<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>)
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115       <span class="comment">! sample source energy</span>
-<a name="l00116"></a>00116       call <a class="code" href="namespacephysics.html#a56644bb2eaf70cea5dbddce67f8b2fb2">sample_source</a>()
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118       <span class="comment">! begin transport of neutron</span>
-<a name="l00119"></a>00119       <span class="keyword">do</span> <span class="keyword">while</span> (<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%alive)
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121         <span class="comment">! call index routine for first tally</span>
-<a name="l00122"></a>00122         <a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a> = <a class="code" href="namespacephysics.html#a9b9463407927006e6591dc6fc4635658">get_eidx</a>(<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E)
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124         <span class="comment">! record collision temp tally</span>
-<a name="l00125"></a>00125         call <a class="code" href="namespacetally.html#ad940737be69d683a73c478fd8fc7c32b">add_to_tally</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>),sum(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%totalxs(<a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a>,:)),<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E)
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127         <span class="comment">! perform physics</span>
-<a name="l00128"></a>00128         call <a class="code" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205">perform_physics</a>()
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130         <span class="comment">! check for energy cutoff</span>
-<a name="l00131"></a>00131         <span class="keyword">if</span> (<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E &lt; <a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>) <a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%alive = .FALSE.
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133       <span class="keyword">end do</span>
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135       <span class="comment">! neutron is dead if out of transport loop (ecut or absorb) --&gt; bank tally</span>
-<a name="l00136"></a>00136       call <a class="code" href="namespacetally.html#a951c5051826a25e1bbb6338773a23f66">bank_tally</a>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>))
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138       <span class="comment">! print update to user</span>
-<a name="l00139"></a>00139       <span class="keyword">if</span> (mod(i,<a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a>/10) == 0) <span class="keyword">then</span>
-<a name="l00140"></a>00140         <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(/A,1X,I0,1X,A)&#39;</span>) <span class="stringliteral">&#39;Simulated&#39;</span>,i,<span class="stringliteral">&#39;neutrons...&#39;</span>
-<a name="l00141"></a>00141       <span class="keyword">end if</span>
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143     <span class="keyword">end do</span>
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="keyword">do</span> i = 1,<span class="keyword">size</span>(<a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(1)%sum)
-<a name="l00146"></a>00146   <span class="keyword">write</span>(101,*) <a class="code" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">tal</a>(1)%sum(i)
-<a name="l00147"></a>00147 <span class="keyword">end do</span>
-<a name="l00148"></a>00148  
-<a name="l00149"></a>00149 <span class="keyword">  end subroutine run_problem</span>
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151 <span class="comment">!===============================================================================</span>
-<a name="l00152"></a>00152 <span class="comment">! FINALIZE</span>
-<a name="l00155"></a>00155 
-<a name="l00156"></a><a class="code" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21">00156</a>   <span class="keyword">subroutine </span><a class="code" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21">finalize</a>()
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158     use <span class="keywordflow">global</span>, only: deallocate_problem
-<a name="l00159"></a>00159     use <span class="keywordflow">hdf5</span>
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161     <span class="comment">! local variables</span>
-<a name="l00162"></a>00162     <span class="keywordtype">integer</span> :: error <span class="comment">! hdf5 error</span>
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164     <span class="comment">! write output</span>
+<a name="l00101"></a>00101     use <span class="keywordflow">global</span>,    only: nhistories,mat,neut,eidx,emin,add_to_tallies,         &amp;
+<a name="l00102"></a>00102    &amp;                     bank_tallies,time_run
+<a name="l00103"></a>00103     use <span class="keywordflow">particle</span>,  only: init_particle
+<a name="l00104"></a>00104     use <span class="keywordflow">physics</span>,   only: sample_source,perform_physics,get_eidx
+<a name="l00105"></a>00105     use <span class="keywordflow">timing</span>,    only: timer_start,timer_stop
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107     <span class="comment">! local variables</span>
+<a name="l00108"></a>00108     <span class="keywordtype">integer</span> :: i  <span class="comment">! iteration counter</span>
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110     <span class="comment">! begin timer</span>
+<a name="l00111"></a>00111     call <a class="code" href="namespacetiming.html#a5cb4e02e341523b25bc9c89e5b119ed0">timer_start</a>(time_run)
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113     <span class="comment">! begin loop over histories</span>
+<a name="l00114"></a>00114     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a>
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116       <span class="comment">! intialize history</span>
+<a name="l00117"></a>00117       call <a class="code" href="namespaceparticle.html#a1c0ff1c009064732181383e76f1ec597">init_particle</a>(<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>)
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119       <span class="comment">! sample source energy</span>
+<a name="l00120"></a>00120       call <a class="code" href="namespacephysics.html#a56644bb2eaf70cea5dbddce67f8b2fb2">sample_source</a>()
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122       <span class="comment">! begin transport of neutron</span>
+<a name="l00123"></a>00123       <span class="keyword">do</span> <span class="keyword">while</span> (<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%alive)
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125         <span class="comment">! call index routine for first tally</span>
+<a name="l00126"></a>00126         <a class="code" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">eidx</a> = <a class="code" href="namespacephysics.html#a9b9463407927006e6591dc6fc4635658">get_eidx</a>(<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E)
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128         <span class="comment">! record collision temp tally</span>
+<a name="l00129"></a>00129         call <a class="code" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06">add_to_tallies</a>()
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131         <span class="comment">! perform physics</span>
+<a name="l00132"></a>00132         call <a class="code" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205">perform_physics</a>()
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134         <span class="comment">! check for energy cutoff</span>
+<a name="l00135"></a>00135         <span class="keyword">if</span> (<a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%E &lt; <a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>) <a class="code" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">neut</a>%alive = .FALSE.
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137       <span class="keyword">end do</span>
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139       <span class="comment">! neutron is dead if out of transport loop (ecut or absorb) --&gt; bank tally</span>
+<a name="l00140"></a>00140       call bank_tallies()
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142       <span class="comment">! print update to user</span>
+<a name="l00143"></a>00143       <span class="keyword">if</span> (mod(i,<a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a>/10) == 0) <span class="keyword">then</span>
+<a name="l00144"></a>00144         <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(/A,1X,I0,1X,A)&#39;</span>) <span class="stringliteral">&#39;Simulated&#39;</span>,i,<span class="stringliteral">&#39;neutrons...&#39;</span>
+<a name="l00145"></a>00145       <span class="keyword">end if</span>
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147     <span class="keyword">end do</span>
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149     <span class="comment">! end timer</span>
+<a name="l00150"></a>00150     call <a class="code" href="namespacetiming.html#ab3c9139fe1604b0822ca4b8fb71abb60">timer_stop</a>(time_run)
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153 <span class="keyword">  end subroutine run_problem</span>
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 <span class="comment">!===============================================================================</span>
+<a name="l00156"></a>00156 <span class="comment">! FINALIZE</span>
+<a name="l00159"></a>00159 
+<a name="l00160"></a><a class="code" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21">00160</a>   <span class="keyword">subroutine </span><a class="code" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21">finalize</a>()
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162     use <span class="keywordflow">global</span>, only: finalize_tallies,deallocate_problem
+<a name="l00163"></a>00163     use <span class="keywordflow">hdf5</span>
+<a name="l00164"></a>00164     use <span class="keywordflow">output</span>, only: write_output
 <a name="l00165"></a>00165 
-<a name="l00166"></a>00166     <span class="comment">! deallocate problem</span>
-<a name="l00167"></a>00167     call <a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a>()
+<a name="l00166"></a>00166     <span class="comment">! local variables</span>
+<a name="l00167"></a>00167     <span class="keywordtype">integer</span> :: error <span class="comment">! hdf5 error</span>
 <a name="l00168"></a>00168 
-<a name="l00169"></a>00169     <span class="comment">! close the fortran interface</span>
-<a name="l00170"></a>00170     call h5close_f(error)
+<a name="l00169"></a>00169     <span class="comment">! calculate statistics on tallies</span>
+<a name="l00170"></a>00170     call <a class="code" href="namespaceglobal.html#a9800d7b25477ca0ca221c34686b2c03b">finalize_tallies</a>()
 <a name="l00171"></a>00171 
-<a name="l00172"></a>00172 <span class="keyword">  end subroutine finalize</span>
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174 <span class="keyword">end program main</span>
+<a name="l00172"></a>00172     <span class="comment">! write output</span>
+<a name="l00173"></a>00173     call <a class="code" href="namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b">write_output</a>()
+<a name="l00174"></a>00174  
+<a name="l00175"></a>00175     <span class="comment">! deallocate problem</span>
+<a name="l00176"></a>00176     call <a class="code" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">deallocate_problem</a>()
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178     <span class="comment">! close the fortran interface</span>
+<a name="l00179"></a>00179     call h5close_f(error)
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181 <span class="keyword">  end subroutine finalize</span>
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 <span class="keyword">end program main</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:38 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

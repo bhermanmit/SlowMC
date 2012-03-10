@@ -51,6 +51,8 @@
 Functions/Subroutines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoutput.html#a715bb39dcd636418aea44557be794b3e">print_heading</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the code heading and run information  <a href="#a715bb39dcd636418aea44557be794b3e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b">write_output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that writes timing info and hdf5 file  <a href="#aefb219cf84eab7ec617ea49ee9d65c3b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoutput.html#af11f2d2c9517f7f26b23c07da2b15fec">get_today</a> (today_date, today_time)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">calculates information about date/time of run  <a href="#af11f2d2c9517f7f26b23c07da2b15fec"></a><br/></td></tr>
 </table>
@@ -85,7 +87,7 @@ Functions/Subroutines</h2></td></tr>
 
 <p>calculates information about date/time of run </p>
 
-<p>Definition at line <a class="el" href="output_8f90_source.html#l00064">64</a> of file <a class="el" href="output_8f90_source.html">output.f90</a>.</p>
+<p>Definition at line <a class="el" href="output_8f90_source.html#l00150">150</a> of file <a class="el" href="output_8f90_source.html">output.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="output_8f90_source.html#l00022">print_heading()</a>.</p>
 
@@ -118,7 +120,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="output_8f90_source.html#l00022">22</a> of file <a class="el" href="output_8f90_source.html">output.f90</a>.</p>
 
-<p>References <a class="el" href="output_8f90_source.html#l00064">get_today()</a>, <a class="el" href="global_8f90_source.html#l00019">global::VERSION_MAJOR</a>, <a class="el" href="global_8f90_source.html#l00020">global::VERSION_MINOR</a>, and <a class="el" href="global_8f90_source.html#l00021">global::VERSION_RELEASE</a>.</p>
+<p>References <a class="el" href="output_8f90_source.html#l00150">get_today()</a>, <a class="el" href="global_8f90_source.html#l00020">global::VERSION_MAJOR</a>, <a class="el" href="global_8f90_source.html#l00021">global::VERSION_MINOR</a>, and <a class="el" href="global_8f90_source.html#l00022">global::VERSION_RELEASE</a>.</p>
 
 <p>Referenced by <a class="el" href="main_8f90_source.html#l00058">initialize()</a>.</p>
 
@@ -142,8 +144,41 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="aefb219cf84eab7ec617ea49ee9d65c3b"></a><!-- doxytag: member="output::write_output" ref="aefb219cf84eab7ec617ea49ee9d65c3b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine,public output::write_output </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Thu Mar 8 2012 23:18:39 for SlowMC by&#160;
+<div class="memdoc">
+
+<p>routine that writes timing info and hdf5 file </p>
+
+<p>Definition at line <a class="el" href="output_8f90_source.html#l00064">64</a> of file <a class="el" href="output_8f90_source.html">output.f90</a>.</p>
+
+<p>References <a class="el" href="global_8f90_source.html#l00036">global::n_tallies</a>, <a class="el" href="global_8f90_source.html#l00027">global::tal</a>, <a class="el" href="global_8f90_source.html#l00046">global::time_init</a>, and <a class="el" href="global_8f90_source.html#l00047">global::time_run</a>.</p>
+
+<p>Referenced by <a class="el" href="main_8f90_source.html#l00160">finalize()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespaceoutput_aefb219cf84eab7ec617ea49ee9d65c3b_icgraph.png" border="0" usemap="#namespaceoutput_aefb219cf84eab7ec617ea49ee9d65c3b_icgraph" alt=""/></div>
+<map name="namespaceoutput_aefb219cf84eab7ec617ea49ee9d65c3b_icgraph" id="namespaceoutput_aefb219cf84eab7ec617ea49ee9d65c3b_icgraph">
+<area shape="rect" id="node3" href="main_8f90.html#ac224fcd1fe27ff085134fc58b5ce5d21" title="routine that finalizes the problem" alt="" coords="193,5,255,35"/><area shape="rect" id="node5" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="304,5,355,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -1,5 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1" title="deallocates global variables" alt="" coords="117,32,293,61"/>
+<area shape="rect" id="node3" href="$namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1" title="deallocates global variables" alt="" coords="117,59,293,88"/>
+<area shape="rect" id="node9" href="$namespaceglobal.html#a9800d7b25477ca0ca221c34686b2c03b" title="routine that calls another routine to compute tally statistics" alt="" coords="132,112,279,141"/>
+<area shape="rect" id="node13" href="$namespaceoutput.html#aefb219cf84eab7ec617ea49ee9d65c3b" title="routine that writes timing info and hdf5 file" alt="" coords="137,165,273,195"/>
 <area shape="rect" id="node5" href="$namespacematerials.html#a578514b55aa8e9254c090a5ba8ca019a" title="routine to deallocate a material" alt="" coords="341,5,536,35"/>
-<area shape="rect" id="node7" href="$namespacetally.html#aa1ed5fec2995055d713abdb124f4df5c" title="routine to deallocate tally types" alt="" coords="361,59,516,88"/>
+<area shape="rect" id="node7" href="$namespacetally.html#a542903033ade511ef77c32491352df5b" title="routine to deallocate tally types" alt="" coords="367,59,511,88"/>
+<area shape="rect" id="node11" href="$namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d" title="routine to compute mean and standard deviation of tallies" alt="" coords="356,112,521,141"/>
 </map>

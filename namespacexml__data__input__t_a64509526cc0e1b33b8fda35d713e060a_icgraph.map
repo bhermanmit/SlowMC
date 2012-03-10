@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$namespacexml__data__input__t.html#a922b09502b29f56225e96369dad59e40" title="xml_data_input_t::read_xml_type_tallies_xml" alt="" coords="363,32,645,61"/>
+<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="728,5,979,35"/>
+<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#aec65478a1de2985b0cbc847c9d8545b8" title="xml_data_input_t::read_xml_type_tallies_xml_array" alt="" coords="695,59,1012,88"/>
+<area shape="rect" id="node7" href="$namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="1063,5,1180,35"/>
+<area shape="rect" id="node9" href="$main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="1229,5,1299,35"/>
+<area shape="rect" id="node11" href="$main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="1347,5,1397,35"/>
+</map>
