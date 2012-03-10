@@ -30,3 +30,6 @@ doxygen
 
 # gh-pages folder
 gh-pages
+
+# hdf5 files
+*.h5
