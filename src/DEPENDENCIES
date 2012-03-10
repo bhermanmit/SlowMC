@@ -1,6 +1,7 @@
 global.o: materials.o
 global.o: particle.o
 global.o: tally.o
+global.o: timing.o
 
 input.o: global.o
 input.o: xml-fortran/templates/input_t.o
@@ -11,5 +12,6 @@ main.o: output.o
 main.o: particle.o
 main.o: physics.o
 main.o: tally.o
+main.o: timing.o
 
 physics.o: global.o

@@ -10,7 +10,7 @@ module output
 
   implicit none
   private
-  public :: print_heading
+  public :: print_heading,write_output
 
 contains
 
@@ -55,6 +55,71 @@ contains
     write(*,FMT='(A/)') '------------------------------------------------------'
 
   end subroutine print_heading
+
+!===============================================================================
+! WRITE_OUTPUT
+!> @brief routine that writes timing info and hdf5 file
+!===============================================================================
+
+  subroutine write_output()
+
+    use global, only: time_init,time_run,tal,n_tallies
+    use hdf5
+
+    ! local variables
+    integer                        :: i            ! loop counter
+    integer                        :: error        ! hdf5 error
+    integer(HID_T)                 :: hdfile       ! hdf5 file
+    integer(HID_T)                 :: dataspace_id ! dataspace identifier
+    integer(HID_T)                 :: dataset_id   ! dataset identifier
+    integer(HID_T)                 :: group_id     ! group id
+    integer(HSIZE_T), dimension(1) :: dim1         ! vector for hdf5 dims
+    character(11)                  :: talnum       ! tally number
+
+    ! write results header
+    write(*,'(/A,/,A,/)') "Results","-----------------------"
+
+    ! write timing information
+    write(*,100) "Initialization time",time_init%elapsed
+    write(*,100) "Transport time",time_run%elapsed
+
+    ! format for write statements
+100 format (1X,A,T35,"= ",ES11.4," seconds")
+
+    ! open up output hdf5 file
+    call h5fcreate_f("output.h5",H5F_ACC_TRUNC_F,hdfile,error)
+
+    ! begin loop around tallies to write out
+    do i = 1,n_tallies
+
+      ! check for flux tally
+      if (tal(i)%flux_tally) cycle
+
+      ! get tally number
+      write (talnum, '(I11)') i
+      talnum = adjustl(talnum) 
+
+      ! open up a group
+      call h5gcreate_f(hdfile,"tally_"//trim(talnum),group_id,error)
+
+      ! write tally data to file
+      dim1 = (/size(tal(i)%E)/)
+      call h5screate_simple_f(1,dim1,dataspace_id,error)
+      call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/E",H5T_NATIVE_DOUBLE,  &
+     &                 dataspace_id,dataset_id,error)
+      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%E,dim1,error)
+      call h5sclose_f(dataspace_id,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! close the group
+      call h5gclose_f(group_id,error)
+
+    end do
+
+    ! close the file
+    call h5fclose_f(hdfile,error)
+
+  end subroutine write_output
 
 !===============================================================================
 ! GET_TODAY

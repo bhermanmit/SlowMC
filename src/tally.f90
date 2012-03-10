@@ -25,6 +25,7 @@ module tally
     real(8) :: emax                   ! max e
     real(8) :: emin                   ! min e
     integer :: react_type             ! reaction type id
+    integer :: isotope                ! isotope number
 
   end type tally_type
 
@@ -35,12 +36,13 @@ contains
 !> @brief routine to intialize user-defined tallies
 !===============================================================================
 
-  subroutine set_user_tally(this,Ebins,n,react_type)
+  subroutine set_user_tally(this,Ebins,n,react_type,isotope)
 
     ! formal variables
     type(tally_type) :: this        ! a tally
     integer          :: n           ! size of Ebins
     integer          :: react_type  ! reaction type
+    integer          :: isotope     ! isotope for multiplier
     real(8)          :: Ebins(n)    ! vector of energy bins
     
     ! preallocate user-defined energy structure
@@ -52,6 +54,9 @@ contains
     ! set reaction type
     this%react_type = react_type
 
+    ! set isotope
+    this%isotope = isotope
+
     ! preallocate vectors
     if(.not.allocated(this%val)) allocate(this%val(n-1))
     if(.not.allocated(this%sum)) allocate(this%sum(n-1))
@@ -61,7 +66,6 @@ contains
     this%val = 0.0_8
     this%sum = 0.0_8
     this%sum_sq = 0.0_8
-
 
   end subroutine set_user_tally
 
@@ -110,8 +114,8 @@ contains
     real(8)          :: E        ! neutron energy
 
     ! local variables
-    integer :: i    ! iteration counter
-    integer :: idx  ! index in tally grid
+    integer :: i      ! iteration counter
+    integer :: idx=0  ! index in tally grid
 
     ! use uniform grid sampling if flux tally
     if (this%flux_tally) then
@@ -120,6 +124,9 @@ contains
       idx = ceiling((log10(E) - log10(this%emin))/this%width)
 
     else
+
+      ! check for output bounds
+      if (E < minval(this%E) .or. E > maxval(this%E)) return
 
       ! begin loop around energy vector to get index
       do i = 1,size(this%E)

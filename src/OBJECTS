@@ -6,4 +6,5 @@ materials.o \
 output.o \
 particle.o \
 physics.o \
-tally.o
+tally.o \
+timing.o

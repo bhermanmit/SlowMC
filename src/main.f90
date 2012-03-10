@@ -58,14 +58,18 @@ contains
   subroutine initialize()
 
     use hdf5
-    use global,    only: seed,allocate_problem,mat,tal,emax,emin
+    use global,    only: seed,allocate_problem,mat,tal,emax,emin,time_init
     use input,     only: read_input
     use materials, only: compute_macroxs
     use output,    only: print_heading
+    use timing,    only: timer_start,timer_stop
 
     ! local variables
     integer :: error ! hdf5 error
     real(8) :: rn    ! initial random number
+
+    ! begin timer
+    call timer_start(time_init)
 
     ! initialize the fortran hdf5 interface
     call h5open_f(error)
@@ -82,6 +86,9 @@ contains
     ! precompute macroscopic cross section of materials
     call compute_macroxs(mat)
 
+    ! end timer
+    call timer_stop(time_init)
+
   end subroutine initialize
 
 !===============================================================================
@@ -92,12 +99,16 @@ contains
   subroutine run_problem()
 
     use global,    only: nhistories,mat,neut,tal,eidx,emin,add_to_tallies,     &
-   &                     bank_tallies
+   &                     bank_tallies,time_run
     use particle,  only: init_particle
     use physics,   only: sample_source,perform_physics,get_eidx
+    use timing,    only: timer_start,timer_stop
 
     ! local variables
     integer :: i  ! iteration counter
+
+    ! begin timer
+    call timer_start(time_run)
 
     ! begin loop over histories
     do i = 1,nhistories
@@ -135,9 +146,14 @@ contains
 
     end do
 
-do i = 1,size(tal(2)%sum)
-  write(101,*) tal(2)%sum(i)
+    ! end timer
+    call timer_stop(time_run)
+
+do i = 1,size(tal(3)%sum)
+  write(101,*) tal(3)%sum(i)
 end do
+print *,tal(1)%sum
+print *,tal(2)%sum
  
   end subroutine run_problem
 
@@ -150,11 +166,13 @@ end do
 
     use global, only: deallocate_problem
     use hdf5
+    use output, only: write_output
 
     ! local variables
     integer :: error ! hdf5 error
 
     ! write output
+    call write_output()
 
     ! deallocate problem
     call deallocate_problem()

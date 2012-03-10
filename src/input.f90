@@ -36,6 +36,7 @@ contains
     logical                        :: thermal      ! contains thermal lib
     integer                        :: i            ! iteration counter
     integer                        :: react_type   ! reaction type
+    integer                        :: isotope=0    ! isotope for micro mult
     real(8), allocatable           :: Ebins(:)     ! tally energy bins
 
     ! check for input file
@@ -97,11 +98,13 @@ contains
       select case(trim(tallies_%tally(i)%type))
         case('flux')
           react_type = 0
-          print *,'FLUX TALLY'
         case('absorption')
           react_type = 1
         case('scattering')
           react_type = 2
+        case('micro_capture')
+          react_type = 3
+          isotope = tallies_%tally(i)%isotope
         case DEFAULT
           react_type = 0
       end select
@@ -113,7 +116,7 @@ contains
       Ebins = tallies_%tally(i)%Ebins
 
       ! set up user-defined tallies
-      call set_user_tally(tal(i),Ebins,size(Ebins),react_type) 
+      call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope)
 
       ! deallocate Ebins
       if(allocated(Ebins)) deallocate(Ebins)

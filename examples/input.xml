@@ -3,7 +3,7 @@
 
 <!-- Settings Information -->
   <settings>
-    <histories> 10000 </histories>
+    <histories> 1000000 </histories>
     <seed> 5 </seed>
     <source_type> 1 </source_type>
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
@@ -19,15 +19,18 @@
       <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
     </nuclide>
 
-    <nuclide N="1e-8" A="238" thermal="false" >
+    <nuclide N="1e-0" A="238" thermal="false" >
       <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238.h5 </path>
     </nuclide>
 
   </material>
 
   <tallies>
-    <tally type="flux">
-      <Ebins> 0.1e-6 6e-6 10e-6 100e-6 1000e-6 20 </Ebins>
+    <tally type="micro_capture" isotope="3" >
+      <Ebins> 6e-6 10e-6 </Ebins>
+    </tally>
+    <tally type="flux" >
+      <Ebins> 6e-6 10e-6 </Ebins>
     </tally>
   </tallies>
 

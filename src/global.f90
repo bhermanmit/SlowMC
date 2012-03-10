@@ -11,6 +11,7 @@ module global
   use materials, only: material_type
   use particle,  only: particle_type
   use tally,     only: tally_type
+  use timing,    only: Timer
 
   implicit none
   save
@@ -40,6 +41,10 @@ module global
 
   ! kT value base on 300K
   real(8) :: kT = 8.6173324e-5_8*300*1.0e-6_8
+
+  ! timers
+  type(Timer) :: time_init
+  type(Timer) :: time_run
 
 contains
 
@@ -106,6 +111,29 @@ contains
 
     ! begin loop over tallies
     do i = 1,n_tallies
+
+      ! set multiplier
+      select case(tal(i)%react_type)
+
+        ! flux only
+        case(0)
+          fact = 1.0_8
+
+        ! absorption
+        case(1)
+          fact = sum(mat%absorxs(eidx,:))
+
+        ! scattering
+        case(2)
+          fact = sum(mat%scattxs(eidx,:))
+
+        ! micro capture
+        case(3)
+          fact = mat%isotopes(tal(i)%isotope)%xs_capt(eidx)
+        case DEFAULT
+          fact = 1.0_8
+
+      end select
 
       ! call routine to add tally
       call add_to_tally(tal(i),fact,totxs,neut%E)
