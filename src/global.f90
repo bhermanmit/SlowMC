@@ -164,4 +164,26 @@ contains
 
   end subroutine bank_tallies
 
+!===============================================================================
+! FINALIZE_TALLIES
+!> @brief routine that calls another routine to compute tally statistics
+!===============================================================================
+
+  subroutine finalize_tallies()
+
+    use tally, only: calculate_statistics
+
+    ! local variables
+    integer :: i ! loop counter
+
+    ! begin loop over tallies
+    do i = 1,n_tallies
+
+      ! call routine to compute statistics
+      call calculate_statistics(tal(i),nhistories)
+
+    end do
+
+  end subroutine finalize_tallies
+
 end module global 

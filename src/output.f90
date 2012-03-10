@@ -82,6 +82,7 @@ contains
     ! write timing information
     write(*,100) "Initialization time",time_init%elapsed
     write(*,100) "Transport time",time_run%elapsed
+    write(*,*)
 
     ! format for write statements
 100 format (1X,A,T35,"= ",ES11.4," seconds")
@@ -92,9 +93,6 @@ contains
     ! begin loop around tallies to write out
     do i = 1,n_tallies
 
-      ! check for flux tally
-      if (tal(i)%flux_tally) cycle
-
       ! get tally number
       write (talnum, '(I11)') i
       talnum = adjustl(talnum) 
@@ -102,14 +100,37 @@ contains
       ! open up a group
       call h5gcreate_f(hdfile,"tally_"//trim(talnum),group_id,error)
 
-      ! write tally data to file
-      dim1 = (/size(tal(i)%E)/)
+      ! write mean
+      dim1 = (/size(tal(i)%mean)/)
       call h5screate_simple_f(1,dim1,dataspace_id,error)
-      call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/E",H5T_NATIVE_DOUBLE,  &
-     &                 dataspace_id,dataset_id,error)
-      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%E,dim1,error)
+      call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/mean",H5T_NATIVE_DOUBLE&
+     &                ,dataspace_id,dataset_id,error)
+      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%mean,dim1,error)
       call h5sclose_f(dataspace_id,error)
       call h5dclose_f(dataset_id,error)
+
+      ! write standard deviation 
+      dim1 = (/size(tal(i)%std)/)
+      call h5screate_simple_f(1,dim1,dataspace_id,error)
+      call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/std",H5T_NATIVE_DOUBLE &
+     &                ,dataspace_id,dataset_id,error)
+      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%std,dim1,error)
+      call h5sclose_f(dataspace_id,error)
+      call h5dclose_f(dataset_id,error)
+
+      ! only write energy edges if a user tally
+      if (.not.tal(i)%flux_tally) then
+
+        ! write tally data to file
+        dim1 = (/size(tal(i)%E)/)
+        call h5screate_simple_f(1,dim1,dataspace_id,error)
+        call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/E",H5T_NATIVE_DOUBLE,&
+       &                 dataspace_id,dataset_id,error)
+        call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%E,dim1,error)
+        call h5sclose_f(dataspace_id,error)
+        call h5dclose_f(dataset_id,error)
+
+      end if
 
       ! close the group
       call h5gclose_f(group_id,error)

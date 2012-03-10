@@ -11,7 +11,7 @@ module tally
   implicit none
   private
   public :: set_spectrum_tally,add_to_tally,bank_tally,deallocate_tally,       &
- &          set_user_tally
+ &          set_user_tally,calculate_statistics
 
   type, public :: tally_type
 
@@ -19,6 +19,8 @@ module tally
     real(8), allocatable :: val(:)    ! the temporary value
     real(8), allocatable :: sum(:)    ! the sum for the mean and var
     real(8), allocatable :: sum_sq(:) ! the sum for the variable
+    real(8), allocatable :: mean(:)   ! mean of tallies
+    real(8), allocatable :: std(:)    ! standard deviation of tallies
     logical :: flux_tally = .false.   ! is this the flux tally
     integer :: nbins                  ! number of tally regions
     real(8) :: width                  ! the uniform width
@@ -77,7 +79,7 @@ contains
   subroutine set_spectrum_tally(this,emax,emin)
 
     ! formal variables
-    type(tally_type) :: this    ! array of tallies
+    type(tally_type) :: this    ! a tally
     real(8)          :: emax    ! max e
     real(8)          :: emin    ! min e
 
@@ -108,7 +110,7 @@ contains
   subroutine add_to_tally(this,fact,totxs,E)
 
     ! formal variables
-    type(tally_type) :: this     ! array of tallies
+    type(tally_type) :: this     ! a tally 
     real(8)          :: fact     ! multiplier for tally
     real(8)          :: totxs    ! totalxs
     real(8)          :: E        ! neutron energy
@@ -151,7 +153,7 @@ contains
   subroutine bank_tally(this)
 
     ! formal variables
-    type(tally_type) :: this ! array of tallies 
+    type(tally_type) :: this ! a tally
 
     ! record to sums
     this%sum    = this%sum    + this%val
@@ -163,6 +165,29 @@ contains
   end subroutine bank_tally
 
 !===============================================================================
+! CALCULATE_STATISTICS
+!> @brief routine to compute mean and standard deviation of tallies
+!===============================================================================
+
+  subroutine calculate_statistics(this,n)
+
+    ! formal variables
+    type(tally_type) :: this ! a tally
+    integer          :: n    ! number of histories run
+
+    ! preallocate mean and stdev
+    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum)))
+    if (.not.allocated(this%std))  allocate(this%std(size(this%sum)))
+
+    ! compute mean
+    this%mean =  this%sum / dble(n)
+
+    ! compute standard deviation
+    this%std = sqrt((this%sum_sq/dble(n) - this%mean**2)/dble(n))
+
+  end subroutine calculate_statistics
+
+!===============================================================================
 ! DEALLOCATE_TALLY
 !> @brief routine to deallocate tally types
 !===============================================================================
@@ -170,7 +195,7 @@ contains
   subroutine deallocate_tally(this)
 
     ! formal variables
-    type(tally_type) :: this ! array of tallies 
+    type(tally_type) :: this ! a tally
 
     ! deallocate all
     if (allocated(this%E)) deallocate(this%E)

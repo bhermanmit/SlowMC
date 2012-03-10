@@ -19,7 +19,7 @@
       <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
     </nuclide>
 
-    <nuclide N="1e-0" A="238" thermal="false" >
+    <nuclide N="1e-8" A="238" thermal="false" >
       <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238.h5 </path>
     </nuclide>
 

@@ -98,7 +98,7 @@ contains
 
   subroutine run_problem()
 
-    use global,    only: nhistories,mat,neut,tal,eidx,emin,add_to_tallies,     &
+    use global,    only: nhistories,mat,neut,eidx,emin,add_to_tallies,         &
    &                     bank_tallies,time_run
     use particle,  only: init_particle
     use physics,   only: sample_source,perform_physics,get_eidx
@@ -149,12 +149,7 @@ contains
     ! end timer
     call timer_stop(time_run)
 
-do i = 1,size(tal(3)%sum)
-  write(101,*) tal(3)%sum(i)
-end do
-print *,tal(1)%sum
-print *,tal(2)%sum
- 
+
   end subroutine run_problem
 
 !===============================================================================
@@ -164,16 +159,19 @@ print *,tal(2)%sum
 
   subroutine finalize()
 
-    use global, only: deallocate_problem
+    use global, only: finalize_tallies,deallocate_problem
     use hdf5
     use output, only: write_output
 
     ! local variables
     integer :: error ! hdf5 error
 
+    ! calculate statistics on tallies
+    call finalize_tallies()
+
     ! write output
     call write_output()
-
+ 
     ! deallocate problem
     call deallocate_problem()
 
