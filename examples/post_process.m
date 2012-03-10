@@ -27,7 +27,7 @@ std_flux = h5read('output.h5',horzcat('/tally_',num2str(user_flux),'/std'));
 loglog(E_spec,mean_spec)
 
 % compute ln factors
-LNfactor = length(E_user) - 1;
+LNfactor = zeros(length(E_user) - 1,1);
 for i = 1:length(E_user)-1
    LNfactor(i) = log(E_user(i+1)/E_user(i)); 
 end
