@@ -14,8 +14,11 @@ module particle
 
   type, public :: particle_type
 
-    real(8) :: E      ! particle's energy
-    logical :: alive  ! am i alive?
+    real(8) :: E       ! particle's energy
+    logical :: alive   ! am i alive?
+    integer :: region  ! material location
+    integer :: isoidx  ! isotope index in region
+    integer :: reactid ! reaction id
 
   end type particle_type
 
@@ -34,6 +37,9 @@ contains
     ! initialize
     this%E = 0.0_8
     this%alive = .true.
+    this%region = 1
+    this%isoidx = 0
+    this%reactid = 0
 
   end subroutine init_particle
 

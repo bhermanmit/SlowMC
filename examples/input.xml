@@ -9,21 +9,20 @@
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
   </settings>
 
-  <material>
 
-    <nuclide N="1" A="1" thermal="true" >
-      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
-    </nuclide>
-
-    <nuclide N="1" A="1" thermal="false" >
-      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
-    </nuclide>
-
-    <nuclide N="1" A="238" thermal="false" >
-      <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238_900.h5 </path>
-    </nuclide>
-
-  </material>
+  <materials>
+    <material>
+      <nuclide N="1" A="1" thermal="true" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
+      </nuclide>
+      <nuclide N="1" A="1" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
+      </nuclide>
+      <nuclide N="0.1" A="238" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238_300.h5 </path>
+      </nuclide>
+    </material>
+  </materials>
 
   <tallies>
     <tally type="micro_capture" isotope="3" >

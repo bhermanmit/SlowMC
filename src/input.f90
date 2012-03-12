@@ -22,7 +22,7 @@ contains
   subroutine read_input
 
     use global,           only: nhistories,seed,source_type,mat,emin,emax,     &
-   &                            allocate_problem,tal,n_tallies
+   &                            allocate_problem,tal,n_tallies,n_materials
     use materials,        only: setup_material,load_source,load_isotope
     use tally,            only: set_user_tally,set_spectrum_tally
     use xml_data_input_t
@@ -35,6 +35,8 @@ contains
     character(255)                 :: path         ! path to isotope file
     logical                        :: thermal      ! contains thermal lib
     integer                        :: i            ! iteration counter
+    integer                        :: j            ! iteration counter
+    integer                        :: nisotopes    ! number of isotopes in mat
     integer                        :: react_type   ! reaction type
     integer                        :: isotope=0    ! isotope for micro mult
     real(8), allocatable           :: Ebins(:)     ! tally energy bins
@@ -59,27 +61,9 @@ contains
     nhistories = settings_%histories
     seed = settings_%seed
     source_type = settings_%source_type
-    mat%nisotopes = size(material_(1)%nuclides)
 
-    ! load the source
-    call load_source(mat,source_type,settings_%source_path)
-
-    ! set up the material object
-    call setup_material(mat,emin,emax)
-
-    ! begin loop over isotope materials
-    do i = 1,mat%nisotopes
-
-      ! extract info
-      N = material_(1)%nuclides(i)%N
-      A = material_(1)%nuclides(i)%A
-      path = material_(1)%nuclides(i)%path
-      thermal = material_(1)%nuclides(i)%thermal
-
-      ! load the isotope into memory
-      call load_isotope(mat,N,A,path,thermal)
-
-    end do
+    ! get size of materials
+    n_materials = size(materials_%material)
 
     ! get size of tallies
     if (.not.associated(tallies_%tally)) then
@@ -89,7 +73,31 @@ contains
     end if
 
     ! allocate problem
-    call allocate_problem(n_tallies)
+    call allocate_problem()
+
+    ! begin loop around materials
+    do i = 1,n_materials
+
+      nisotopes = size(materials_%material(i)%nuclides)
+
+      ! set up the material object
+      call setup_material(mat(i),emin,emax,nisotopes)
+
+      ! begin loop over isotope materials
+      do j = 1,mat(i)%nisotopes
+
+        ! extract info
+        N = materials_%material(i)%nuclides(j)%N
+        A = materials_%material(i)%nuclides(j)%A
+        path = materials_%material(i)%nuclides(j)%path
+        thermal = materials_%material(i)%nuclides(j)%thermal
+
+        ! load the isotope into memory
+        call load_isotope(mat(i),N,A,path,thermal)
+
+      end do
+
+    end do
 
     ! begin loop over tallies
     do i = 1,n_tallies-1
@@ -125,6 +133,9 @@ contains
 
     ! set up spectrum tally
     call set_spectrum_tally(tal(n_tallies),emax,emin)
+
+    ! load the source
+    call load_source(mat(1),source_type,settings_%source_path)
 
   end subroutine read_input
 

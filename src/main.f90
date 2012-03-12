@@ -58,7 +58,8 @@ contains
   subroutine initialize()
 
     use hdf5
-    use global,    only: seed,allocate_problem,mat,tal,emax,emin,time_init
+    use global,    only: seed,allocate_problem,mat,tal,emax,emin,time_init,    &
+   &                     compute_macro_cross_sections
     use input,     only: read_input
     use materials, only: compute_macroxs
     use output,    only: print_heading
@@ -84,7 +85,7 @@ contains
     rn = rand(seed)
 
     ! precompute macroscopic cross section of materials
-    call compute_macroxs(mat)
+    call compute_macro_cross_sections()
 
     ! end timer
     call timer_stop(time_init)

@@ -22,9 +22,9 @@ module global
   integer :: VERSION_RELEASE = 1
 
   ! list all types
-  type(material_type)           :: mat
-  type(particle_type)           :: neut
-  type(tally_type), allocatable :: tal(:)
+  type(particle_type)              :: neut
+  type(material_type), allocatable :: mat(:)
+  type(tally_type), allocatable    :: tal(:)
 
   ! list history input information
   integer :: nhistories
@@ -32,8 +32,9 @@ module global
   integer :: source_type
 
   ! list global vars that are set during run
-  integer :: eidx      ! energy index for cross sections
-  integer :: n_tallies ! number of tallies
+  integer :: eidx        ! energy index for cross sections
+  integer :: n_tallies   ! number of tallies
+  integer :: n_materials ! n_materials
 
   ! set max and min energy
   real(8) :: emin = 1e-11_8
@@ -53,13 +54,13 @@ contains
 !> @brief allocates global variables for calculation
 !==============================================================================
 
-  subroutine allocate_problem(n)
+  subroutine allocate_problem()
 
     ! formal variables
-    integer :: n ! size of tallies
 
     ! allocate tallies
-    if (.not.allocated(tal)) allocate(tal(n))
+    if (.not.allocated(tal)) allocate(tal(n_tallies))
+    if (.not.allocated(mat)) allocate(mat(n_materials))
 
   end subroutine allocate_problem
 
@@ -76,8 +77,16 @@ contains
     ! local variables
     integer :: i  ! loop counter
 
-    ! deallocate material
-    call deallocate_material(mat)
+    ! deallocate within materials
+    do i = 1,n_materials
+
+      ! deallocate material
+      call deallocate_material(mat(i))
+
+    end do
+
+    ! deallocate material variable
+    if (allocated(mat)) deallocate(mat)
 
     ! deallocate within tallies
     do i = 1,n_tallies
@@ -91,6 +100,28 @@ contains
     if (allocated(tal)) deallocate(tal)
 
   end subroutine deallocate_problem
+
+!===============================================================================
+! COMPUTE_MACRO_CROSS_SECTIONS
+!> @brief routine that handles the call to compute macro cross sections
+!===============================================================================
+
+  subroutine compute_macro_cross_sections()
+
+    use materials, only: compute_macroxs
+
+    ! local variables
+    integer :: i  ! loop counter
+
+    ! begin loop over materals
+    do i = 1,n_materials
+
+      ! call routine to compute xs
+      call compute_macroxs(mat(i))
+
+    end do
+
+  end subroutine compute_macro_cross_sections
 
 !===============================================================================
 ! ADD_TO_TALLIES
@@ -107,7 +138,7 @@ contains
     real(8) :: totxs        ! total macroscopic xs of material
 
     ! compute macroscopic cross section
-    totxs = sum(mat%totalxs(eidx,:))
+    totxs = sum(mat(neut%region)%totalxs(eidx,:))
 
     ! begin loop over tallies
     do i = 1,n_tallies
@@ -121,15 +152,15 @@ contains
 
         ! absorption
         case(1)
-          fact = sum(mat%absorxs(eidx,:))
+          fact = sum(mat(neut%region)%absorxs(eidx,:))
 
         ! scattering
         case(2)
-          fact = sum(mat%scattxs(eidx,:))
+          fact = sum(mat(neut%region)%scattxs(eidx,:))
 
         ! micro capture
         case(3)
-          fact = mat%isotopes(tal(i)%isotope)%xs_capt(eidx)
+          fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
         case DEFAULT
           fact = 1.0_8
 

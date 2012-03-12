@@ -66,12 +66,16 @@ contains
 !> @brief routine that initializes the materials
 !===============================================================================
 
-  subroutine setup_material(this,emin,emax)
+  subroutine setup_material(this,emin,emax,nisotopes)
 
     ! formal variables
     type(material_type) :: this      ! a material
     real(8)             :: emin      ! minimum energy to consider
     real(8)             :: emax      ! maximum energy to consider
+    integer             :: nisotopes ! number of isotopes
+
+    ! set number of isotopes
+    this%nisotopes = nisotopes
 
     ! allocate isotopes array
     if (.not. allocated(this%isotopes)) allocate(this%isotopes(this%nisotopes))

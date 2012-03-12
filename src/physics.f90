@@ -31,10 +31,10 @@ contains
     rn = rand(0)
 
     ! compute index in cdf
-    idx = ceiling(rn / mat%source%cdf_width) + 1
+    idx = ceiling(rn / mat(1)%source%cdf_width) + 1
 
     ! bounds checker
-    if (idx > size(mat%source%E)) then
+    if (idx > size(mat(1)%source%E)) then
       write(*,*) 'Bounds error on source samplings'
       write(*,*) 'Random number:',rn
       write(*,*) 'Index Location:',idx
@@ -42,7 +42,7 @@ contains
     end if
 
     ! extract that E and set it to neutron
-    neut%E = mat%source%E(idx)
+    neut%E = mat(1)%source%E(idx)
 
   end subroutine sample_source
 
@@ -55,20 +55,20 @@ contains
 
     use global, only: neut
 
-    integer :: isoidx   ! isotope index
-    integer :: reactid  ! reaction id
+    ! sample region
+    neut%region = sample_region()
 
     ! sample isotope
-    isoidx = sample_isotope()
+    neut%isoidx = sample_isotope(neut%region)
 
     ! sample reaction in isotope
-    reactid = sample_reaction(isoidx)
+    neut%reactid = sample_reaction(neut%region,neut%isoidx)
 
     ! perform reaction
-    if (reactid == 1) then ! absorption
+    if (neut%reactid == 1) then ! absorption
       neut%alive = .FALSE.
-    else if (reactid == 2) then ! scattering
-      call elastic_scattering(isoidx)
+    else if (neut%reactid == 2) then ! scattering
+      call elastic_scattering(neut%region,neut%isoidx)
     else
       write(*,*) "Something is wrong after isotope sampling"
       stop
@@ -90,28 +90,44 @@ contains
     integer             :: eidx ! the energy index
 
     ! compute index
-    eidx = ceiling((log10(E) - log10(mat%E_min))/mat%E_width) + 1
+    eidx = ceiling((log10(E) - log10(mat(1)%E_min))/mat(1)%E_width) + 1
 
     ! check bounds
-    if (eidx == 0 .or. eidx >=mat%npts) then
+    if (eidx == 0 .or. eidx >=mat(1)%npts) then
       write(*,*) 'Energy index out of bounds!'
       write(*,*) 'Energy:',E
-      write(*,*) 'Width:',mat%E_width
+      write(*,*) 'Width:',mat(1)%E_width
       stop
    end if
 
   end function get_eidx
 
 !===============================================================================
+! SAMPLE_REGION
+!> @brief function to sample region where interaction occurs
+!===============================================================================
+
+  function sample_region() result(region)
+
+    ! formal variables
+    integer :: region ! region of interaction
+
+    ! set region number
+    region = 1
+
+  end function sample_region
+
+!===============================================================================
 ! SAMPLE_ISOTOPE
 !> @brief function to sample interaction isotope
 !===============================================================================
 
-  function sample_isotope() result(isoidx)
+  function sample_isotope(region) result(isoidx)
 
     use global, only: mat,eidx
 
     ! formal variables
+    integer :: region  ! region of interaction
     integer :: isoidx  ! the index of the isotope sampled
 
     ! local variables
@@ -121,15 +137,16 @@ contains
     integer              :: i       ! iteration counter
 
     ! allocate pmf and cdf
-    if(.not. allocated(pmf)) allocate(pmf(mat%nisotopes+1))
-    if(.not. allocated(cdf)) allocate(cdf(mat%nisotopes+1))
+    if(.not. allocated(pmf)) allocate(pmf(mat(region)%nisotopes+1))
+    if(.not. allocated(cdf)) allocate(cdf(mat(region)%nisotopes+1))
 
     ! set both to zero
     pmf = 0.0_8
     cdf = 0.0_8
 
     ! create pmf at that energy index
-    pmf(2:size(pmf)) = mat%totalxs(eidx,:)/sum(mat%totalxs(eidx,:))
+    pmf(2:size(pmf)) = mat(region)%totalxs(eidx,:) /                           &
+   &                   sum(mat(region)%totalxs(eidx,:))
 
     ! create cdf from pmf
     do i = 1,size(pmf)
@@ -163,11 +180,12 @@ contains
 !> @brief function to sample reaction type
 !===============================================================================
 
-  function sample_reaction(isoidx) result(reactid)
+  function sample_reaction(region,isoidx) result(reactid)
 
     use global, only: mat,eidx
 
     ! formal variables
+    integer :: region   ! region of interaction
     integer :: isoidx   ! the sampled isotope index
     integer :: reactid  ! the id of the reaction type
 
@@ -178,8 +196,8 @@ contains
     integer :: i       ! iteration counter
 
     ! set up pmf
-    pmf = (/0.0_8,mat%isotopes(isoidx)%xs_capt(eidx),                          &
-   &                                       mat%isotopes(isoidx)%xs_scat(eidx)/)
+    pmf = (/0.0_8,mat(region)%isotopes(isoidx)%xs_capt(eidx),                  &
+   &                                mat(region)%isotopes(isoidx)%xs_scat(eidx)/)
 
     ! normalize pmf
     pmf = pmf / sum(pmf)
@@ -207,11 +225,12 @@ contains
 !> @brief routine to perform thermal/asymptotic elastic scattering physics 
 !===============================================================================
 
-  subroutine elastic_scattering(isoidx)
+  subroutine elastic_scattering(region,isoidx)
 
     use global, only: neut,mat,kT
 
     ! formal variables
+    integer :: region ! region of interaction
     integer :: isoidx ! isotope sampled index
 
     ! local variables
@@ -227,27 +246,27 @@ contains
     rn = rand(0)
 
     ! check for thermal scattering
-    if (neut%E < 4e-6_8 .and. mat%isotopes(isoidx)%thermal) then
+    if (neut%E < 4e-6_8 .and. mat(region)%isotopes(isoidx)%thermal) then
 
       ! get index in cdf
-      idx = ceiling(rn/mat%isotopes(isoidx)%thermal_lib%cdf_width)
+      idx = ceiling(rn/mat(region)%isotopes(isoidx)%thermal_lib%cdf_width)
 
       ! check index
       if (idx == 0) idx = 1
 
       ! preallocate energy vector
       if (.not.allocated(Evec))                                                &
-     & allocate(Evec(size(mat%isotopes(isoidx)%thermal_lib%kTvec)))
+     & allocate(Evec(size(mat(region)%isotopes(isoidx)%thermal_lib%kTvec)))
 
       ! set possible energy ratios vector
-      Evec = mat%isotopes(isoidx)%thermal_lib%Erat(idx,:)
+      Evec = mat(region)%isotopes(isoidx)%thermal_lib%Erat(idx,:)
 
       ! get energy in kT units
       EkT = neut%E/kT
 
       ! find index in kT space
-      do i = 1,size(mat%isotopes(isoidx)%thermal_lib%kTvec)
-        if (EkT < mat%isotopes(isoidx)%thermal_lib%kTvec(i)) then
+      do i = 1,size(mat(region)%isotopes(isoidx)%thermal_lib%kTvec)
+        if (EkT < mat(region)%isotopes(isoidx)%thermal_lib%kTvec(i)) then
           kTidx = i
           exit
         end if
@@ -259,9 +278,9 @@ contains
       else
         ! perform linear interplation on kT value
         Eint = Evec(kTidx-1) + (EkT -                                          &
-       &       mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1))*((Evec(kTidx)  &
-       &     - Evec(kTidx-1))/(mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx)   &
-       &     - mat%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1)))
+       &mat(region)%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1))*((Evec(kTidx) &
+       &- Evec(kTidx-1))/(mat(region)%isotopes(isoidx)%thermal_lib%kTvec(kTidx)&
+       &- mat(region)%isotopes(isoidx)%thermal_lib%kTvec(kTidx-1)))
 
        ! multiply by incoming energy
        neut%E = neut%E*Eint
@@ -274,7 +293,7 @@ contains
     else
 
       ! perform asymptotic elastic scattering
-      neut%E = neut%E - neut%E*(1-mat%isotopes(isoidx)%alpha)*rn;
+      neut%E = neut%E - neut%E*(1-mat(region)%isotopes(isoidx)%alpha)*rn;
 
     end if
 
