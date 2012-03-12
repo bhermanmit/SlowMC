@@ -12,6 +12,7 @@
 
   <materials>
     <material>
+      <type> homogeneous </type> 
       <nuclide N="1" A="1" thermal="true" >
         <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
       </nuclide>

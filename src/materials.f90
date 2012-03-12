@@ -53,6 +53,7 @@ module materials
     real(8)                     :: E_width       ! width of energy interval
     real(8)                     :: E_min         ! min energy
     real(8)                     :: E_max         ! max energy
+    real(8)                     :: vol           ! volume of region
     real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
     real(8), allocatable        :: scattxs(:,:)  ! array of macroscopic scat xs
     real(8), allocatable        :: absorxs(:,:)  ! array of macroscopic abs xs
@@ -66,16 +67,20 @@ contains
 !> @brief routine that initializes the materials
 !===============================================================================
 
-  subroutine setup_material(this,emin,emax,nisotopes)
+  subroutine setup_material(this,emin,emax,nisotopes,vol)
 
     ! formal variables
     type(material_type) :: this      ! a material
     real(8)             :: emin      ! minimum energy to consider
     real(8)             :: emax      ! maximum energy to consider
+    real(8)             :: vol       ! volume of material
     integer             :: nisotopes ! number of isotopes
 
     ! set number of isotopes
     this%nisotopes = nisotopes
+
+    ! set volume
+    this%vol = vol
 
     ! allocate isotopes array
     if (.not. allocated(this%isotopes)) allocate(this%isotopes(this%nisotopes))

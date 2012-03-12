@@ -20,6 +20,7 @@
 
   <typedef name="material_xml">
     <component name="type" type="word" length="255" />
+    <component name="V" type="double" />
     <component name="nuclides" tag="nuclide" type="nuclide_xml" dimension="1" />
   </typedef>
 

@@ -32,6 +32,7 @@ contains
     character(255)                 :: filename     ! filename to open
     real(8)                        :: N            ! temp number dens
     real(8)                        :: A            ! temp atomic weight
+    real(8)                        :: vol          ! volume of region
     character(255)                 :: path         ! path to isotope file
     logical                        :: thermal      ! contains thermal lib
     integer                        :: i            ! iteration counter
@@ -78,16 +79,49 @@ contains
     ! begin loop around materials
     do i = 1,n_materials
 
+      ! get number of isotopes and volume
       nisotopes = size(materials_%material(i)%nuclides)
+      vol = materials_%material(i)%V
 
       ! set up the material object
-      call setup_material(mat(i),emin,emax,nisotopes)
+      call setup_material(mat(i),emin,emax,nisotopes,vol)
 
       ! begin loop over isotope materials
       do j = 1,mat(i)%nisotopes
 
-        ! extract info
-        N = materials_%material(i)%nuclides(j)%N
+        ! check volumes and number densities
+        if (trim(materials_%material(i)%type)=='homogeneous') then
+
+          ! set volume to 1 and don't adjust n dens
+          vol = 1.0_8
+          N = materials_%material(i)%nuclides(j)%N
+print *,'HERE'
+        else if (trim(materials_%material(i)%type)=='fuel') then
+
+          ! don't adjust n dens
+          N = materials_%material(i)%nuclides(j)%N
+
+          ! check volume
+          if (abs(vol - 0.0_8) < 1e-10_8) then
+            write(*,*) 'Please enter a physical fuel volume!'
+            stop
+          end if
+
+        else
+
+          ! check volume
+          if (abs(vol - 0.0_8) < 1e-10_8) then
+            write(*,*) 'Please enter a physical moderator volume!'
+            stop
+          end if
+
+          ! adjust number density by volume weighting
+          N = materials_%material(i)%nuclides(j)%N*                            &
+         &   (materials_%material(i)%nuclides(j)%V/vol)
+
+        end if
+
+        ! extract other info
         A = materials_%material(i)%nuclides(j)%A
         path = materials_%material(i)%nuclides(j)%path
         thermal = materials_%material(i)%nuclides(j)%thermal
