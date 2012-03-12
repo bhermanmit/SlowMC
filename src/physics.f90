@@ -109,11 +109,79 @@ contains
 
   function sample_region() result(region)
 
+    use global, only: n_materials,Dancoff,res_iso,radius,mat,eidx,neut
+
     ! formal variables
     integer :: region ! region of interaction
 
+    ! local variables
+    real(8) :: Pff   ! fuel-to-fuel collision probability
+    real(8) :: Pfm   ! fuel-to-moderator collision probability
+    real(8) :: Pmf   ! moderator-to-fuel collision probability
+    real(8) :: A     ! A factor
+    real(8) :: a1    ! alpha 1 factor
+    real(8) :: a2    ! alpha 2 factor
+    real(8) :: b     ! beta factor
+    real(8) :: sig_e ! macro escape cross section
+    real(8) :: sig_t ! macro total cross section of resonant isotope
+    real(8) :: rn    ! sampled random number
+
     ! set region number
     region = 1
+
+    ! check for more than 1 material
+    if (n_materials == 2) then
+
+      ! calculate A
+      A = (1.0_8-Dancoff)/Dancoff
+
+      ! calculate alpha 1
+      a1 = ((5._8*A+6._8)-sqrt(A**2+36._8*A+36._8))/(2._8*(A+1._8))
+
+      ! calculate alpha 2
+      a2 = ((5._8*A+6._8)+sqrt(A**2+36._8*A+36._8))/(2._8*(A+1._8))
+
+      ! calculate beta
+      b = (((4._8*A+6._8)/(A+1._8)) - a1)/(a2 - a1)
+
+      ! calculate macro escape cross section
+      sig_e = 1._8/(2._8*radius)
+
+      ! get macro total cross section of resonant isotope
+      sig_t = mat(1)%totalxs(eidx,res_iso)
+
+      ! compute fuel-to-fuel collision probability
+      Pff = (b*sig_t)/(a1*sig_e + sig_t) + ((1-b)*sig_t)/(a2*sig_e + sig_t)
+
+      ! compute fuel-to-moderator collision probability
+      Pfm = 1._8 - Pff
+
+      ! using reciprocity compute moderator-to-fuel collision probability
+      Pmf = Pfm * (sum(mat(1)%totalxs(eidx,:))*mat(1)%vol) /                   &
+     &            (sum(mat(2)%totalxs(eidx,:))*mat(2)%vol)
+
+      ! sample random number
+      rn = rand(0)
+
+      ! figure out what region currently in and sample accordingly
+      if (neut%region == 1) then
+        if (rn < Pfm) then
+          region = 2
+        else
+          region = 1
+        end if
+      else if (neut%region == 2) then
+        if (rn < Pmf) then
+          region = 1
+        else
+          region = 2
+        end if
+      else
+        write(*,*) 'Cant find neutron!'
+        stop
+      end if
+
+    end if
 
   end function sample_region
 

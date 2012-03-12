@@ -35,6 +35,9 @@ module global
   integer :: eidx        ! energy index for cross sections
   integer :: n_tallies   ! number of tallies
   integer :: n_materials ! n_materials
+  integer :: res_iso     ! resonant isotope id in material 1
+  real(8) :: Dancoff     ! lattice Dancoff factor (C)
+  real(8) :: radius      ! radius of fuel pin
 
   ! set max and min energy
   real(8) :: emin = 1e-11_8
@@ -167,7 +170,7 @@ contains
       end select
 
       ! call routine to add tally
-      call add_to_tally(tal(i),fact,totxs,neut%E)
+      call add_to_tally(tal(i),fact,totxs,neut%E,neut%region)
 
     end do
 

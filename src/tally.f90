@@ -16,11 +16,11 @@ module tally
   type, public :: tally_type
 
     real(8), allocatable :: E(:)      ! user defined energy structure
-    real(8), allocatable :: val(:)    ! the temporary value
-    real(8), allocatable :: sum(:)    ! the sum for the mean and var
-    real(8), allocatable :: sum_sq(:) ! the sum for the variable
-    real(8), allocatable :: mean(:)   ! mean of tallies
-    real(8), allocatable :: std(:)    ! standard deviation of tallies
+    real(8), allocatable :: val(:,:)    ! the temporary value
+    real(8), allocatable :: sum(:,:)    ! the sum for the mean and var
+    real(8), allocatable :: sum_sq(:,:) ! the sum for the variable
+    real(8), allocatable :: mean(:,:)   ! mean of tallies
+    real(8), allocatable :: std(:,:)    ! standard deviation of tallies
     logical :: flux_tally = .false.   ! is this the flux tally
     integer :: nbins                  ! number of tally regions
     real(8) :: width                  ! the uniform width
@@ -38,13 +38,14 @@ contains
 !> @brief routine to intialize user-defined tallies
 !===============================================================================
 
-  subroutine set_user_tally(this,Ebins,n,react_type,isotope)
+  subroutine set_user_tally(this,Ebins,n,react_type,isotope,n_materials)
 
     ! formal variables
     type(tally_type) :: this        ! a tally
     integer          :: n           ! size of Ebins
     integer          :: react_type  ! reaction type
     integer          :: isotope     ! isotope for multiplier
+    integer          :: n_materials ! number of material tally regions
     real(8)          :: Ebins(n)    ! vector of energy bins
     
     ! preallocate user-defined energy structure
@@ -60,9 +61,15 @@ contains
     this%isotope = isotope
 
     ! preallocate vectors
-    if(.not.allocated(this%val)) allocate(this%val(n-1))
-    if(.not.allocated(this%sum)) allocate(this%sum(n-1))
-    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(n-1))
+    if(.not.allocated(this%val)) allocate(this%val(n-1,n_materials))
+    if(.not.allocated(this%sum)) allocate(this%sum(n-1,n_materials))
+    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(n-1,n_materials))
+
+    ! preallocate mean and stdev
+    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum),          &
+   &                                                               n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(size(this%sum),           &
+   &                                                               n_materials))
 
     ! zero out tallies
     this%val = 0.0_8
@@ -76,12 +83,13 @@ contains
 !> @brief routine to initialize all tallies 
 !===============================================================================
 
-  subroutine set_spectrum_tally(this,emax,emin)
+  subroutine set_spectrum_tally(this,emax,emin,n_materials)
 
     ! formal variables
-    type(tally_type) :: this    ! a tally
-    real(8)          :: emax    ! max e
-    real(8)          :: emin    ! min e
+    type(tally_type) :: this         ! a tally
+    integer          :: n_materials  ! number of materials
+    real(8)          :: emax         ! max e
+    real(8)          :: emin         ! min e
 
     ! set up automatic flux tally
     this%flux_tally = .true.
@@ -91,9 +99,15 @@ contains
     this%width = (log10(emax) - log10(emin))/dble(this%nbins)
 
     ! preallocate vectors
-    if(.not.allocated(this%val)) allocate(this%val(1000)) 
-    if(.not.allocated(this%sum)) allocate(this%sum(1000))
-    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(1000)) 
+    if(.not.allocated(this%val)) allocate(this%val(1000,n_materials))
+    if(.not.allocated(this%sum)) allocate(this%sum(1000,n_materials))
+    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(1000,n_materials))
+
+    ! preallocate mean and stdev
+    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum),          &
+   &                                                               n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(size(this%sum),           &
+   &                                                               n_materials))
 
     ! zero out tallies
     this%val = 0.0_8
@@ -107,10 +121,11 @@ contains
 !> @brief routine to add quantities during transport of a particle 
 !===============================================================================
 
-  subroutine add_to_tally(this,fact,totxs,E)
+  subroutine add_to_tally(this,fact,totxs,E,region)
 
     ! formal variables
     type(tally_type) :: this     ! a tally 
+    integer          :: region   ! region id
     real(8)          :: fact     ! multiplier for tally
     real(8)          :: totxs    ! totalxs
     real(8)          :: E        ! neutron energy
@@ -141,7 +156,7 @@ contains
     end if
 
     ! add to tally
-    if (idx /= 0) this%val(idx) = this%val(idx) + fact/totxs
+    if (idx /= 0) this%val(idx,region) = this%val(idx,region) + fact/totxs
 
   end subroutine add_to_tally
 
@@ -174,10 +189,6 @@ contains
     ! formal variables
     type(tally_type) :: this ! a tally
     integer          :: n    ! number of histories run
-
-    ! preallocate mean and stdev
-    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum)))
-    if (.not.allocated(this%std))  allocate(this%std(size(this%sum)))
 
     ! compute mean
     this%mean =  this%sum / dble(n)

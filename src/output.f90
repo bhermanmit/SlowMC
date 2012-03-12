@@ -74,6 +74,7 @@ contains
     integer(HID_T)                 :: dataset_id   ! dataset identifier
     integer(HID_T)                 :: group_id     ! group id
     integer(HSIZE_T), dimension(1) :: dim1         ! vector for hdf5 dims
+    integer(HSIZE_T), dimension(2) :: dim2         ! matrix for hdf5 dims
     character(11)                  :: talnum       ! tally number
 
     ! write results header
@@ -101,20 +102,20 @@ contains
       call h5gcreate_f(hdfile,"tally_"//trim(talnum),group_id,error)
 
       ! write mean
-      dim1 = (/size(tal(i)%mean)/)
-      call h5screate_simple_f(1,dim1,dataspace_id,error)
+      dim2 = (/size(tal(i)%mean,1),size(tal(i)%mean,2)/)
+      call h5screate_simple_f(1,dim2,dataspace_id,error)
       call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/mean",H5T_NATIVE_DOUBLE&
      &                ,dataspace_id,dataset_id,error)
-      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%mean,dim1,error)
+      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%mean,dim2,error)
       call h5sclose_f(dataspace_id,error)
       call h5dclose_f(dataset_id,error)
 
       ! write standard deviation 
-      dim1 = (/size(tal(i)%std)/)
-      call h5screate_simple_f(1,dim1,dataspace_id,error)
+      dim2 = (/size(tal(i)%std,1),size(tal(i)%std,2)/)
+      call h5screate_simple_f(1,dim2,dataspace_id,error)
       call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/std",H5T_NATIVE_DOUBLE &
      &                ,dataspace_id,dataset_id,error)
-      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%std,dim1,error)
+      call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%std,dim2,error)
       call h5sclose_f(dataspace_id,error)
       call h5dclose_f(dataset_id,error)
 

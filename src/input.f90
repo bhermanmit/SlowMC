@@ -22,18 +22,20 @@ contains
   subroutine read_input
 
     use global,           only: nhistories,seed,source_type,mat,emin,emax,     &
-   &                            allocate_problem,tal,n_tallies,n_materials
+   &                            allocate_problem,tal,n_tallies,n_materials,    &
+   &                            res_iso,Dancoff,radius
     use materials,        only: setup_material,load_source,load_isotope
     use tally,            only: set_user_tally,set_spectrum_tally
     use xml_data_input_t
 
     ! local variables
     logical                        :: file_exists  ! see if file exists
-    character(255)                 :: filename     ! filename to open
+    character(len=255)             :: filename     ! filename to open
     real(8)                        :: N            ! temp number dens
     real(8)                        :: A            ! temp atomic weight
     real(8)                        :: vol          ! volume of region
-    character(255)                 :: path         ! path to isotope file
+    character(len=255)             :: path         ! path to isotope file
+    character(len=255)             :: name         ! name of isotope
     logical                        :: thermal      ! contains thermal lib
     integer                        :: i            ! iteration counter
     integer                        :: j            ! iteration counter
@@ -95,7 +97,7 @@ contains
           ! set volume to 1 and don't adjust n dens
           vol = 1.0_8
           N = materials_%material(i)%nuclides(j)%N
-print *,'HERE'
+
         else if (trim(materials_%material(i)%type)=='fuel') then
 
           ! don't adjust n dens
@@ -125,9 +127,21 @@ print *,'HERE'
         A = materials_%material(i)%nuclides(j)%A
         path = materials_%material(i)%nuclides(j)%path
         thermal = materials_%material(i)%nuclides(j)%thermal
+        name = materials_%material(i)%nuclides(j)%name 
 
         ! load the isotope into memory
-        call load_isotope(mat(i),N,A,path,thermal)
+        call load_isotope(mat(i),N,A,path,thermal,name)
+
+        ! check for resonant isotope in material 1
+        if (trim(materials_%material(i)%type)=='fuel' .and.                    &
+       &    trim(settings_%res_iso) == trim(name)) then
+
+          ! get Dancoff factor and resonant isotope
+          res_iso = j
+          Dancoff = settings_%Dancoff
+          radius = settings_%radius
+
+        end if
 
       end do
 
@@ -158,7 +172,7 @@ print *,'HERE'
       Ebins = tallies_%tally(i)%Ebins
 
       ! set up user-defined tallies
-      call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope)
+      call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope,n_materials)
 
       ! deallocate Ebins
       if(allocated(Ebins)) deallocate(Ebins)
@@ -166,7 +180,7 @@ print *,'HERE'
     end do
 
     ! set up spectrum tally
-    call set_spectrum_tally(tal(n_tallies),emax,emin)
+    call set_spectrum_tally(tal(n_tallies),emax,emin,n_materials)
 
     ! load the source
     call load_source(mat(1),source_type,settings_%source_path)

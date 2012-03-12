@@ -8,6 +8,9 @@
     <component name="seed" type="integer" />
     <component name="source_type" type="integer" />
     <component name="source_path" type="word" length="255" />
+    <component name="Dancoff" type="double" />
+    <component name="res_iso" type="word" length="255" />
+    <component name="radius" type="double" />
   </typedef>
 
   <typedef name="nuclide_xml">
@@ -15,7 +18,8 @@
     <component name="A" type="double" />
     <component name="V" type="double" />
     <component name="path" type="word" length="255" />
-    <component name="thermal" type="logical" /> 
+    <component name="thermal" type="logical" />
+    <component name="name" type="word" length="255" />
   </typedef>
 
   <typedef name="material_xml">

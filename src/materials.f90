@@ -37,6 +37,7 @@ module materials
     real(8)               :: alpha       ! (A-1)^2/(A+1)^2
     real(8), allocatable  :: xs_capt(:)  ! capture micro xs
     real(8), allocatable  :: xs_scat(:)  ! scattering micro xs
+    character(len=255)    :: name        ! name of isotope
 
     logical               :: thermal     ! thermal scatterer
     type(thermal_type)    :: thermal_lib ! thermal library
@@ -99,7 +100,7 @@ contains
 !> @brief routine that loads isotope properties, xs, etc. into memory
 !===============================================================================
 
-  subroutine load_isotope(this,N,A,path,thermal)
+  subroutine load_isotope(this,N,A,path,thermal,name)
 
     use hdf5
 
@@ -108,6 +109,7 @@ contains
     real(8)                    :: N       ! number density
     real(8)                    :: A       ! atomic weight
     character(len=255)         :: path    ! path to isotope
+    character(len=255)         :: name    ! name of isotope
     logical                    :: thermal ! contains a thermal lib
 
     ! local variables
@@ -120,13 +122,14 @@ contains
     type(thermal_type), pointer    :: therm
 
     ! display to user
-    write(*,*) 'Loading isotope:',this%curr_iso
+    write(*,*) 'Loading isotope: ',trim(name)
 
     ! set parameters
     this%isotopes(this%curr_iso)%N = N
     this%isotopes(this%curr_iso)%A = A
     this%isotopes(this%curr_iso)%alpha = ((A-1)/(A+1))**2 
     this%isotopes(this%curr_iso)%thermal = thermal
+    this%isotopes(this%curr_iso)%name = name
 
     ! open up hdf5 file
     call h5fopen_f(trim(path),H5F_ACC_RDWR_F,hdf5_file,error)
