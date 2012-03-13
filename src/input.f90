@@ -85,6 +85,9 @@ contains
       nisotopes = size(materials_%material(i)%nuclides)
       vol = materials_%material(i)%V
 
+      ! set homogeneous volume
+      if (trim(materials_%material(i)%type)=='homogeneous') vol = 1.0_8
+
       ! set up the material object
       call setup_material(mat(i),emin,emax,nisotopes,vol)
 
@@ -95,7 +98,6 @@ contains
         if (trim(materials_%material(i)%type)=='homogeneous') then
 
           ! set volume to 1 and don't adjust n dens
-          vol = 1.0_8
           N = materials_%material(i)%nuclides(j)%N
 
         else if (trim(materials_%material(i)%type)=='fuel') then

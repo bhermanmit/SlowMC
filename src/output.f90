@@ -103,7 +103,7 @@ contains
 
       ! write mean
       dim2 = (/size(tal(i)%mean,1),size(tal(i)%mean,2)/)
-      call h5screate_simple_f(1,dim2,dataspace_id,error)
+      call h5screate_simple_f(2,dim2,dataspace_id,error)
       call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/mean",H5T_NATIVE_DOUBLE&
      &                ,dataspace_id,dataset_id,error)
       call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%mean,dim2,error)
@@ -112,7 +112,7 @@ contains
 
       ! write standard deviation 
       dim2 = (/size(tal(i)%std,1),size(tal(i)%std,2)/)
-      call h5screate_simple_f(1,dim2,dataspace_id,error)
+      call h5screate_simple_f(2,dim2,dataspace_id,error)
       call h5dcreate_f(hdfile,"tally_"//trim(talnum)//"/std",H5T_NATIVE_DOUBLE &
      &                ,dataspace_id,dataset_id,error)
       call h5dwrite_f(dataset_id,H5T_NATIVE_DOUBLE,tal(i)%std,dim2,error)

@@ -53,10 +53,13 @@ contains
 
   subroutine perform_physics()
 
-    use global, only: neut
+    use global, only: neut,add_to_tallies
 
     ! sample region
     neut%region = sample_region()
+
+    ! a collision has now occurred in a region at an energy, add to tally
+    call add_to_tallies()
 
     ! sample isotope
     neut%isoidx = sample_isotope(neut%region)
@@ -152,6 +155,8 @@ contains
 
       ! compute fuel-to-fuel collision probability
       Pff = (b*sig_t)/(a1*sig_e + sig_t) + ((1-b)*sig_t)/(a2*sig_e + sig_t)
+
+      Pff = sig_t/((((1._8-Dancoff)*1.1_8)/((1._8-Dancoff) + Dancoff*1.1_8))*sig_e + sig_t)
 
       ! compute fuel-to-moderator collision probability
       Pfm = 1._8 - Pff

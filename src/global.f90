@@ -209,12 +209,19 @@ contains
 
     ! local variables
     integer :: i ! loop counter
+    integer :: j ! loop counter
 
     ! begin loop over tallies
     do i = 1,n_tallies
 
       ! call routine to compute statistics
       call calculate_statistics(tal(i),nhistories)
+print *,mat(1)%nisotopes
+print *,mat(1)%vol
+      ! normalize by volumes
+      do j = 1,n_materials
+        tal(i)%mean(:,j) = tal(i)%mean(:,j) / mat(j)%vol
+      end do
 
     end do
 

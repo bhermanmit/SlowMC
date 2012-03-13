@@ -99,8 +99,7 @@ contains
 
   subroutine run_problem()
 
-    use global,    only: nhistories,mat,neut,eidx,emin,add_to_tallies,         &
-   &                     bank_tallies,time_run
+    use global,    only: nhistories,mat,neut,eidx,emin,bank_tallies,time_run
     use particle,  only: init_particle
     use physics,   only: sample_source,perform_physics,get_eidx
     use timing,    only: timer_start,timer_stop
@@ -126,10 +125,7 @@ contains
         ! call index routine for first tally
         eidx = get_eidx(neut%E)
 
-        ! record collision temp tally
-        call add_to_tallies()
-
-        ! perform physics
+        ! perform physics and also records collision tally
         call perform_physics()
 
         ! check for energy cutoff

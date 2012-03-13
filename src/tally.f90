@@ -66,10 +66,8 @@ contains
     if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(n-1,n_materials))
 
     ! preallocate mean and stdev
-    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum),          &
-   &                                                               n_materials))
-    if (.not.allocated(this%std))  allocate(this%std(size(this%sum),           &
-   &                                                               n_materials))
+    if (.not.allocated(this%mean)) allocate(this%mean(n-1,n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(n-1,n_materials))
 
     ! zero out tallies
     this%val = 0.0_8
@@ -104,10 +102,8 @@ contains
     if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(1000,n_materials))
 
     ! preallocate mean and stdev
-    if (.not.allocated(this%mean)) allocate(this%mean(size(this%sum),          &
-   &                                                               n_materials))
-    if (.not.allocated(this%std))  allocate(this%std(size(this%sum),           &
-   &                                                               n_materials))
+    if (.not.allocated(this%mean)) allocate(this%mean(1000,n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(1000,n_materials))
 
     ! zero out tallies
     this%val = 0.0_8
