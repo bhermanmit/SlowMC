@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<input>
+
+<!-- Settings Information -->
+  <settings>
+    <histories> 1000000 </histories>
+    <seed> 5 </seed>
+    <source_type> 1 </source_type>
+    <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
+  </settings>
+
+  <materials>
+    <material>
+      <type> homogeneous </type> 
+      <nuclide name="H-1" N="1" A="1" thermal="true" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
+      </nuclide>
+      <nuclide name="1/v" N="1" A="1" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/v_abs.h5 </path>
+      </nuclide>
+      <nuclide name="U-238" N="0.1" A="238" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238_300.h5 </path>
+      </nuclide>
+    </material>
+  </materials>
+
+  <tallies>
+    <tally type="micro_capture" isotope="3" >
+      <Ebins> 1e-11 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1000e-6 </Ebins>
+    </tally>
+    <tally type="flux" >
+      <Ebins> 1e-11 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1000e-6 </Ebins>
+    </tally>
+  </tallies>
+
+</input>
