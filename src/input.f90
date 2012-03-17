@@ -160,8 +160,10 @@ contains
           react_type = 1
         case('scattering')
           react_type = 2
-        case('micro_capture')
+        case('nufission')
           react_type = 3
+        case('micro_capture')
+          react_type = 4
           isotope = tallies_%tally(i)%isotope
         case DEFAULT
           react_type = 0

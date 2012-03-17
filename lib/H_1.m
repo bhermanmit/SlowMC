@@ -321,6 +321,7 @@ E = 10.^(log10(1e-11):dE:log10(20.0))';
 % create cross sections
 xs_scat = interp1(E_endf,xs_endf,E,'linear','extrap');
 xs_capt = zeros(length(xs_scat),1);
+xs_fiss = zeros(length(xs_scat),1);
 
 % get size
 sizeE = length(E);
@@ -341,6 +342,8 @@ h5create('H_1.h5','/xs_scat',sizeE);
 h5write('H_1.h5','/xs_scat',xs_scat);
 h5create('H_1.h5','/xs_capt',sizeE);
 h5write('H_1.h5','/xs_capt',xs_capt);
+h5create('H_1.h5','/xs_fiss',sizeE);
+h5write('H_1.h5','/xs_fiss',xs_fiss);
 h5create('H_1.h5','/E_width',1);
 h5write('H_1.h5','/E_width',dE);
 

@@ -3,7 +3,7 @@ tic
 % Inputs for user
 isoname = 'U_238';  % isotope name
 n_res = 14;        % number of resonances to read from file
-T = 1200;           % temperature of resonances
+T = 300;           % temperature of resonances
 sig_pot = 11.2934; % potential cross section of isotope
 A = 238;           % isotope atomic weight
 maxE = 1000;        % max energy in eV
@@ -111,7 +111,8 @@ sizeE = length(xs(:,1));
 xs_capt = xs(:,1);
 
 % set scattering to 0
-xs_scat = zeros(sizeE,1);
+xs_scat = sig_pot*ones(sizeE,1);
+xs_fiss = zeros(sizeE,1);
 
 % filename
 hdfile = horzcat(isoname,'_',num2str(T),'.h5');
@@ -124,5 +125,7 @@ h5create(hdfile,'/xs_scat',sizeE);
 h5write(hdfile,'/xs_scat',xs_scat);
 h5create(hdfile,'/xs_capt',sizeE);
 h5write(hdfile,'/xs_capt',xs_capt);
+h5create(hdfile,'/xs_fiss',sizeE);
+h5write(hdfile,'/xs_fiss',xs_fiss);
 h5create(hdfile,'/E_width',1);
 h5write(hdfile,'/E_width',dE);

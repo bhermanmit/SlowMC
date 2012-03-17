@@ -68,9 +68,9 @@ contains
     neut%reactid = sample_reaction(neut%region,neut%isoidx)
 
     ! perform reaction
-    if (neut%reactid == 1) then ! absorption
+    if (neut%reactid == 1 .or. neut%reactid == 2) then ! absorption
       neut%alive = .FALSE.
-    else if (neut%reactid == 2) then ! scattering
+    else if (neut%reactid == 3) then ! scattering
       call elastic_scattering(neut%region,neut%isoidx)
     else
       write(*,*) "Something is wrong after isotope sampling"
@@ -153,9 +153,8 @@ contains
       ! get macro total cross section of resonant isotope
       sig_t = sum(mat(1)%totalxs(eidx,:))
 
-      ! compute fuel-to-fuel collision probability
+      ! compute fuel-to-fuel collision probability (Carlviks two-term)
       Pff = (b*sig_t)/(a1*sig_e + sig_t) + ((1-b)*sig_t)/(a2*sig_e + sig_t)
-!     Pff = sig_t/((((1._8-Dancoff)*1.1_8)/((1._8-Dancoff) + Dancoff*1.1_8))*sig_e + sig_t)
 
       ! compute fuel-to-moderator collision probability
       Pfm = 1._8 - Pff
@@ -263,20 +262,21 @@ contains
     integer :: reactid  ! the id of the reaction type
 
     ! local variables
-    real(8) :: pmf(3)  ! probability mass function
-    real(8) :: cdf(3)  ! cumulative distribution function
+    real(8) :: pmf(4)  ! probability mass function
+    real(8) :: cdf(4)  ! cumulative distribution function
     real(8) :: rn      ! sampled random number
     integer :: i       ! iteration counter
 
     ! set up pmf
-    pmf = (/0.0_8,mat(region)%isotopes(isoidx)%xs_capt(eidx),                  &
-   &                                mat(region)%isotopes(isoidx)%xs_scat(eidx)/)
+    pmf = (/0.0_8,mat(region)%isotopes(isoidx)%xs_fiss(eidx),                  &
+   &              mat(region)%isotopes(isoidx)%xs_capt(eidx),                  &
+                  mat(region)%isotopes(isoidx)%xs_scat(eidx)/)
 
     ! normalize pmf
     pmf = pmf / sum(pmf)
 
     ! compute cdf
-    do i = 1,3
+    do i = 1,4
       cdf(i) = sum(pmf(1:i))
     end do
 
@@ -284,7 +284,7 @@ contains
     rn = rand(0)
 
     ! perform linear table search
-    do i = 1,3
+    do i = 1,4
       if (rn < cdf(i)) then
         reactid = i - 1
         exit

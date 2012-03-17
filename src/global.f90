@@ -46,6 +46,9 @@ module global
   ! kT value base on 300K
   real(8) :: kT = 8.6173324e-5_8*300*1.0e-6_8
 
+  ! set nu value
+  real(8) :: nubar = 2.455_8
+
   ! timers
   type(Timer) :: time_init
   type(Timer) :: time_run
@@ -161,9 +164,15 @@ contains
         case(2)
           fact = sum(mat(neut%region)%scattxs(eidx,:))
 
-        ! micro capture
+        ! nufission
         case(3)
+          fact = nubar*sum(mat(neut%region)%fissixs(eidx,:))
+
+        ! micro capture
+        case(4)
           fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
+
+        ! default is flux tally
         case DEFAULT
           fact = 1.0_8
 
@@ -216,15 +225,16 @@ contains
 
       ! call routine to compute statistics
       call calculate_statistics(tal(i),nhistories)
-print *,mat(1)%nisotopes
-print *,mat(1)%vol
-      ! normalize by volumes
-      do j = 1,n_materials
-        tal(i)%mean(:,j) = tal(i)%mean(:,j) / mat(j)%vol
-      end do
+
+      ! normalize by volumes and histories if flux tally
+      if (tal(i)%flux_tally) then
+        do j = 1,n_materials
+          tal(i)%mean(:,j) = tal(i)%mean(:,j) / (mat(j)%vol*nhistories)
+        end do
+      end if
 
     end do
 
   end subroutine finalize_tallies
 
-end module global 
+end module global

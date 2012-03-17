@@ -3,7 +3,7 @@
 
 <!-- Settings Information -->
   <settings>
-    <histories> 100000 </histories>
+    <histories> 1000000 </histories>
     <seed> 5 </seed>
     <source_type> 1 </source_type>
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
@@ -15,18 +15,24 @@
   <materials>
     <material>
       <type> fuel </type> 
-      <V> 0.7845 </V>
-      <nuclide name="U-238" N="0.0232" A="238" V="0.7845" thermal="false" >
+      <V> 0.5271 </V>
+      <nuclide name="U-238" N="0.0232" A="238" V="0.5271" thermal="false" >
         <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238_300.h5 </path>
       </nuclide>
     </material>
     <material>
       <type> moderator </type>
-      <V> 3.21466 </V>
-      <nuclide name="H-1" N="0.0258" A="1" V="3.21466" thermal="true" >
+      <V> 1.0605 </V>
+      <nuclide name="H-1" N="0.051588" A="1" V="1.0605" thermal="true" >
         <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
       </nuclide>
     </material>
   </materials>
+
+  <tallies>
+    <tally type="absorption" >
+      <Ebins> 1e-11 20.0 </Ebins>
+    </tally>
+  </tallies>
 
 </input>

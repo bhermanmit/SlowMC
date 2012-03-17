@@ -37,6 +37,7 @@ module materials
     real(8)               :: alpha       ! (A-1)^2/(A+1)^2
     real(8), allocatable  :: xs_capt(:)  ! capture micro xs
     real(8), allocatable  :: xs_scat(:)  ! scattering micro xs
+    real(8), allocatable  :: xs_fiss(:)  ! fission micro xs
     character(len=255)    :: name        ! name of isotope
 
     logical               :: thermal     ! thermal scatterer
@@ -58,6 +59,8 @@ module materials
     real(8), allocatable        :: totalxs(:,:)  ! array of macroscopic tot xs
     real(8), allocatable        :: scattxs(:,:)  ! array of macroscopic scat xs
     real(8), allocatable        :: absorxs(:,:)  ! array of macroscopic abs xs
+    real(8), allocatable        :: captuxs(:,:)  ! array of macroscopic capt xs
+    real(8), allocatable        :: fissixs(:,:)  ! array of macroscopic fiss xs
 
   end type material_type
 
@@ -145,6 +148,9 @@ contains
    &         allocate(this%isotopes(this%curr_iso)%xs_scat(vecsize))
     if (.not.allocated(this%isotopes(this%curr_iso)%xs_capt))                  &
    &         allocate(this%isotopes(this%curr_iso)%xs_capt(vecsize))
+    if (.not.allocated(this%isotopes(this%curr_iso)%xs_fiss))                  &
+   &         allocate(this%isotopes(this%curr_iso)%xs_fiss(vecsize))
+
 
     ! keep the size
     this%npts = vecsize
@@ -152,6 +158,7 @@ contains
     ! zero out xs vectors
     this%isotopes(this%curr_iso)%xs_scat = 0.0_8
     this%isotopes(this%curr_iso)%xs_capt = 0.0_8
+    this%isotopes(this%curr_iso)%xs_fiss = 0.0_8
 
     ! read in xs
     call h5dopen_f(hdf5_file,"/xs_scat",dataset_id,error)
@@ -163,6 +170,11 @@ contains
     dim1 = (/vecsize/)
     call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,                               &
    &     this%isotopes(this%curr_iso)%xs_capt,dim1,error)
+    call h5dclose_f(dataset_id,error)
+    call h5dopen_f(hdf5_file,"/xs_fiss",dataset_id,error)
+    dim1 = (/vecsize/)
+    call h5dread_f(dataset_id,H5T_NATIVE_DOUBLE,                               &
+   &     this%isotopes(this%curr_iso)%xs_fiss,dim1,error)
     call h5dclose_f(dataset_id,error)
 
     ! get energy interval width
@@ -295,6 +307,11 @@ contains
    &                            allocate(this%scattxs(this%npts,this%nisotopes))
     if (.not.allocated(this%absorxs))                                          &
    &                            allocate(this%absorxs(this%npts,this%nisotopes))
+    if (.not.allocated(this%captuxs))                                          &
+   &                            allocate(this%captuxs(this%npts,this%nisotopes))
+    if (.not.allocated(this%fissixs))                                          &
+   &                            allocate(this%fissixs(this%npts,this%nisotopes))
+
 
     ! zero out total xs
     this%totalxs = 0.0_8
@@ -306,9 +323,11 @@ contains
       iso => this%isotopes(i)
 
       ! multiply microscopic cross section by number density and append
+      this%captuxs(:,i) = iso%N*(iso%xs_capt)
+      this%fissixs(:,I) = iso%N*(iso%xs_fiss)
       this%scattxs(:,i) = iso%N*(iso%xs_scat)
-      this%absorxs(:,i) = iso%N*(iso%xs_capt)
-      this%totalxs(:,i) = iso%N*(iso%xs_capt + iso%xs_scat)
+      this%absorxs(:,i) = iso%N*(iso%xs_capt + iso%xs_fiss)
+      this%totalxs(:,i) = iso%N*(iso%xs_capt + iso%xs_fiss + iso%xs_scat)
 
     end do
 
@@ -344,7 +363,8 @@ contains
      &             (this%isotopes(i)%xs_scat)
       if (allocated(this%isotopes(i)%xs_capt)) deallocate                      &
      &             (this%isotopes(i)%xs_capt)
-
+      if (allocated(this%isotopes(i)%xs_fiss)) deallocate                      &
+     &             (this%isotopes(i)%xs_fiss)
     end do
 
     ! deallocate isotopes
@@ -354,6 +374,8 @@ contains
     if (allocated(this%totalxs)) deallocate(this%totalxs)
     if (allocated(this%scattxs)) deallocate(this%scattxs)
     if (allocated(this%absorxs)) deallocate(this%absorxs)
+    if (allocated(this%captuxs)) deallocate(this%captuxs)
+    if (allocated(this%fissixs)) deallocate(this%fissixs)
 
   end subroutine deallocate_material
 
