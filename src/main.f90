@@ -129,7 +129,7 @@ contains
         call perform_physics()
 
         ! check for energy cutoff
-        if (neut%E < emin) neut%alive = .FALSE.
+        if (neut%E < emin) neut%E = 1.1e-11_8 
 
       end do
 

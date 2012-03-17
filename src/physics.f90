@@ -151,12 +151,11 @@ contains
       sig_e = 1._8/(2._8*radius)
 
       ! get macro total cross section of resonant isotope
-      sig_t = mat(1)%totalxs(eidx,res_iso)
+      sig_t = sum(mat(1)%totalxs(eidx,:))
 
       ! compute fuel-to-fuel collision probability
       Pff = (b*sig_t)/(a1*sig_e + sig_t) + ((1-b)*sig_t)/(a2*sig_e + sig_t)
-
-      Pff = sig_t/((((1._8-Dancoff)*1.1_8)/((1._8-Dancoff) + Dancoff*1.1_8))*sig_e + sig_t)
+!     Pff = sig_t/((((1._8-Dancoff)*1.1_8)/((1._8-Dancoff) + Dancoff*1.1_8))*sig_e + sig_t)
 
       ! compute fuel-to-moderator collision probability
       Pfm = 1._8 - Pff
@@ -187,7 +186,8 @@ contains
       end if
 
     end if
-
+!print *,'Pff:',Pff,'Pfm:',Pfm,'Pmf:',Pmf,'Energy:',neut%E,sig_t,sum(mat(2)%totalxs(eidx,:)) 
+!read*
   end function sample_region
 
 !===============================================================================
