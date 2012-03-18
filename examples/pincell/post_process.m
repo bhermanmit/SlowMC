@@ -1,7 +1,7 @@
 % Post Processing Script for SlowMC code
 
 % select which tally to read
-spectrum = 2;
+spectrum = 3;
 
 % extract energy and spectrum mean
 E_spec = logspace(-11,log10(20.0),1000);

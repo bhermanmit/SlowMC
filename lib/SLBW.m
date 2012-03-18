@@ -98,34 +98,34 @@ toc
 % change units on E
 E = E/1e6;
 
-% zero out xs over 1 keV
-xs(:,1) = xs(:,1).*(E <= 1e-3);
-
-% put 0.1 barns after
-xs(:,1) = xs(:,1) + (E > 1e-3)*0.1;
-
-% get size
-sizeE = length(xs(:,1));
-
-% get capture
-xs_capt = xs(:,1);
-
-% set scattering to 0
-xs_scat = sig_pot*ones(sizeE,1);
-xs_fiss = zeros(sizeE,1);
-
-% filename
-hdfile = horzcat(isoname,'_',num2str(T),'.h5');
-
-% write out hdf5 file
-delete(hdfile);
-h5create(hdfile,'/vecsize',1);
-h5write(hdfile,'/vecsize',sizeE);
-h5create(hdfile,'/xs_scat',sizeE);
-h5write(hdfile,'/xs_scat',xs_scat);
-h5create(hdfile,'/xs_capt',sizeE);
-h5write(hdfile,'/xs_capt',xs_capt);
-h5create(hdfile,'/xs_fiss',sizeE);
-h5write(hdfile,'/xs_fiss',xs_fiss);
-h5create(hdfile,'/E_width',1);
-h5write(hdfile,'/E_width',dE);
+% % zero out xs over 1 keV
+% xs(:,1) = xs(:,1).*(E <= 1e-3);
+% 
+% % put 0.1 barns after
+% xs(:,1) = xs(:,1) + (E > 1e-3)*0.1;
+% 
+% % get size
+% sizeE = length(xs(:,1));
+% 
+% % get capture
+% xs_capt = xs(:,1);
+% 
+% % set scattering to 0
+% xs_scat = sig_pot*ones(sizeE,1);
+% xs_fiss = zeros(sizeE,1);
+% 
+% % filename
+% hdfile = horzcat(isoname,'_',num2str(T),'.h5');
+% 
+% % write out hdf5 file
+% delete(hdfile);
+% h5create(hdfile,'/vecsize',1);
+% h5write(hdfile,'/vecsize',sizeE);
+% h5create(hdfile,'/xs_scat',sizeE);
+% h5write(hdfile,'/xs_scat',xs_scat);
+% h5create(hdfile,'/xs_capt',sizeE);
+% h5write(hdfile,'/xs_capt',xs_capt);
+% h5create(hdfile,'/xs_fiss',sizeE);
+% h5write(hdfile,'/xs_fiss',xs_fiss);
+% h5create(hdfile,'/E_width',1);
+% h5write(hdfile,'/E_width',dE);

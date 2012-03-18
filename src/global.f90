@@ -53,6 +53,14 @@ module global
   type(Timer) :: time_init
   type(Timer) :: time_run
 
+  ! analog counters for k-inf
+  integer :: n_abs=0.0_8
+  integer :: n_fiss=0.0_8
+  real(8) :: ana_kinf_mean = 0.0_8
+  real(8) :: ana_kinf_std  = 0.0_8
+  real(8) :: col_kinf_mean = 0.0_8
+  real(8) :: col_kinf_std  = 0.0_8
+
 contains
 
 !==============================================================================
@@ -234,6 +242,13 @@ contains
       end if
 
     end do
+
+    ! compute k_inf
+    ana_kinf_mean = dble(n_fiss)*nubar/dble(n_abs)
+!   ana_kinf_std  = sqrt((ana_kinf_mean/dble(n_) - ana_kinf_mean**2)/dble(n-1)) 
+    ana_kinf_std  = 0.0_8
+    col_kinf_mean = sum(tal(n_tallies)%mean)
+    col_kinf_std  = sum(tal(n_tallies)%std)
 
   end subroutine finalize_tallies
 

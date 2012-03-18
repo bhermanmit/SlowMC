@@ -53,7 +53,7 @@ contains
 
   subroutine perform_physics()
 
-    use global, only: neut,add_to_tallies
+    use global, only: neut,add_to_tallies,n_abs,n_fiss
 
     ! sample region
     neut%region = sample_region()
@@ -70,6 +70,8 @@ contains
     ! perform reaction
     if (neut%reactid == 1 .or. neut%reactid == 2) then ! absorption
       neut%alive = .FALSE.
+      if (neut%reactid == 1) n_fiss = n_fiss+1
+      n_abs = n_abs + 1
     else if (neut%reactid == 3) then ! scattering
       call elastic_scattering(neut%region,neut%isoidx)
     else

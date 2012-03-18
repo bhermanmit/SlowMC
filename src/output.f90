@@ -63,7 +63,8 @@ contains
 
   subroutine write_output()
 
-    use global, only: time_init,time_run,tal,n_tallies
+    use global, only: time_init,time_run,tal,n_tallies,ana_kinf_mean,          &
+   &                  ana_kinf_std,col_kinf_mean,col_kinf_std
     use hdf5
 
     ! local variables
@@ -85,8 +86,15 @@ contains
     write(*,100) "Transport time",time_run%elapsed
     write(*,*)
 
-    ! format for write statements
+    ! format for time write statements
 100 format (1X,A,T35,"= ",ES11.4," seconds")
+
+    ! write k-inf information
+    write(*,101) 'k-inf (analog):',ana_kinf_mean,ana_kinf_std
+    write(*,101) 'k-inf (coll):  ',col_kinf_mean,col_kinf_std
+
+    ! format for kinf write statements
+101 format(1X,A,2X,F7.5,1X,'+/-',1X,F7.5)
 
     ! open up output hdf5 file
     call h5fcreate_f("output.h5",H5F_ACC_TRUNC_F,hdfile,error)

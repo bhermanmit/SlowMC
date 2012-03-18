@@ -25,7 +25,8 @@ contains
    &                            allocate_problem,tal,n_tallies,n_materials,    &
    &                            res_iso,Dancoff,radius
     use materials,        only: setup_material,load_source,load_isotope
-    use tally,            only: set_user_tally,set_spectrum_tally
+    use tally,            only: set_user_tally,set_spectrum_tally,             &
+   &                            set_kinf_tally
     use xml_data_input_t
 
     ! local variables
@@ -70,9 +71,9 @@ contains
 
     ! get size of tallies
     if (.not.associated(tallies_%tally)) then
-      n_tallies = 1
+      n_tallies = 2
     else
-      n_tallies = size(tallies_%tally) + 1
+      n_tallies = size(tallies_%tally) + 2
     end if
 
     ! allocate problem
@@ -150,7 +151,7 @@ contains
     end do
 
     ! begin loop over tallies
-    do i = 1,n_tallies-1
+    do i = 1,n_tallies-2
 
       ! set reaction type
       select case(trim(tallies_%tally(i)%type))
@@ -184,7 +185,10 @@ contains
     end do
 
     ! set up spectrum tally
-    call set_spectrum_tally(tal(n_tallies),emax,emin,n_materials)
+    call set_spectrum_tally(tal(n_tallies-1),emax,emin,n_materials)
+
+    ! set up k_inf tally
+    call set_kinf_tally(tal(n_tallies),emax,emin,n_materials)
 
     ! load the source
     call load_source(mat(1),source_type,settings_%source_path)

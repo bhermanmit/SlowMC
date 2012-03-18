@@ -11,7 +11,7 @@ module tally
   implicit none
   private
   public :: set_spectrum_tally,add_to_tally,bank_tally,deallocate_tally,       &
- &          set_user_tally,calculate_statistics
+ &          set_user_tally,calculate_statistics,set_kinf_tally
 
   type, public :: tally_type
 
@@ -113,6 +113,45 @@ contains
   end subroutine set_spectrum_tally
 
 !===============================================================================
+! SET_KINF_TALLY
+!> @brief routine to initiaize kinf nu-fission tally
+!===============================================================================
+
+  subroutine set_kinf_tally(this,emax,emin,n_materials)
+
+    ! formal variables
+    type(tally_type) :: this         ! a tally
+    integer          :: n_materials  ! number of materials
+    real(8)          :: emax         ! max e
+    real(8)          :: emin         ! min e
+
+    ! preallocate user-defined energy structure
+    if (.not.allocated(this%E)) allocate(this%E(2))
+
+    ! set energy structure
+    this%E(1) = emin
+    this%E(2) = emax
+
+    ! set reaction type
+    this%react_type = 3
+
+    ! preallocate vectors
+    if(.not.allocated(this%val)) allocate(this%val(1,n_materials))
+    if(.not.allocated(this%sum)) allocate(this%sum(1,n_materials))
+    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(1,n_materials))
+
+    ! preallocate mean and stdev
+    if (.not.allocated(this%mean)) allocate(this%mean(1,n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(1,n_materials))
+
+    ! zero out tallies
+    this%val = 0.0_8
+    this%sum = 0.0_8
+    this%sum_sq = 0.0_8
+
+  end subroutine set_kinf_tally
+
+!===============================================================================
 ! ADD_TO_TALLY
 !> @brief routine to add quantities during transport of a particle 
 !===============================================================================
@@ -190,7 +229,7 @@ contains
     this%mean =  this%sum / dble(n)
 
     ! compute standard deviation
-    this%std = sqrt((this%sum_sq/dble(n) - this%mean**2)/dble(n))
+    this%std = sqrt((this%sum_sq/dble(n) - this%mean**2)/dble(n-1))
 
   end subroutine calculate_statistics
 
