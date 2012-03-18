@@ -92,6 +92,7 @@ contains
     ! write k-inf information
     write(*,101) 'k-inf (analog):',ana_kinf_mean,ana_kinf_std
     write(*,101) 'k-inf (coll):  ',col_kinf_mean,col_kinf_std
+    write(*,*)
 
     ! format for kinf write statements
 101 format(1X,A,2X,F7.5,1X,'+/-',1X,F7.5)
