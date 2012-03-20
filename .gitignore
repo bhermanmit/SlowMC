@@ -32,4 +32,4 @@ doxygen
 gh-pages
 
 # hdf5 files
-*.h5
+output.h5
