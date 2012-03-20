@@ -45,6 +45,7 @@ contains
     integer                        :: isotope=0    ! isotope for micro mult
     integer                        :: region=0     ! region to tally micros
     real(8), allocatable           :: Ebins(:)     ! tally energy bins
+    logical                        :: dv           ! divide tally by volumes 
 
     ! check for input file
     filename = "input.xml"
@@ -154,6 +155,10 @@ contains
     ! begin loop over tallies
     do i = 1,n_tallies-2
 
+      ! check for divide by volume
+      dv = .false.
+      if (tallies_%tally(i)%dv) dv = .true.
+
       ! set reaction type
       select case(trim(tallies_%tally(i)%type))
         case('flux')
@@ -184,7 +189,7 @@ contains
 
       ! set up user-defined tallies
       call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope,region,  &
-     &                    n_materials)
+     &                    n_materials,dv)
 
       ! deallocate Ebins
       if(allocated(Ebins)) deallocate(Ebins)

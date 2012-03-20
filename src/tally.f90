@@ -29,6 +29,7 @@ module tally
     integer :: react_type             ! reaction type id
     integer :: isotope                ! isotope number
     integer :: region                 ! region for micros
+    logical :: dv = .false.           ! divide by volume of regions
 
   end type tally_type
 
@@ -39,7 +40,8 @@ contains
 !> @brief routine to intialize user-defined tallies
 !===============================================================================
 
-  subroutine set_user_tally(this,Ebins,n,react_type,isotope,region,n_materials)
+  subroutine set_user_tally(this,Ebins,n,react_type,isotope,region,n_materials,&
+                            dv)
 
     ! formal variables
     type(tally_type) :: this        ! a tally
@@ -49,9 +51,13 @@ contains
     integer          :: region      ! region filter for isotope
     integer          :: n_materials ! number of material tally regions
     real(8)          :: Ebins(n)    ! vector of energy bins
-    
+    logical          :: dv          ! divide by volume   
+ 
     ! preallocate user-defined energy structure
     if (.not.allocated(this%E)) allocate(this%E(n))
+
+    ! set divide by volume
+    this%dv = dv
 
     ! set energy structure
     this%E = Ebins

@@ -247,7 +247,7 @@ contains
       call calculate_statistics(tal(i),nhistories)
 
       ! normalize by volumes and histories if flux tally
-      if (tal(i)%flux_tally) then
+      if (tal(i)%flux_tally .or. tal(i)%dv) then
         do j = 1,n_materials
           tal(i)%mean(:,j) = tal(i)%mean(:,j) / mat(j)%vol
         end do

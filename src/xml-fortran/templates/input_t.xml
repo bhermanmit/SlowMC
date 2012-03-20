@@ -33,6 +33,7 @@
   </typedef>
 
   <typedef name="tally_xml" />
+    <component name="dv" type="logical" default=".false."/>
     <component name="Ebins" type="double-array" />
     <component name="type"  type="word" length="255" />
     <component name="isotope" type="integer" />
