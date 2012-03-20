@@ -36,6 +36,7 @@
     <component name="Ebins" type="double-array" />
     <component name="type"  type="word" length="255" />
     <component name="isotope" type="integer" />
+    <component name="region"  type="integer" />
   </typedef>
 
   <typedef name="tallies_xml">
