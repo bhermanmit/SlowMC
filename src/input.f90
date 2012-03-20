@@ -158,16 +158,18 @@ contains
       select case(trim(tallies_%tally(i)%type))
         case('flux')
           react_type = 0
-        case('absorption')
+        case('total')
           react_type = 1
-        case('scattering')
+        case('absorption')
           react_type = 2
-        case('nufission')
+        case('scattering')
           react_type = 3
-        case('fission')
+        case('nufission')
           react_type = 4
-        case('micro_capture')
+        case('fission')
           react_type = 5
+        case('micro_capture')
+          react_type = 6
           isotope = tallies_%tally(i)%isotope
           region = tallies_%tally(i)%region
         case DEFAULT

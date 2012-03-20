@@ -164,24 +164,28 @@ contains
         case(0)
           fact = 1.0_8
 
-        ! absorption
+        ! total 
         case(1)
+          fact = totxs
+
+        ! absorption
+        case(2)
           fact = sum(mat(neut%region)%absorxs(eidx,:))
 
         ! scattering
-        case(2)
+        case(3)
           fact = sum(mat(neut%region)%scattxs(eidx,:))
 
         ! nufission
-        case(3)
+        case(4)
           fact = nubar*sum(mat(neut%region)%fissixs(eidx,:))
 
         ! fission
-        case(4)
+        case(5)
           fact = sum(mat(neut%region)%fissixs(eidx,:))
 
         ! micro capture
-        case(5)
+        case(6)
           if (neut%region == tal(i)%region) then
             fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
           else
