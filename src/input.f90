@@ -43,6 +43,7 @@ contains
     integer                        :: nisotopes    ! number of isotopes in mat
     integer                        :: react_type   ! reaction type
     integer                        :: isotope=0    ! isotope for micro mult
+    integer                        :: region=0     ! region to tally micros
     real(8), allocatable           :: Ebins(:)     ! tally energy bins
 
     ! check for input file
@@ -163,9 +164,12 @@ contains
           react_type = 2
         case('nufission')
           react_type = 3
-        case('micro_capture')
+        case('fission')
           react_type = 4
+        case('micro_capture')
+          react_type = 5
           isotope = tallies_%tally(i)%isotope
+          region = tallies_%tally(i)%region
         case DEFAULT
           react_type = 0
       end select
@@ -177,7 +181,8 @@ contains
       Ebins = tallies_%tally(i)%Ebins
 
       ! set up user-defined tallies
-      call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope,n_materials)
+      call set_user_tally(tal(i),Ebins,size(Ebins),react_type,isotope,region,  &
+     &                    n_materials)
 
       ! deallocate Ebins
       if(allocated(Ebins)) deallocate(Ebins)

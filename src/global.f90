@@ -176,9 +176,17 @@ contains
         case(3)
           fact = nubar*sum(mat(neut%region)%fissixs(eidx,:))
 
-        ! micro capture
+        ! fission
         case(4)
-          fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
+          fact = sum(mat(neut%region)%fissixs(eidx,:))
+
+        ! micro capture
+        case(5)
+          if (neut%region == tal(i)%region) then
+            fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
+          else
+            cycle
+          end if
 
         ! default is flux tally
         case DEFAULT
@@ -237,7 +245,7 @@ contains
       ! normalize by volumes and histories if flux tally
       if (tal(i)%flux_tally) then
         do j = 1,n_materials
-          tal(i)%mean(:,j) = tal(i)%mean(:,j) / (mat(j)%vol*nhistories)
+          tal(i)%mean(:,j) = tal(i)%mean(:,j) / mat(j)%vol
         end do
       end if
 
