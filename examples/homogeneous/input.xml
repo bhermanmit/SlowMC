@@ -25,7 +25,7 @@
   </materials>
 
   <tallies>
-    <tally type="micro_capture" isotope="3" >
+    <tally type="micro_capture" isotope="3" region="1">
       <Ebins> 1e-11 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1000e-6 </Ebins>
     </tally>
     <tally type="flux" >
