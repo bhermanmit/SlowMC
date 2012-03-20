@@ -53,12 +53,14 @@ Data Types</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type &#160;</td><td class="memItemRight" valign="bottom"><b>tally_type</b></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#acd7f9f649f186cdc5f8ef1bd5ad61983">set_user_tally</a> (this, Ebins, n, react_type, isotope)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to intialize user-defined tallies  <a href="#acd7f9f649f186cdc5f8ef1bd5ad61983"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a4c040f66f18cd95097fcd5a6762cde9a">set_spectrum_tally</a> (this, emax, emin)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to initialize all tallies  <a href="#a4c040f66f18cd95097fcd5a6762cde9a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a17dd806382c380da7baf563923ebed52">add_to_tally</a> (this, fact, totxs, E)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to add quantities during transport of a particle  <a href="#a17dd806382c380da7baf563923ebed52"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#ab29030118763812d7fe49cb0d51e7597">set_user_tally</a> (this, Ebins, n, react_type, isotope, region, n_materials, dv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to intialize user-defined tallies  <a href="#ab29030118763812d7fe49cb0d51e7597"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#ad7b7906258ddc8dd18f90cd58ea0ba27">set_spectrum_tally</a> (this, emax, emin, n_materials)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to initialize all tallies  <a href="#ad7b7906258ddc8dd18f90cd58ea0ba27"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#ae6f47ba17a052fbd3ecb4dc9d1f8dd5d">set_kinf_tally</a> (this, emax, emin, n_materials)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to initiaize kinf nu-fission tally  <a href="#ae6f47ba17a052fbd3ecb4dc9d1f8dd5d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a03985c1ebaab7358d5960cac05ba28ef">add_to_tally</a> (this, fact, totxs, E, region)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to add quantities during transport of a particle  <a href="#a03985c1ebaab7358d5960cac05ba28ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">bank_tally</a> (this)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to bank a histories tallies  <a href="#a340ac839b4b22266d919ed2117b5bd8a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">calculate_statistics</a> (this, n)</td></tr>
@@ -70,7 +72,7 @@ Functions/Subroutines</h2></td></tr>
 <div class="textblock"><p>Contains information about tallying quantities. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Bryan Herman </dd></dl>
 </div><hr/><h2>Function/Subroutine Documentation</h2>
-<a class="anchor" id="a17dd806382c380da7baf563923ebed52"></a><!-- doxytag: member="tally::add_to_tally" ref="a17dd806382c380da7baf563923ebed52" args="(this, fact, totxs, E)" -->
+<a class="anchor" id="a03985c1ebaab7358d5960cac05ba28ef"></a><!-- doxytag: member="tally::add_to_tally" ref="a03985c1ebaab7358d5960cac05ba28ef" args="(this, fact, totxs, E, region)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -96,7 +98,13 @@ Functions/Subroutines</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real(8)&#160;</td>
-          <td class="paramname"><em>E</em>&#160;</td>
+          <td class="paramname"><em>E</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>region</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -109,16 +117,16 @@ Functions/Subroutines</h2></td></tr>
 
 <p>routine to add quantities during transport of a particle </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00110">110</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00170">170</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00100">global::add_to_tallies()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00145">global::add_to_tallies()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacetally_a17dd806382c380da7baf563923ebed52_icgraph.png" border="0" usemap="#namespacetally_a17dd806382c380da7baf563923ebed52_icgraph" alt=""/></div>
-<map name="namespacetally_a17dd806382c380da7baf563923ebed52_icgraph" id="namespacetally_a17dd806382c380da7baf563923ebed52_icgraph">
-<area shape="rect" id="node3" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="179,5,323,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="371,5,464,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="512,5,563,35"/></map>
+<div class="center"><img src="namespacetally_a03985c1ebaab7358d5960cac05ba28ef_icgraph.png" border="0" usemap="#namespacetally_a03985c1ebaab7358d5960cac05ba28ef_icgraph" alt=""/></div>
+<map name="namespacetally_a03985c1ebaab7358d5960cac05ba28ef_icgraph" id="namespacetally_a03985c1ebaab7358d5960cac05ba28ef_icgraph">
+<area shape="rect" id="node3" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="179,5,323,35"/><area shape="rect" id="node5" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="371,5,541,35"/><area shape="rect" id="node7" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="589,5,683,35"/><area shape="rect" id="node9" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="731,5,781,35"/></map>
 </div>
 </p>
 
@@ -141,16 +149,16 @@ Here is the caller graph for this function:</div>
 
 <p>routine to bank a histories tallies </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00153">153</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00214">214</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00150">global::bank_tallies()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00213">global::bank_tallies()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacetally_a340ac839b4b22266d919ed2117b5bd8a_icgraph.png" border="0" usemap="#namespacetally_a340ac839b4b22266d919ed2117b5bd8a_icgraph" alt=""/></div>
 <map name="namespacetally_a340ac839b4b22266d919ed2117b5bd8a_icgraph" id="namespacetally_a340ac839b4b22266d919ed2117b5bd8a_icgraph">
-<area shape="rect" id="node3" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d" title="routine that record temporary history information in tallies" alt="" coords="168,5,301,35"/></map>
+<area shape="rect" id="node3" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d" title="routine that record temporary history information in tallies" alt="" coords="168,5,301,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="349,5,443,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="491,5,541,35"/></map>
 </div>
 </p>
 
@@ -183,9 +191,9 @@ Here is the caller graph for this function:</div>
 
 <p>routine to compute mean and standard deviation of tallies </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00172">172</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00233">233</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00172">global::finalize_tallies()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00235">global::finalize_tallies()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -215,9 +223,9 @@ Here is the caller graph for this function:</div>
 
 <p>routine to deallocate tally types </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00195">195</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00252">252</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00071">global::deallocate_problem()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00086">global::deallocate_problem()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -230,7 +238,50 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a4c040f66f18cd95097fcd5a6762cde9a"></a><!-- doxytag: member="tally::set_spectrum_tally" ref="a4c040f66f18cd95097fcd5a6762cde9a" args="(this, emax, emin)" -->
+<a class="anchor" id="ae6f47ba17a052fbd3ecb4dc9d1f8dd5d"></a><!-- doxytag: member="tally::set_kinf_tally" ref="ae6f47ba17a052fbd3ecb4dc9d1f8dd5d" args="(this, emax, emin, n_materials)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine,public tally::set_kinf_tally </td>
+          <td>(</td>
+          <td class="paramtype">type(tally_type)&#160;</td>
+          <td class="paramname"><em>this</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(8)&#160;</td>
+          <td class="paramname"><em>emax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(8)&#160;</td>
+          <td class="paramname"><em>emin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>n_materials</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>routine to initiaize kinf nu-fission tally </p>
+
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00131">131</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad7b7906258ddc8dd18f90cd58ea0ba27"></a><!-- doxytag: member="tally::set_spectrum_tally" ref="ad7b7906258ddc8dd18f90cd58ea0ba27" args="(this, emax, emin, n_materials)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -250,7 +301,13 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real(8)&#160;</td>
-          <td class="paramname"><em>emin</em>&#160;</td>
+          <td class="paramname"><em>emin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>n_materials</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -263,22 +320,22 @@ Here is the caller graph for this function:</div>
 
 <p>routine to initialize all tallies </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00079">79</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00095">95</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacetally_a4c040f66f18cd95097fcd5a6762cde9a_icgraph.png" border="0" usemap="#namespacetally_a4c040f66f18cd95097fcd5a6762cde9a_icgraph" alt=""/></div>
-<map name="namespacetally_a4c040f66f18cd95097fcd5a6762cde9a_icgraph" id="namespacetally_a4c040f66f18cd95097fcd5a6762cde9a_icgraph">
+<div class="center"><img src="namespacetally_ad7b7906258ddc8dd18f90cd58ea0ba27_icgraph.png" border="0" usemap="#namespacetally_ad7b7906258ddc8dd18f90cd58ea0ba27_icgraph" alt=""/></div>
+<map name="namespacetally_ad7b7906258ddc8dd18f90cd58ea0ba27_icgraph" id="namespacetally_ad7b7906258ddc8dd18f90cd58ea0ba27_icgraph">
 <area shape="rect" id="node3" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="220,5,337,35"/><area shape="rect" id="node5" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="387,5,456,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="504,5,555,35"/></map>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="acd7f9f649f186cdc5f8ef1bd5ad61983"></a><!-- doxytag: member="tally::set_user_tally" ref="acd7f9f649f186cdc5f8ef1bd5ad61983" args="(this, Ebins, n, react_type, isotope)" -->
+<a class="anchor" id="ab29030118763812d7fe49cb0d51e7597"></a><!-- doxytag: member="tally::set_user_tally" ref="ab29030118763812d7fe49cb0d51e7597" args="(this, Ebins, n, react_type, isotope, region, n_materials, dv)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -310,7 +367,25 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">integer&#160;</td>
-          <td class="paramname"><em>isotope</em>&#160;</td>
+          <td class="paramname"><em>isotope</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>region</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>n_materials</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">logical&#160;</td>
+          <td class="paramname"><em>dv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -323,15 +398,15 @@ Here is the caller graph for this function:</div>
 
 <p>routine to intialize user-defined tallies </p>
 
-<p>Definition at line <a class="el" href="tally_8f90_source.html#l00041">41</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
+<p>Definition at line <a class="el" href="tally_8f90_source.html#l00043">43</a> of file <a class="el" href="tally_8f90_source.html">tally.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacetally_acd7f9f649f186cdc5f8ef1bd5ad61983_icgraph.png" border="0" usemap="#namespacetally_acd7f9f649f186cdc5f8ef1bd5ad61983_icgraph" alt=""/></div>
-<map name="namespacetally_acd7f9f649f186cdc5f8ef1bd5ad61983_icgraph" id="namespacetally_acd7f9f649f186cdc5f8ef1bd5ad61983_icgraph">
+<div class="center"><img src="namespacetally_ab29030118763812d7fe49cb0d51e7597_icgraph.png" border="0" usemap="#namespacetally_ab29030118763812d7fe49cb0d51e7597_icgraph" alt=""/></div>
+<map name="namespacetally_ab29030118763812d7fe49cb0d51e7597_icgraph" id="namespacetally_ab29030118763812d7fe49cb0d51e7597_icgraph">
 <area shape="rect" id="node3" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="191,5,308,35"/><area shape="rect" id="node5" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="357,5,427,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="475,5,525,35"/></map>
 </div>
 </p>
@@ -339,7 +414,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:20 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -1,14 +1,17 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="160,5,304,35"/>
+<area shape="rect" id="node3" href="$namespaceglobal.html#a082803bdd82681404cb106c4dbde237d" title="routine that record temporary history information in tallies" alt="" coords="165,5,299,35"/>
 <area shape="rect" id="node7" href="$namespacephysics.html#a9b9463407927006e6591dc6fc4635658" title="function to compute the index in unionized energy grid" alt="" coords="171,59,293,88"/>
 <area shape="rect" id="node9" href="$namespaceparticle.html#a1c0ff1c009064732181383e76f1ec597" title="routine to initialize a particle" alt="" coords="163,112,301,141"/>
 <area shape="rect" id="node11" href="$namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="147,165,317,195"/>
-<area shape="rect" id="node19" href="$namespacephysics.html#a56644bb2eaf70cea5dbddce67f8b2fb2" title="routine to sample source from cdf" alt="" coords="151,219,313,248"/>
-<area shape="rect" id="node21" href="$namespacetiming.html#a5cb4e02e341523b25bc9c89e5b119ed0" title="timing::timer_start" alt="" coords="169,272,295,301"/>
-<area shape="rect" id="node23" href="$namespacetiming.html#ab3c9139fe1604b0822ca4b8fb71abb60" title="timing::timer_stop" alt="" coords="169,325,295,355"/>
-<area shape="rect" id="node5" href="$namespacetally.html#a17dd806382c380da7baf563923ebed52" title="routine to add quantities during transport of a particle" alt="" coords="393,5,516,35"/>
-<area shape="rect" id="node13" href="$namespacephysics.html#aa72279ceb4aed8f87207f32cdc81648b" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="367,112,543,141"/>
-<area shape="rect" id="node15" href="$namespacephysics.html#a9718375dac64a0b1b11251454b0ae869" title="function to sample interaction isotope" alt="" coords="372,165,537,195"/>
-<area shape="rect" id="node17" href="$namespacephysics.html#ab0df29491acac2523a11b6cba249976c" title="function to sample reaction type" alt="" coords="369,219,540,248"/>
-<area shape="rect" id="node25" href="$namespacetiming.html#abbea9673193e6e38536233c214a4b507" title="timing::timer_get_value" alt="" coords="376,325,533,355"/>
+<area shape="rect" id="node25" href="$namespacephysics.html#a56644bb2eaf70cea5dbddce67f8b2fb2" title="routine to sample source from cdf" alt="" coords="151,219,313,248"/>
+<area shape="rect" id="node27" href="$namespacetiming.html#a5cb4e02e341523b25bc9c89e5b119ed0" title="timing::timer_start" alt="" coords="169,272,295,301"/>
+<area shape="rect" id="node29" href="$namespacetiming.html#ab3c9139fe1604b0822ca4b8fb71abb60" title="timing::timer_stop" alt="" coords="169,325,295,355"/>
+<area shape="rect" id="node5" href="$namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a" title="routine to bank a histories tallies" alt="" coords="399,5,511,35"/>
+<area shape="rect" id="node13" href="$namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="383,59,527,88"/>
+<area shape="rect" id="node17" href="$namespacephysics.html#ac66d88afb83774b3194721245b0cedc8" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="367,112,543,141"/>
+<area shape="rect" id="node19" href="$namespacephysics.html#ad40503675b93b306323c8e25a8585a04" title="function to sample interaction isotope" alt="" coords="372,165,537,195"/>
+<area shape="rect" id="node21" href="$namespacephysics.html#a2ffa5d1d4790564d3acb49d5ed6ada2d" title="function to sample reaction type" alt="" coords="369,219,540,248"/>
+<area shape="rect" id="node23" href="$namespacephysics.html#ad9444d358ff46b46e987c88a8c23e424" title="function to sample region where interaction occurs" alt="" coords="376,272,533,301"/>
+<area shape="rect" id="node15" href="$namespacetally.html#a03985c1ebaab7358d5960cac05ba28ef" title="routine to add quantities during transport of a particle" alt="" coords="593,59,716,88"/>
+<area shape="rect" id="node31" href="$namespacetiming.html#abbea9673193e6e38536233c214a4b507" title="timing::timer_get_value" alt="" coords="376,325,533,355"/>
 </map>

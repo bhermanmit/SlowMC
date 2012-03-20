@@ -55,18 +55,20 @@ Functions/Subroutines</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">high level routine to perform transport physics  <a href="#a133218ca6a5aef900f47bd603d8fe205"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#a9b9463407927006e6591dc6fc4635658">get_eidx</a> (E)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to compute the index in unionized energy grid  <a href="#a9b9463407927006e6591dc6fc4635658"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#a9718375dac64a0b1b11251454b0ae869">sample_isotope</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to sample interaction isotope  <a href="#a9718375dac64a0b1b11251454b0ae869"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#ab0df29491acac2523a11b6cba249976c">sample_reaction</a> (isoidx)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to sample reaction type  <a href="#ab0df29491acac2523a11b6cba249976c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#aa72279ceb4aed8f87207f32cdc81648b">elastic_scattering</a> (isoidx)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to perform thermal/asymptotic elastic scattering physics  <a href="#aa72279ceb4aed8f87207f32cdc81648b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#ad9444d358ff46b46e987c88a8c23e424">sample_region</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to sample region where interaction occurs  <a href="#ad9444d358ff46b46e987c88a8c23e424"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#ad40503675b93b306323c8e25a8585a04">sample_isotope</a> (region)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to sample interaction isotope  <a href="#ad40503675b93b306323c8e25a8585a04"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#a2ffa5d1d4790564d3acb49d5ed6ada2d">sample_reaction</a> (region, isoidx)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">function to sample reaction type  <a href="#a2ffa5d1d4790564d3acb49d5ed6ada2d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics.html#ac66d88afb83774b3194721245b0cedc8">elastic_scattering</a> (region, isoidx)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to perform thermal/asymptotic elastic scattering physics  <a href="#ac66d88afb83774b3194721245b0cedc8"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Contains routines to model the physics of the problem. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Bryan Herman </dd></dl>
 </div><hr/><h2>Function/Subroutine Documentation</h2>
-<a class="anchor" id="aa72279ceb4aed8f87207f32cdc81648b"></a><!-- doxytag: member="physics::elastic_scattering" ref="aa72279ceb4aed8f87207f32cdc81648b" args="(isoidx)" -->
+<a class="anchor" id="ac66d88afb83774b3194721245b0cedc8"></a><!-- doxytag: member="physics::elastic_scattering" ref="ac66d88afb83774b3194721245b0cedc8" args="(region, isoidx)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -74,8 +76,18 @@ Functions/Subroutines</h2></td></tr>
           <td class="memname">subroutine physics::elastic_scattering </td>
           <td>(</td>
           <td class="paramtype">integer&#160;</td>
-          <td class="paramname"><em>isoidx</em></td><td>)</td>
+          <td class="paramname"><em>region</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>isoidx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -83,17 +95,17 @@ Functions/Subroutines</h2></td></tr>
 
 <p>routine to perform thermal/asymptotic elastic scattering physics </p>
 
-<p>Definition at line <a class="el" href="physics_8f90_source.html#l00210">210</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
+<p>Definition at line <a class="el" href="physics_8f90_source.html#l00303">303</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="global_8f90_source.html#l00043">global::kT</a>, <a class="el" href="global_8f90_source.html#l00025">global::mat</a>, and <a class="el" href="global_8f90_source.html#l00026">global::neut</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00047">global::kT</a>, <a class="el" href="global_8f90_source.html#l00026">global::mat</a>, and <a class="el" href="global_8f90_source.html#l00025">global::neut</a>.</p>
 
 <p>Referenced by <a class="el" href="physics_8f90_source.html#l00054">perform_physics()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacephysics_aa72279ceb4aed8f87207f32cdc81648b_icgraph.png" border="0" usemap="#namespacephysics_aa72279ceb4aed8f87207f32cdc81648b_icgraph" alt=""/></div>
-<map name="namespacephysics_aa72279ceb4aed8f87207f32cdc81648b_icgraph" id="namespacephysics_aa72279ceb4aed8f87207f32cdc81648b_icgraph">
+<div class="center"><img src="namespacephysics_ac66d88afb83774b3194721245b0cedc8_icgraph.png" border="0" usemap="#namespacephysics_ac66d88afb83774b3194721245b0cedc8_icgraph" alt=""/></div>
+<map name="namespacephysics_ac66d88afb83774b3194721245b0cedc8_icgraph" id="namespacephysics_ac66d88afb83774b3194721245b0cedc8_icgraph">
 <area shape="rect" id="node3" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="232,5,403,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="451,5,544,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="592,5,643,35"/></map>
 </div>
 </p>
@@ -117,11 +129,11 @@ Here is the caller graph for this function:</div>
 
 <p>function to compute the index in unionized energy grid </p>
 
-<p>Definition at line <a class="el" href="physics_8f90_source.html#l00084">84</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
+<p>Definition at line <a class="el" href="physics_8f90_source.html#l00089">89</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="global_8f90_source.html#l00025">global::mat</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00026">global::mat</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>.</p>
+<p>Referenced by <a class="el" href="main_8f90_source.html#l00100">run_problem()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -152,16 +164,16 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="physics_8f90_source.html#l00054">54</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="physics_8f90_source.html#l00210">elastic_scattering()</a>, <a class="el" href="global_8f90_source.html#l00026">global::neut</a>, <a class="el" href="physics_8f90_source.html#l00110">sample_isotope()</a>, and <a class="el" href="physics_8f90_source.html#l00166">sample_reaction()</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00145">global::add_to_tallies()</a>, <a class="el" href="physics_8f90_source.html#l00303">elastic_scattering()</a>, <a class="el" href="global_8f90_source.html#l00057">global::n_abs</a>, <a class="el" href="global_8f90_source.html#l00058">global::n_fiss</a>, <a class="el" href="global_8f90_source.html#l00025">global::neut</a>, <a class="el" href="physics_8f90_source.html#l00199">sample_isotope()</a>, <a class="el" href="physics_8f90_source.html#l00257">sample_reaction()</a>, and <a class="el" href="physics_8f90_source.html#l00115">sample_region()</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>.</p>
+<p>Referenced by <a class="el" href="main_8f90_source.html#l00100">run_problem()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacephysics_a133218ca6a5aef900f47bd603d8fe205_cgraph.png" border="0" usemap="#namespacephysics_a133218ca6a5aef900f47bd603d8fe205_cgraph" alt=""/></div>
 <map name="namespacephysics_a133218ca6a5aef900f47bd603d8fe205_cgraph" id="namespacephysics_a133218ca6a5aef900f47bd603d8fe205_cgraph">
-<area shape="rect" id="node3" href="namespacephysics.html#aa72279ceb4aed8f87207f32cdc81648b" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="225,5,401,35"/><area shape="rect" id="node5" href="namespacephysics.html#a9718375dac64a0b1b11251454b0ae869" title="function to sample interaction isotope" alt="" coords="231,59,396,88"/><area shape="rect" id="node7" href="namespacephysics.html#ab0df29491acac2523a11b6cba249976c" title="function to sample reaction type" alt="" coords="228,112,399,141"/></map>
+<area shape="rect" id="node3" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="241,5,385,35"/><area shape="rect" id="node7" href="namespacephysics.html#ac66d88afb83774b3194721245b0cedc8" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="225,59,401,88"/><area shape="rect" id="node9" href="namespacephysics.html#ad40503675b93b306323c8e25a8585a04" title="function to sample interaction isotope" alt="" coords="231,112,396,141"/><area shape="rect" id="node11" href="namespacephysics.html#a2ffa5d1d4790564d3acb49d5ed6ada2d" title="function to sample reaction type" alt="" coords="228,165,399,195"/><area shape="rect" id="node13" href="namespacephysics.html#ad9444d358ff46b46e987c88a8c23e424" title="function to sample region where interaction occurs" alt="" coords="235,219,392,248"/><area shape="rect" id="node5" href="namespacetally.html#a03985c1ebaab7358d5960cac05ba28ef" title="routine to add quantities during transport of a particle" alt="" coords="452,5,575,35"/></map>
 </div>
 </p>
 
@@ -176,14 +188,15 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a9718375dac64a0b1b11251454b0ae869"></a><!-- doxytag: member="physics::sample_isotope" ref="a9718375dac64a0b1b11251454b0ae869" args="()" -->
+<a class="anchor" id="ad40503675b93b306323c8e25a8585a04"></a><!-- doxytag: member="physics::sample_isotope" ref="ad40503675b93b306323c8e25a8585a04" args="(region)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">integer physics::sample_isotope </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>region</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -192,24 +205,24 @@ Here is the caller graph for this function:</div>
 
 <p>function to sample interaction isotope </p>
 
-<p>Definition at line <a class="el" href="physics_8f90_source.html#l00110">110</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
+<p>Definition at line <a class="el" href="physics_8f90_source.html#l00199">199</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="global_8f90_source.html#l00035">global::eidx</a>, and <a class="el" href="global_8f90_source.html#l00025">global::mat</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00035">global::eidx</a>, and <a class="el" href="global_8f90_source.html#l00026">global::mat</a>.</p>
 
 <p>Referenced by <a class="el" href="physics_8f90_source.html#l00054">perform_physics()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacephysics_a9718375dac64a0b1b11251454b0ae869_icgraph.png" border="0" usemap="#namespacephysics_a9718375dac64a0b1b11251454b0ae869_icgraph" alt=""/></div>
-<map name="namespacephysics_a9718375dac64a0b1b11251454b0ae869_icgraph" id="namespacephysics_a9718375dac64a0b1b11251454b0ae869_icgraph">
+<div class="center"><img src="namespacephysics_ad40503675b93b306323c8e25a8585a04_icgraph.png" border="0" usemap="#namespacephysics_ad40503675b93b306323c8e25a8585a04_icgraph" alt=""/></div>
+<map name="namespacephysics_ad40503675b93b306323c8e25a8585a04_icgraph" id="namespacephysics_ad40503675b93b306323c8e25a8585a04_icgraph">
 <area shape="rect" id="node3" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="221,5,392,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="440,5,533,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="581,5,632,35"/></map>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="ab0df29491acac2523a11b6cba249976c"></a><!-- doxytag: member="physics::sample_reaction" ref="ab0df29491acac2523a11b6cba249976c" args="(isoidx)" -->
+<a class="anchor" id="a2ffa5d1d4790564d3acb49d5ed6ada2d"></a><!-- doxytag: member="physics::sample_reaction" ref="a2ffa5d1d4790564d3acb49d5ed6ada2d" args="(region, isoidx)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -217,8 +230,18 @@ Here is the caller graph for this function:</div>
           <td class="memname">integer physics::sample_reaction </td>
           <td>(</td>
           <td class="paramtype">integer&#160;</td>
-          <td class="paramname"><em>isoidx</em></td><td>)</td>
+          <td class="paramname"><em>region</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>isoidx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -226,18 +249,51 @@ Here is the caller graph for this function:</div>
 
 <p>function to sample reaction type </p>
 
-<p>Definition at line <a class="el" href="physics_8f90_source.html#l00166">166</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
+<p>Definition at line <a class="el" href="physics_8f90_source.html#l00257">257</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="global_8f90_source.html#l00035">global::eidx</a>, and <a class="el" href="global_8f90_source.html#l00025">global::mat</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00035">global::eidx</a>, and <a class="el" href="global_8f90_source.html#l00026">global::mat</a>.</p>
 
 <p>Referenced by <a class="el" href="physics_8f90_source.html#l00054">perform_physics()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacephysics_ab0df29491acac2523a11b6cba249976c_icgraph.png" border="0" usemap="#namespacephysics_ab0df29491acac2523a11b6cba249976c_icgraph" alt=""/></div>
-<map name="namespacephysics_ab0df29491acac2523a11b6cba249976c_icgraph" id="namespacephysics_ab0df29491acac2523a11b6cba249976c_icgraph">
+<div class="center"><img src="namespacephysics_a2ffa5d1d4790564d3acb49d5ed6ada2d_icgraph.png" border="0" usemap="#namespacephysics_a2ffa5d1d4790564d3acb49d5ed6ada2d_icgraph" alt=""/></div>
+<map name="namespacephysics_a2ffa5d1d4790564d3acb49d5ed6ada2d_icgraph" id="namespacephysics_a2ffa5d1d4790564d3acb49d5ed6ada2d_icgraph">
 <area shape="rect" id="node3" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="224,5,395,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="443,5,536,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="584,5,635,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad9444d358ff46b46e987c88a8c23e424"></a><!-- doxytag: member="physics::sample_region" ref="ad9444d358ff46b46e987c88a8c23e424" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer physics::sample_region </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>function to sample region where interaction occurs </p>
+
+<p>Definition at line <a class="el" href="physics_8f90_source.html#l00115">115</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
+
+<p>References <a class="el" href="global_8f90_source.html#l00039">global::Dancoff</a>, <a class="el" href="global_8f90_source.html#l00035">global::eidx</a>, <a class="el" href="global_8f90_source.html#l00026">global::mat</a>, <a class="el" href="global_8f90_source.html#l00037">global::n_materials</a>, <a class="el" href="global_8f90_source.html#l00025">global::neut</a>, and <a class="el" href="global_8f90_source.html#l00040">global::radius</a>.</p>
+
+<p>Referenced by <a class="el" href="physics_8f90_source.html#l00054">perform_physics()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespacephysics_ad9444d358ff46b46e987c88a8c23e424_icgraph.png" border="0" usemap="#namespacephysics_ad9444d358ff46b46e987c88a8c23e424_icgraph" alt=""/></div>
+<map name="namespacephysics_ad9444d358ff46b46e987c88a8c23e424_icgraph" id="namespacephysics_ad9444d358ff46b46e987c88a8c23e424_icgraph">
+<area shape="rect" id="node3" href="namespacephysics.html#a133218ca6a5aef900f47bd603d8fe205" title="high level routine to perform transport physics" alt="" coords="213,5,384,35"/><area shape="rect" id="node5" href="main_8f90.html#a97c00fb033657ce8889d3e9f80d0029f" title="main routine for executing the transport calculation" alt="" coords="432,5,525,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="573,5,624,35"/></map>
 </div>
 </p>
 
@@ -261,9 +317,9 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="physics_8f90_source.html#l00022">22</a> of file <a class="el" href="physics_8f90_source.html">physics.f90</a>.</p>
 
-<p>References <a class="el" href="global_8f90_source.html#l00025">global::mat</a>, and <a class="el" href="global_8f90_source.html#l00026">global::neut</a>.</p>
+<p>References <a class="el" href="global_8f90_source.html#l00026">global::mat</a>, and <a class="el" href="global_8f90_source.html#l00025">global::neut</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8f90_source.html#l00099">run_problem()</a>.</p>
+<p>Referenced by <a class="el" href="main_8f90_source.html#l00100">run_problem()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -277,7 +333,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:20 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

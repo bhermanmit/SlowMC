@@ -56,10 +56,10 @@ Data Types</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type &#160;</td><td class="memItemRight" valign="bottom"><b>material_type</b></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917">setup_material</a> (this, emin, emax)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that initializes the materials  <a href="#a2e57f9bb26931ba3861c7d8a4f70a917"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3">load_isotope</a> (this, N, A, path, thermal)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that loads isotope properties, xs, etc.  <a href="#aea215775580cdaea17c8be01b9ad00d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#a1bdb0e5fa30d2ba95cf713f38ecbe92d">setup_material</a> (this, emin, emax, nisotopes, vol)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that initializes the materials  <a href="#a1bdb0e5fa30d2ba95cf713f38ecbe92d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#a67ecb92f761ba3024473600b88163d26">load_isotope</a> (this, N, A, path, thermal, name)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that loads isotope properties, xs, etc.  <a href="#a67ecb92f761ba3024473600b88163d26"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4">load_source</a> (this, source_type, source_path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine to load fission source into memory  <a href="#a87a696d2ebca17ea84ba5e4cfe8164f4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematerials.html#a50f15cd96ae48aa1b4bd5006becf25f3">compute_macroxs</a> (this)</td></tr>
@@ -88,16 +88,16 @@ Functions/Subroutines</h2></td></tr>
 
 <p>routine to pre-compute macroscopic cross sections </p>
 
-<p>Definition at line <a class="el" href="materials_8f90_source.html#l00270">270</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
+<p>Definition at line <a class="el" href="materials_8f90_source.html#l00294">294</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8f90_source.html#l00058">initialize()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00123">global::compute_macro_cross_sections()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacematerials_a50f15cd96ae48aa1b4bd5006becf25f3_icgraph.png" border="0" usemap="#namespacematerials_a50f15cd96ae48aa1b4bd5006becf25f3_icgraph" alt=""/></div>
 <map name="namespacematerials_a50f15cd96ae48aa1b4bd5006becf25f3_icgraph" id="namespacematerials_a50f15cd96ae48aa1b4bd5006becf25f3_icgraph">
-<area shape="rect" id="node3" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="245,5,315,35"/><area shape="rect" id="node5" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="363,5,413,35"/></map>
+<area shape="rect" id="node3" href="namespaceglobal.html#ab602338ad6dc499c8cfdf62379887cdd" title="routine that handles the call to compute macro cross sections" alt="" coords="247,5,497,35"/></map>
 </div>
 </p>
 
@@ -120,9 +120,9 @@ Here is the caller graph for this function:</div>
 
 <p>routine to deallocate a material </p>
 
-<p>Definition at line <a class="el" href="materials_8f90_source.html#l00310">310</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
+<p>Definition at line <a class="el" href="materials_8f90_source.html#l00341">341</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
 
-<p>Referenced by <a class="el" href="global_8f90_source.html#l00071">global::deallocate_problem()</a>.</p>
+<p>Referenced by <a class="el" href="global_8f90_source.html#l00086">global::deallocate_problem()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -135,7 +135,7 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="aea215775580cdaea17c8be01b9ad00d3"></a><!-- doxytag: member="materials::load_isotope" ref="aea215775580cdaea17c8be01b9ad00d3" args="(this, N, A, path, thermal)" -->
+<a class="anchor" id="a67ecb92f761ba3024473600b88163d26"></a><!-- doxytag: member="materials::load_isotope" ref="a67ecb92f761ba3024473600b88163d26" args="(this, N, A, path, thermal, name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -167,7 +167,13 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">logical&#160;</td>
-          <td class="paramname"><em>thermal</em>&#160;</td>
+          <td class="paramname"><em>thermal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(len=255)&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -181,15 +187,15 @@ Here is the caller graph for this function:</div>
 <p>routine that loads isotope properties, xs, etc. </p>
 <p>into memory </p>
 
-<p>Definition at line <a class="el" href="materials_8f90_source.html#l00093">93</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
+<p>Definition at line <a class="el" href="materials_8f90_source.html#l00106">106</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacematerials_aea215775580cdaea17c8be01b9ad00d3_icgraph.png" border="0" usemap="#namespacematerials_aea215775580cdaea17c8be01b9ad00d3_icgraph" alt=""/></div>
-<map name="namespacematerials_aea215775580cdaea17c8be01b9ad00d3_icgraph" id="namespacematerials_aea215775580cdaea17c8be01b9ad00d3_icgraph">
+<div class="center"><img src="namespacematerials_a67ecb92f761ba3024473600b88163d26_icgraph.png" border="0" usemap="#namespacematerials_a67ecb92f761ba3024473600b88163d26_icgraph" alt=""/></div>
+<map name="namespacematerials_a67ecb92f761ba3024473600b88163d26_icgraph" id="namespacematerials_a67ecb92f761ba3024473600b88163d26_icgraph">
 <area shape="rect" id="node3" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="212,5,329,35"/><area shape="rect" id="node5" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="379,5,448,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="496,5,547,35"/></map>
 </div>
 </p>
@@ -229,7 +235,7 @@ Here is the caller graph for this function:</div>
 
 <p>routine to load fission source into memory </p>
 
-<p>Definition at line <a class="el" href="materials_8f90_source.html#l00213">213</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
+<p>Definition at line <a class="el" href="materials_8f90_source.html#l00237">237</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>.</p>
 
@@ -244,7 +250,7 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a2e57f9bb26931ba3861c7d8a4f70a917"></a><!-- doxytag: member="materials::setup_material" ref="a2e57f9bb26931ba3861c7d8a4f70a917" args="(this, emin, emax)" -->
+<a class="anchor" id="a1bdb0e5fa30d2ba95cf713f38ecbe92d"></a><!-- doxytag: member="materials::setup_material" ref="a1bdb0e5fa30d2ba95cf713f38ecbe92d" args="(this, emin, emax, nisotopes, vol)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -264,7 +270,19 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real(8)&#160;</td>
-          <td class="paramname"><em>emax</em>&#160;</td>
+          <td class="paramname"><em>emax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer&#160;</td>
+          <td class="paramname"><em>nisotopes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">real(8)&#160;</td>
+          <td class="paramname"><em>vol</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -277,15 +295,15 @@ Here is the caller graph for this function:</div>
 
 <p>routine that initializes the materials </p>
 
-<p>Definition at line <a class="el" href="materials_8f90_source.html#l00069">69</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
+<p>Definition at line <a class="el" href="materials_8f90_source.html#l00074">74</a> of file <a class="el" href="materials_8f90_source.html">materials.f90</a>.</p>
 
 <p>Referenced by <a class="el" href="input_8f90_source.html#l00022">input::read_input()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="namespacematerials_a2e57f9bb26931ba3861c7d8a4f70a917_icgraph.png" border="0" usemap="#namespacematerials_a2e57f9bb26931ba3861c7d8a4f70a917_icgraph" alt=""/></div>
-<map name="namespacematerials_a2e57f9bb26931ba3861c7d8a4f70a917_icgraph" id="namespacematerials_a2e57f9bb26931ba3861c7d8a4f70a917_icgraph">
+<div class="center"><img src="namespacematerials_a1bdb0e5fa30d2ba95cf713f38ecbe92d_icgraph.png" border="0" usemap="#namespacematerials_a1bdb0e5fa30d2ba95cf713f38ecbe92d_icgraph" alt=""/></div>
+<map name="namespacematerials_a1bdb0e5fa30d2ba95cf713f38ecbe92d_icgraph" id="namespacematerials_a1bdb0e5fa30d2ba95cf713f38ecbe92d_icgraph">
 <area shape="rect" id="node3" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="223,5,340,35"/><area shape="rect" id="node5" href="main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="389,5,459,35"/><area shape="rect" id="node7" href="main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="507,5,557,35"/></map>
 </div>
 </p>
@@ -293,7 +311,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:20 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

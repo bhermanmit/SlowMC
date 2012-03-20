@@ -64,116 +64,195 @@
 <a name="l00022"></a><a class="code" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6">00022</a>   <span class="keyword">subroutine </span><a class="code" href="namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6">read_input</a>
 <a name="l00023"></a>00023 
 <a name="l00024"></a>00024     use <span class="keywordflow">global</span>,           only: nhistories,seed,source_type,mat,emin,emax,     &amp;
-<a name="l00025"></a>00025    &amp;                            allocate_problem,tal,n_tallies
-<a name="l00026"></a>00026     use <span class="keywordflow">materials</span>,        only: setup_material,load_source,load_isotope
-<a name="l00027"></a>00027     use <span class="keywordflow">tally</span>,            only: set_user_tally,set_spectrum_tally
-<a name="l00028"></a>00028     use <span class="keywordflow">xml_data_input_t</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030     <span class="comment">! local variables</span>
-<a name="l00031"></a>00031     <span class="keywordtype">logical</span>                        :: file_exists  <span class="comment">! see if file exists</span>
-<a name="l00032"></a>00032     <span class="keywordtype">character(255)</span>                 :: filename     <span class="comment">! filename to open</span>
-<a name="l00033"></a>00033     <span class="keywordtype">real(8)</span>                        :: N            <span class="comment">! temp number dens</span>
-<a name="l00034"></a>00034     <span class="keywordtype">real(8)</span>                        :: A            <span class="comment">! temp atomic weight</span>
-<a name="l00035"></a>00035     <span class="keywordtype">character(255)</span>                 :: path         <span class="comment">! path to isotope file</span>
-<a name="l00036"></a>00036     <span class="keywordtype">logical</span>                        :: thermal      <span class="comment">! contains thermal lib</span>
-<a name="l00037"></a>00037     <span class="keywordtype">integer</span>                        :: i            <span class="comment">! iteration counter</span>
-<a name="l00038"></a>00038     <span class="keywordtype">integer</span>                        :: react_type   <span class="comment">! reaction type</span>
-<a name="l00039"></a>00039     <span class="keywordtype">integer</span>                        :: isotope=0    <span class="comment">! isotope for micro mult</span>
-<a name="l00040"></a>00040     <span class="keywordtype">real(8)</span>, <span class="keywordtype">allocatable</span>           :: Ebins(:)     <span class="comment">! tally energy bins</span>
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042     <span class="comment">! check for input file</span>
-<a name="l00043"></a>00043     filename = <span class="stringliteral">&quot;input.xml&quot;</span>
-<a name="l00044"></a>00044     <span class="keyword">inquire</span>(FILE=trim(filename), EXIST=file_exists)
-<a name="l00045"></a>00045     <span class="keyword">if</span> (.not. file_exists) <span class="keyword">then</span>
-<a name="l00046"></a>00046       <span class="keyword">write</span>(*,*) <span class="stringliteral">&#39;Cannot read input file!&#39;</span>
-<a name="l00047"></a>00047       stop
-<a name="l00048"></a>00048     <span class="keyword">else</span>
+<a name="l00025"></a>00025    &amp;                            allocate_problem,tal,n_tallies,n_materials,    &amp;
+<a name="l00026"></a>00026    &amp;                            res_iso,Dancoff,radius
+<a name="l00027"></a>00027     use <span class="keywordflow">materials</span>,        only: setup_material,load_source,load_isotope
+<a name="l00028"></a>00028     use <span class="keywordflow">tally</span>,            only: set_user_tally,set_spectrum_tally,             &amp;
+<a name="l00029"></a>00029    &amp;                            set_kinf_tally
+<a name="l00030"></a>00030     use <span class="keywordflow">xml_data_input_t</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032     <span class="comment">! local variables</span>
+<a name="l00033"></a>00033     <span class="keywordtype">logical</span>                        :: file_exists  <span class="comment">! see if file exists</span>
+<a name="l00034"></a>00034     <span class="keywordtype">character(len=255)</span>             :: filename     <span class="comment">! filename to open</span>
+<a name="l00035"></a>00035     <span class="keywordtype">real(8)</span>                        :: N            <span class="comment">! temp number dens</span>
+<a name="l00036"></a>00036     <span class="keywordtype">real(8)</span>                        :: A            <span class="comment">! temp atomic weight</span>
+<a name="l00037"></a>00037     <span class="keywordtype">real(8)</span>                        :: vol          <span class="comment">! volume of region</span>
+<a name="l00038"></a>00038     <span class="keywordtype">character(len=255)</span>             :: path         <span class="comment">! path to isotope file</span>
+<a name="l00039"></a>00039     <span class="keywordtype">character(len=255)</span>             :: name         <span class="comment">! name of isotope</span>
+<a name="l00040"></a>00040     <span class="keywordtype">logical</span>                        :: thermal      <span class="comment">! contains thermal lib</span>
+<a name="l00041"></a>00041     <span class="keywordtype">integer</span>                        :: i            <span class="comment">! iteration counter</span>
+<a name="l00042"></a>00042     <span class="keywordtype">integer</span>                        :: j            <span class="comment">! iteration counter</span>
+<a name="l00043"></a>00043     <span class="keywordtype">integer</span>                        :: nisotopes    <span class="comment">! number of isotopes in mat</span>
+<a name="l00044"></a>00044     <span class="keywordtype">integer</span>                        :: react_type   <span class="comment">! reaction type</span>
+<a name="l00045"></a>00045     <span class="keywordtype">integer</span>                        :: isotope=0    <span class="comment">! isotope for micro mult</span>
+<a name="l00046"></a>00046     <span class="keywordtype">integer</span>                        :: region=0     <span class="comment">! region to tally micros</span>
+<a name="l00047"></a>00047     <span class="keywordtype">real(8)</span>, <span class="keywordtype">allocatable</span>           :: Ebins(:)     <span class="comment">! tally energy bins</span>
+<a name="l00048"></a>00048     <span class="keywordtype">logical</span>                        :: dv           <span class="comment">! divide tally by volumes </span>
 <a name="l00049"></a>00049 
-<a name="l00050"></a>00050       <span class="comment">! tell user</span>
-<a name="l00051"></a>00051       <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(A/)&#39;</span>) <span class="stringliteral">&quot;Reading INPUT XML file...&quot;</span>
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053     <span class="keyword">end if</span>
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055     <span class="comment">! read in input file</span>
-<a name="l00056"></a>00056     call <a class="code" href="namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04">read_xml_file_input_t</a>(trim(filename))
+<a name="l00050"></a>00050     <span class="comment">! check for input file</span>
+<a name="l00051"></a>00051     filename = <span class="stringliteral">&quot;input.xml&quot;</span>
+<a name="l00052"></a>00052     <span class="keyword">inquire</span>(FILE=trim(filename), EXIST=file_exists)
+<a name="l00053"></a>00053     <span class="keyword">if</span> (.not. file_exists) <span class="keyword">then</span>
+<a name="l00054"></a>00054       <span class="keyword">write</span>(*,*) <span class="stringliteral">&#39;Cannot read input file!&#39;</span>
+<a name="l00055"></a>00055       stop
+<a name="l00056"></a>00056     <span class="keyword">else</span>
 <a name="l00057"></a>00057 
-<a name="l00058"></a>00058     <span class="comment">! read in settings</span>
-<a name="l00059"></a>00059     <a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%histories
-<a name="l00060"></a>00060     <a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%seed
-<a name="l00061"></a>00061     <a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_type
-<a name="l00062"></a>00062     <a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%nisotopes = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides)
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064     <span class="comment">! load the source</span>
-<a name="l00065"></a>00065     call <a class="code" href="namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4">load_source</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,<a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a>,<a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_path)
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067     <span class="comment">! set up the material object</span>
-<a name="l00068"></a>00068     call <a class="code" href="namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917">setup_material</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>,<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>)
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070     <span class="comment">! begin loop over isotope materials</span>
-<a name="l00071"></a>00071     <span class="keyword">do</span> i = 1,<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>%nisotopes
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073       <span class="comment">! extract info</span>
-<a name="l00074"></a>00074       N = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%N
-<a name="l00075"></a>00075       A = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%A
-<a name="l00076"></a>00076       path = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%path
-<a name="l00077"></a>00077       thermal = <a class="code" href="namespacexml__data__input__t.html#afb35c9d5976aa6c6ed13c8d0315259b5">material_</a>(1)%nuclides(i)%thermal
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079       <span class="comment">! load the isotope into memory</span>
-<a name="l00080"></a>00080       call <a class="code" href="namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3">load_isotope</a>(<a class="code" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">mat</a>,N,A,path,thermal)
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082     <span class="keyword">end do</span>
+<a name="l00058"></a>00058       <span class="comment">! tell user</span>
+<a name="l00059"></a>00059       <span class="keyword">write</span>(*,<span class="stringliteral">&#39;(A/)&#39;</span>) <span class="stringliteral">&quot;Reading INPUT XML file...&quot;</span>
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <span class="keyword">end if</span>
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063     <span class="comment">! read in input file</span>
+<a name="l00064"></a>00064     call <a class="code" href="namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04">read_xml_file_input_t</a>(trim(filename))
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     <span class="comment">! read in settings</span>
+<a name="l00067"></a>00067     <a class="code" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">nhistories</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%histories
+<a name="l00068"></a>00068     <a class="code" href="namespaceglobal.html#ad7e6d9bd3ba641fc8d62646388a43cfe">seed</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%seed
+<a name="l00069"></a>00069     <a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a> = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_type
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071     <span class="comment">! get size of materials</span>
+<a name="l00072"></a>00072     n_materials = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material)
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074     <span class="comment">! get size of tallies</span>
+<a name="l00075"></a>00075     <span class="keyword">if</span> (.not.<span class="keyword">associated</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally)) <span class="keyword">then</span>
+<a name="l00076"></a>00076       n_tallies = 2
+<a name="l00077"></a>00077     <span class="keyword">else</span>
+<a name="l00078"></a>00078       n_tallies = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally) + 2
+<a name="l00079"></a>00079     <span class="keyword">end if</span>
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081     <span class="comment">! allocate problem</span>
+<a name="l00082"></a>00082     call allocate_problem()
 <a name="l00083"></a>00083 
-<a name="l00084"></a>00084     <span class="comment">! get size of tallies</span>
-<a name="l00085"></a>00085     <span class="keyword">if</span> (.not.<span class="keyword">associated</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally)) <span class="keyword">then</span>
-<a name="l00086"></a>00086       n_tallies = 1
-<a name="l00087"></a>00087     <span class="keyword">else</span>
-<a name="l00088"></a>00088       n_tallies = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally) + 1
-<a name="l00089"></a>00089     <span class="keyword">end if</span>
+<a name="l00084"></a>00084     <span class="comment">! begin loop around materials</span>
+<a name="l00085"></a>00085     <span class="keyword">do</span> i = 1,n_materials
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087       <span class="comment">! get number of isotopes and volume</span>
+<a name="l00088"></a>00088       nisotopes = <span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides)
+<a name="l00089"></a>00089       vol = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%V
 <a name="l00090"></a>00090 
-<a name="l00091"></a>00091     <span class="comment">! allocate problem</span>
-<a name="l00092"></a>00092     call allocate_problem(n_tallies)
+<a name="l00091"></a>00091       <span class="comment">! set homogeneous volume</span>
+<a name="l00092"></a>00092       <span class="keyword">if</span> (trim(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%type)==<span class="stringliteral">&#39;homogeneous&#39;</span>) vol = 1.0_8
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="comment">! begin loop over tallies</span>
-<a name="l00095"></a>00095     <span class="keyword">do</span> i = 1,n_tallies-1
+<a name="l00094"></a>00094       <span class="comment">! set up the material object</span>
+<a name="l00095"></a>00095       call <a class="code" href="namespacematerials.html#a1bdb0e5fa30d2ba95cf713f38ecbe92d">setup_material</a>(<a class="code" href="namespaceglobal.html#a2ca08b9263c8d6c2e41377976a320968">mat</a>(i),<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>,<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>,nisotopes,vol)
 <a name="l00096"></a>00096 
-<a name="l00097"></a>00097       <span class="comment">! set reaction type</span>
-<a name="l00098"></a>00098       <span class="keyword">select</span> <span class="keyword">case</span>(trim(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%type))
-<a name="l00099"></a>00099         <span class="keyword">case</span>(<span class="stringliteral">&#39;flux&#39;</span>)
-<a name="l00100"></a>00100           react_type = 0
-<a name="l00101"></a>00101         <span class="keyword">case</span>(<span class="stringliteral">&#39;absorption&#39;</span>)
-<a name="l00102"></a>00102           react_type = 1
-<a name="l00103"></a>00103         <span class="keyword">case</span>(<span class="stringliteral">&#39;scattering&#39;</span>)
-<a name="l00104"></a>00104           react_type = 2
-<a name="l00105"></a>00105         <span class="keyword">case</span>(<span class="stringliteral">&#39;micro_capture&#39;</span>)
-<a name="l00106"></a>00106           react_type = 3
-<a name="l00107"></a>00107           isotope = <a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%isotope
-<a name="l00108"></a>00108         <span class="keyword">case</span> DEFAULT
-<a name="l00109"></a>00109           react_type = 0
-<a name="l00110"></a>00110       <span class="keyword">end select</span>
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112       <span class="comment">! preallocate Ebins</span>
-<a name="l00113"></a>00113       <span class="keyword">if</span>(.not. <span class="keyword">allocated</span>(Ebins)) <span class="keyword">allocate</span>(Ebins(<span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%Ebins)))
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115       <span class="comment">! set Ebins</span>
-<a name="l00116"></a>00116       Ebins = <a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%Ebins
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118       <span class="comment">! set up user-defined tallies</span>
-<a name="l00119"></a>00119       call <a class="code" href="namespacetally.html#acd7f9f649f186cdc5f8ef1bd5ad61983">set_user_tally</a>(tal(i),Ebins,<span class="keyword">size</span>(Ebins),react_type,isotope)
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121       <span class="comment">! deallocate Ebins</span>
-<a name="l00122"></a>00122       <span class="keyword">if</span>(<span class="keyword">allocated</span>(Ebins)) <span class="keyword">deallocate</span>(Ebins)
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124     <span class="keyword">end do</span>
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126     <span class="comment">! set up spectrum tally</span>
-<a name="l00127"></a>00127     call <a class="code" href="namespacetally.html#a4c040f66f18cd95097fcd5a6762cde9a">set_spectrum_tally</a>(tal(n_tallies),<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>)
+<a name="l00097"></a>00097       <span class="comment">! begin loop over isotope materials</span>
+<a name="l00098"></a>00098       <span class="keyword">do</span> j = 1,<a class="code" href="namespaceglobal.html#a2ca08b9263c8d6c2e41377976a320968">mat</a>(i)%nisotopes
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100         <span class="comment">! check volumes and number densities</span>
+<a name="l00101"></a>00101         <span class="keyword">if</span> (trim(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%type)==<span class="stringliteral">&#39;homogeneous&#39;</span>) <span class="keyword">then</span>
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103           <span class="comment">! set volume to 1 and don&#39;t adjust n dens</span>
+<a name="l00104"></a>00104           N = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%N
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106         <span class="keyword">else</span> <span class="keyword">if</span> (trim(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%type)==<span class="stringliteral">&#39;fuel&#39;</span>) <span class="keyword">then</span>
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108           <span class="comment">! don&#39;t adjust n dens</span>
+<a name="l00109"></a>00109           N = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%N
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111           <span class="comment">! check volume</span>
+<a name="l00112"></a>00112           <span class="keyword">if</span> (abs(vol - 0.0_8) &lt; 1e-10_8) <span class="keyword">then</span>
+<a name="l00113"></a>00113             <span class="keyword">write</span>(*,*) <span class="stringliteral">&#39;Please enter a physical fuel volume!&#39;</span>
+<a name="l00114"></a>00114             stop
+<a name="l00115"></a>00115           <span class="keyword">end if</span>
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117         <span class="keyword">else</span>
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119           <span class="comment">! check volume</span>
+<a name="l00120"></a>00120           <span class="keyword">if</span> (abs(vol - 0.0_8) &lt; 1e-10_8) <span class="keyword">then</span>
+<a name="l00121"></a>00121             <span class="keyword">write</span>(*,*) <span class="stringliteral">&#39;Please enter a physical moderator volume!&#39;</span>
+<a name="l00122"></a>00122             stop
+<a name="l00123"></a>00123           <span class="keyword">end if</span>
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125           <span class="comment">! adjust number density by volume weighting</span>
+<a name="l00126"></a>00126           N = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%N*                            &amp;
+<a name="l00127"></a>00127          &amp;   (<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%V/vol)
 <a name="l00128"></a>00128 
-<a name="l00129"></a>00129 <span class="keyword">  end subroutine read_input</span>
+<a name="l00129"></a>00129         <span class="keyword">end if</span>
 <a name="l00130"></a>00130 
-<a name="l00131"></a>00131 <span class="keyword">end module input</span>
+<a name="l00131"></a>00131         <span class="comment">! extract other info</span>
+<a name="l00132"></a>00132         A = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%A
+<a name="l00133"></a>00133         path = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%path
+<a name="l00134"></a>00134         thermal = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%thermal
+<a name="l00135"></a>00135         name = <a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%nuclides(j)%name 
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137         <span class="comment">! load the isotope into memory</span>
+<a name="l00138"></a>00138         call <a class="code" href="namespacematerials.html#a67ecb92f761ba3024473600b88163d26">load_isotope</a>(<a class="code" href="namespaceglobal.html#a2ca08b9263c8d6c2e41377976a320968">mat</a>(i),N,A,path,thermal,name)
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140         <span class="comment">! check for resonant isotope in material 1</span>
+<a name="l00141"></a>00141         <span class="keyword">if</span> (trim(<a class="code" href="namespacexml__data__input__t.html#a38fe7bba0868a9054183530fe06a54af">materials_</a>%material(i)%type)==<span class="stringliteral">&#39;fuel&#39;</span> .and.                    &amp;
+<a name="l00142"></a>00142        &amp;    trim(<a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%res_iso) == trim(name)) <span class="keyword">then</span>
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144           <span class="comment">! get Dancoff factor and resonant isotope</span>
+<a name="l00145"></a>00145           res_iso = j
+<a name="l00146"></a>00146           Dancoff = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%Dancoff
+<a name="l00147"></a>00147           radius = <a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%radius
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149         <span class="keyword">end if</span>
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151       <span class="keyword">end do</span>
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153     <span class="keyword">end do</span>
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155     <span class="comment">! begin loop over tallies</span>
+<a name="l00156"></a>00156     <span class="keyword">do</span> i = 1,n_tallies-2
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158       <span class="comment">! check for divide by volume</span>
+<a name="l00159"></a>00159       dv = .false.
+<a name="l00160"></a>00160       <span class="keyword">if</span> (<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%dv) dv = .true.
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162       <span class="comment">! set reaction type</span>
+<a name="l00163"></a>00163       <span class="keyword">select</span> <span class="keyword">case</span>(trim(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%type))
+<a name="l00164"></a>00164         <span class="keyword">case</span>(<span class="stringliteral">&#39;flux&#39;</span>)
+<a name="l00165"></a>00165           react_type = 0
+<a name="l00166"></a>00166         <span class="keyword">case</span>(<span class="stringliteral">&#39;total&#39;</span>)
+<a name="l00167"></a>00167           react_type = 1
+<a name="l00168"></a>00168         <span class="keyword">case</span>(<span class="stringliteral">&#39;absorption&#39;</span>)
+<a name="l00169"></a>00169           react_type = 2
+<a name="l00170"></a>00170         <span class="keyword">case</span>(<span class="stringliteral">&#39;scattering&#39;</span>)
+<a name="l00171"></a>00171           react_type = 3
+<a name="l00172"></a>00172         <span class="keyword">case</span>(<span class="stringliteral">&#39;nufission&#39;</span>)
+<a name="l00173"></a>00173           react_type = 4
+<a name="l00174"></a>00174         <span class="keyword">case</span>(<span class="stringliteral">&#39;fission&#39;</span>)
+<a name="l00175"></a>00175           react_type = 5
+<a name="l00176"></a>00176         <span class="keyword">case</span>(<span class="stringliteral">&#39;micro_capture&#39;</span>)
+<a name="l00177"></a>00177           react_type = 6
+<a name="l00178"></a>00178           isotope = <a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%isotope
+<a name="l00179"></a>00179           region = <a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%region
+<a name="l00180"></a>00180         <span class="keyword">case</span> DEFAULT
+<a name="l00181"></a>00181           react_type = 0
+<a name="l00182"></a>00182       <span class="keyword">end select</span>
+<a name="l00183"></a>00183 
+<a name="l00184"></a>00184       <span class="comment">! preallocate Ebins</span>
+<a name="l00185"></a>00185       <span class="keyword">if</span>(.not. <span class="keyword">allocated</span>(Ebins)) <span class="keyword">allocate</span>(Ebins(<span class="keyword">size</span>(<a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%Ebins)))
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187       <span class="comment">! set Ebins</span>
+<a name="l00188"></a>00188       Ebins = <a class="code" href="namespacexml__data__input__t.html#a532906cba9c526037bb1850e5d709d7d">tallies_</a>%tally(i)%Ebins
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190       <span class="comment">! set up user-defined tallies</span>
+<a name="l00191"></a>00191       call <a class="code" href="namespacetally.html#ab29030118763812d7fe49cb0d51e7597">set_user_tally</a>(tal(i),Ebins,<span class="keyword">size</span>(Ebins),react_type,isotope,region,  &amp;
+<a name="l00192"></a>00192      &amp;                    n_materials,dv)
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194       <span class="comment">! deallocate Ebins</span>
+<a name="l00195"></a>00195       <span class="keyword">if</span>(<span class="keyword">allocated</span>(Ebins)) <span class="keyword">deallocate</span>(Ebins)
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197     <span class="keyword">end do</span>
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199     <span class="comment">! set up spectrum tally</span>
+<a name="l00200"></a>00200     call <a class="code" href="namespacetally.html#ad7b7906258ddc8dd18f90cd58ea0ba27">set_spectrum_tally</a>(tal(n_tallies-1),<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>,n_materials)
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202     <span class="comment">! set up k_inf tally</span>
+<a name="l00203"></a>00203     call set_kinf_tally(tal(n_tallies),<a class="code" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">emax</a>,<a class="code" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">emin</a>,n_materials)
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205     <span class="comment">! load the source</span>
+<a name="l00206"></a>00206     call <a class="code" href="namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4">load_source</a>(<a class="code" href="namespaceglobal.html#a2ca08b9263c8d6c2e41377976a320968">mat</a>(1),<a class="code" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">source_type</a>,<a class="code" href="namespacexml__data__input__t.html#af1d4d8be441f4be3decd0e0f719582bd">settings_</a>%source_path)
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208 <span class="keyword">  end subroutine read_input</span>
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210 <span class="keyword">end module input</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:19 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

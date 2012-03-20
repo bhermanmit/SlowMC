@@ -1,22 +1,24 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespacematerials.html#aea215775580cdaea17c8be01b9ad00d3" title="routine that loads isotope properties, xs, etc." alt="" coords="223,5,377,35"/>
+<area shape="rect" id="node3" href="$namespacematerials.html#a67ecb92f761ba3024473600b88163d26" title="routine that loads isotope properties, xs, etc." alt="" coords="223,5,377,35"/>
 <area shape="rect" id="node5" href="$namespacematerials.html#a87a696d2ebca17ea84ba5e4cfe8164f4" title="routine to load fission source into memory" alt="" coords="224,59,376,88"/>
 <area shape="rect" id="node7" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="175,112,425,141"/>
-<area shape="rect" id="node37" href="$namespacetally.html#a4c040f66f18cd95097fcd5a6762cde9a" title="routine to initialize all tallies" alt="" coords="219,165,381,195"/>
-<area shape="rect" id="node39" href="$namespacetally.html#acd7f9f649f186cdc5f8ef1bd5ad61983" title="routine to intialize user&#45;defined tallies" alt="" coords="233,219,367,248"/>
-<area shape="rect" id="node41" href="$namespacematerials.html#a2e57f9bb26931ba3861c7d8a4f70a917" title="routine that initializes the materials" alt="" coords="216,272,384,301"/>
-<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#aeb2bc977516800f3fbd0003f8369ccd6" title="xml_data_input_t::init_xml_file_input_t" alt="" coords="519,32,761,61"/>
-<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="475,85,805,115"/>
-<area shape="rect" id="node23" href="$namespacexml__data__input__t.html#abc2b56e6da9d791b34353a254e79507c" title="xml_data_input_t::read_xml_type_settings_xml" alt="" coords="493,139,787,168"/>
-<area shape="rect" id="node27" href="$namespacexml__data__input__t.html#a922b09502b29f56225e96369dad59e40" title="xml_data_input_t::read_xml_type_tallies_xml" alt="" coords="499,192,781,221"/>
-<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="861,85,1155,115"/>
-<area shape="rect" id="node15" href="$namespacexml__data__input__t.html#aafa3c5d70dec0ada63bd0ed68a4e36fc" title="xml_data_input_t::init_xml_type_material_xml" alt="" coords="1232,59,1517,88"/>
-<area shape="rect" id="node17" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="1212,112,1537,141"/>
-<area shape="rect" id="node19" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="1587,112,1877,141"/>
-<area shape="rect" id="node21" href="$namespacexml__data__input__t.html#a6e82ef897b263ca156c1a0ab8ef119c3" title="xml_data_input_t::init_xml_type_nuclide_xml" alt="" coords="1925,112,2208,141"/>
-<area shape="rect" id="node25" href="$namespacexml__data__input__t.html#ac2ce2e638d25ba3e886667034e1f031c" title="xml_data_input_t::init_xml_type_settings_xml" alt="" coords="865,139,1151,168"/>
-<area shape="rect" id="node29" href="$namespacexml__data__input__t.html#a05f105c3a799fa1aa1c382b2045c9730" title="xml_data_input_t::init_xml_type_tallies_xml" alt="" coords="871,192,1145,221"/>
-<area shape="rect" id="node31" href="$namespacexml__data__input__t.html#a64509526cc0e1b33b8fda35d713e060a" title="xml_data_input_t::read_xml_type_tally_xml_array" alt="" coords="853,245,1163,275"/>
-<area shape="rect" id="node33" href="$namespacexml__data__input__t.html#a3fc8c1d41da843975eb1739a94320517" title="xml_data_input_t::read_xml_type_tally_xml" alt="" coords="1239,245,1511,275"/>
-<area shape="rect" id="node35" href="$namespacexml__data__input__t.html#ad099a1e384e7d80fe18d84041bb0317c" title="xml_data_input_t::init_xml_type_tally_xml" alt="" coords="1600,245,1864,275"/>
+<area shape="rect" id="node41" href="$namespacetally.html#ad7b7906258ddc8dd18f90cd58ea0ba27" title="routine to initialize all tallies" alt="" coords="219,165,381,195"/>
+<area shape="rect" id="node43" href="$namespacetally.html#ab29030118763812d7fe49cb0d51e7597" title="routine to intialize user&#45;defined tallies" alt="" coords="233,219,367,248"/>
+<area shape="rect" id="node45" href="$namespacematerials.html#a1bdb0e5fa30d2ba95cf713f38ecbe92d" title="routine that initializes the materials" alt="" coords="216,272,384,301"/>
+<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#aeb2bc977516800f3fbd0003f8369ccd6" title="xml_data_input_t::init_xml_file_input_t" alt="" coords="505,32,748,61"/>
+<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a455ad8f57ea966f1aadd0d076811920d" title="xml_data_input_t::read_xml_type_materials_xml" alt="" coords="476,85,777,115"/>
+<area shape="rect" id="node27" href="$namespacexml__data__input__t.html#abc2b56e6da9d791b34353a254e79507c" title="xml_data_input_t::read_xml_type_settings_xml" alt="" coords="480,139,773,168"/>
+<area shape="rect" id="node31" href="$namespacexml__data__input__t.html#a922b09502b29f56225e96369dad59e40" title="xml_data_input_t::read_xml_type_tallies_xml" alt="" coords="485,192,768,221"/>
+<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#a91c321dbe757118386e107c75f939191" title="xml_data_input_t::init_xml_type_materials_xml" alt="" coords="845,32,1139,61"/>
+<area shape="rect" id="node15" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="827,85,1157,115"/>
+<area shape="rect" id="node17" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="1207,85,1500,115"/>
+<area shape="rect" id="node19" href="$namespacexml__data__input__t.html#aafa3c5d70dec0ada63bd0ed68a4e36fc" title="xml_data_input_t::init_xml_type_material_xml" alt="" coords="1571,59,1856,88"/>
+<area shape="rect" id="node21" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="1551,112,1876,141"/>
+<area shape="rect" id="node23" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="1925,112,2216,141"/>
+<area shape="rect" id="node25" href="$namespacexml__data__input__t.html#a6e82ef897b263ca156c1a0ab8ef119c3" title="xml_data_input_t::init_xml_type_nuclide_xml" alt="" coords="2264,112,2547,141"/>
+<area shape="rect" id="node29" href="$namespacexml__data__input__t.html#ac2ce2e638d25ba3e886667034e1f031c" title="xml_data_input_t::init_xml_type_settings_xml" alt="" coords="849,139,1135,168"/>
+<area shape="rect" id="node33" href="$namespacexml__data__input__t.html#a05f105c3a799fa1aa1c382b2045c9730" title="xml_data_input_t::init_xml_type_tallies_xml" alt="" coords="855,192,1129,221"/>
+<area shape="rect" id="node35" href="$namespacexml__data__input__t.html#a64509526cc0e1b33b8fda35d713e060a" title="xml_data_input_t::read_xml_type_tally_xml_array" alt="" coords="837,245,1147,275"/>
+<area shape="rect" id="node37" href="$namespacexml__data__input__t.html#a3fc8c1d41da843975eb1739a94320517" title="xml_data_input_t::read_xml_type_tally_xml" alt="" coords="1217,245,1489,275"/>
+<area shape="rect" id="node39" href="$namespacexml__data__input__t.html#ad099a1e384e7d80fe18d84041bb0317c" title="xml_data_input_t::init_xml_type_tally_xml" alt="" coords="1581,245,1845,275"/>
 </map>

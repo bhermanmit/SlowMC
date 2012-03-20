@@ -1,10 +1,12 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="336,5,627,35"/>
-<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="676,5,1001,35"/>
-<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="1052,5,1345,35"/>
-<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="1395,5,1725,35"/>
-<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="1775,5,2025,35"/>
-<area shape="rect" id="node13" href="$namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="2076,5,2193,35"/>
-<area shape="rect" id="node15" href="$main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="2243,5,2312,35"/>
-<area shape="rect" id="node17" href="$main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="2360,5,2411,35"/>
+<area shape="rect" id="node3" href="$namespacexml__data__input__t.html#ac439afc71364247532b3ac88273fa011" title="xml_data_input_t::read_xml_type_nuclide_xml" alt="" coords="336,32,627,61"/>
+<area shape="rect" id="node5" href="$namespacexml__data__input__t.html#a6bc713fc7cae42a852f967f74017ac9a" title="xml_data_input_t::read_xml_type_nuclide_xml_array" alt="" coords="676,32,1001,61"/>
+<area shape="rect" id="node7" href="$namespacexml__data__input__t.html#a3b3cb60be42b77917fee00fdbc1d21fb" title="xml_data_input_t::read_xml_type_material_xml" alt="" coords="1052,32,1345,61"/>
+<area shape="rect" id="node9" href="$namespacexml__data__input__t.html#a7b774e5ce04cfe91c0ff3cac40d19aa7" title="xml_data_input_t::read_xml_type_material_xml_array" alt="" coords="1395,32,1725,61"/>
+<area shape="rect" id="node11" href="$namespacexml__data__input__t.html#a455ad8f57ea966f1aadd0d076811920d" title="xml_data_input_t::read_xml_type_materials_xml" alt="" coords="1775,32,2076,61"/>
+<area shape="rect" id="node13" href="$namespacexml__data__input__t.html#acce0aa676b375d5118edeb9764b3ca04" title="xml_data_input_t::read_xml_file_input_t" alt="" coords="2169,5,2420,35"/>
+<area shape="rect" id="node21" href="$namespacexml__data__input__t.html#a03e8d1976461adbe7642b558711a59a3" title="xml_data_input_t::read_xml_type_materials_xml_array" alt="" coords="2125,59,2464,88"/>
+<area shape="rect" id="node15" href="$namespaceinput.html#a7f1296112c7f3f2ffd93a989264c89d6" title="Reads the input xml file and sets global variables." alt="" coords="2513,5,2631,35"/>
+<area shape="rect" id="node17" href="$main_8f90.html#a10eb461956ec02225efb8d0f9334defc" title="high level routine for intializing problem" alt="" coords="2680,5,2749,35"/>
+<area shape="rect" id="node19" href="$main_8f90.html#a8ec2266d83cd6c0b762cbcbc92c0af3d" title="main" alt="" coords="2797,5,2848,35"/>
 </map>

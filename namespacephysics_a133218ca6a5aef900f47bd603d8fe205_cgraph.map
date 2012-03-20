@@ -1,5 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$namespacephysics.html#aa72279ceb4aed8f87207f32cdc81648b" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="225,5,401,35"/>
-<area shape="rect" id="node5" href="$namespacephysics.html#a9718375dac64a0b1b11251454b0ae869" title="function to sample interaction isotope" alt="" coords="231,59,396,88"/>
-<area shape="rect" id="node7" href="$namespacephysics.html#ab0df29491acac2523a11b6cba249976c" title="function to sample reaction type" alt="" coords="228,112,399,141"/>
+<area shape="rect" id="node3" href="$namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06" title="routine that adds temporary value to tallies" alt="" coords="241,5,385,35"/>
+<area shape="rect" id="node7" href="$namespacephysics.html#ac66d88afb83774b3194721245b0cedc8" title="routine to perform thermal/asymptotic elastic scattering physics" alt="" coords="225,59,401,88"/>
+<area shape="rect" id="node9" href="$namespacephysics.html#ad40503675b93b306323c8e25a8585a04" title="function to sample interaction isotope" alt="" coords="231,112,396,141"/>
+<area shape="rect" id="node11" href="$namespacephysics.html#a2ffa5d1d4790564d3acb49d5ed6ada2d" title="function to sample reaction type" alt="" coords="228,165,399,195"/>
+<area shape="rect" id="node13" href="$namespacephysics.html#ad9444d358ff46b46e987c88a8c23e424" title="function to sample region where interaction occurs" alt="" coords="235,219,392,248"/>
+<area shape="rect" id="node5" href="$namespacetally.html#a03985c1ebaab7358d5960cac05ba28ef" title="routine to add quantities during transport of a particle" alt="" coords="452,5,575,35"/>
 </map>

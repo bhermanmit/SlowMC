@@ -62,10 +62,12 @@ Modules</h2></td></tr>
 </p>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a18e52bb343fdad5919d4fd2084223049">global::allocate_problem</a> (n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates global variables for calculation  <a href="#a18e52bb343fdad5919d4fd2084223049"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ae42e2eadb6d745fd7bceefd6896f41b3">global::allocate_problem</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates global variables for calculation  <a href="#ae42e2eadb6d745fd7bceefd6896f41b3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8298c51c0bdaf90c3d0f5360452de1f1">global::deallocate_problem</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">deallocates global variables  <a href="#a8298c51c0bdaf90c3d0f5360452de1f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ab602338ad6dc499c8cfdf62379887cdd">global::compute_macro_cross_sections</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that handles the call to compute macro cross sections  <a href="#ab602338ad6dc499c8cfdf62379887cdd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8fa311401dba83e9bfa43e9af712ec06">global::add_to_tallies</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">routine that adds temporary value to tallies  <a href="#a8fa311401dba83e9bfa43e9af712ec06"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a082803bdd82681404cb106c4dbde237d">global::bank_tallies</a> ()</td></tr>
@@ -77,8 +79,9 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#af676482a3ce4ddeaeeb9f43f5d146382">global::VERSION_MAJOR</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ac384fb69c26140c517ee3bdb59c31e99">global::VERSION_MINOR</a> = 1</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8327d6c4ddf2fda8053597e394197a20">global::VERSION_RELEASE</a> = 1</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">type(material_type)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a9eda1ccc7c1ee8cab0c8dd906d3d64be">global::mat</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type(particle_type)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a561362399dcdb18aee7f9d017b148d32">global::neut</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">type(material_type), dimension(:), <br class="typebreak"/>
+allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a2ca08b9263c8d6c2e41377976a320968">global::mat</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type(tally_type), dimension(:), <br class="typebreak"/>
 allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a6117ecd1234d64e9b304e8952acd1e7f">global::tal</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a938aac3ba5f0e310677be31ae3789c17">global::nhistories</a></td></tr>
@@ -86,14 +89,25 @@ allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a3d7a23c80657b9b63c765db36b8c602e">global::source_type</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aec4daa1b9647bec1677b1485206cdd0f">global::eidx</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a628c066f2cc80e493574d461c2cdf5a5">global::n_tallies</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a74bd7709faaeed7ab601757efc9f9f45">global::n_materials</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a86388578f4184ffbc90a388443221278">global::res_iso</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8b6e17d0e4618234760e8290c29fff34">global::Dancoff</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aad2f986b5996616eb28f3522a269c11d">global::radius</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ac9839028a45a3afb9543892de5b3fdc3">global::emin</a> = 1e-11_8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aa9efc9eb03e9a055dffcaa0d4d77450b">global::emax</a> = 20.0_8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a8bb13ab14d8340a122f9856859db2ea6">global::kT</a> = 8.6173324e-5_8*300*1.0e-6_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a2e9ee1579e29b2947457aa1411c00f6f">global::nubar</a> = 2.455_8</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type(Timer)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a7770d59ae9868e64239af34f15bd0f8c">global::time_init</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">type(Timer)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a0bccc61fe58c03edbe9c92b1061d723e">global::time_run</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ab3a8ca4e6ab7ec21330226749d361360">global::n_abs</a> = 0.0_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">integer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#aea6521e15a7c325d01ecb9dca9c1c663">global::n_fiss</a> = 0.0_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ab6b1e72ac08390921d3ffecc7b881d30">global::ana_kinf_mean</a> = 0.0_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#ade0a27d53b6b8405a5d6132f80805136">global::ana_kinf_std</a> = 0.0_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a376bef5ad69ef69bf2dc43ee80565aaa">global::col_kinf_mean</a> = 0.0_8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">real(8)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceglobal.html#a6cd317a1c0b4deb588ce28d2de2d4817">global::col_kinf_std</a> = 0.0_8</td></tr>
 </table>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 9 2012 22:35:09 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:19 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
