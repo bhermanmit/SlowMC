@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<input>
+
+<!-- Settings Information -->
+  <settings>
+    <histories> 1000000 </histories>
+    <seed> 5 </seed>
+    <source_type> 1 </source_type>
+    <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
+    <Dancoff> 0.277 </Dancoff>
+    <res_iso> U-238 </res_iso>
+    <radius> 0.4096 </radius>
+  </settings>
+
+  <materials>
+    <material>
+      <type> fuel </type> 
+      <V> 0.527072 </V>
+      <nuclide name="U-238" N="0.0221" A="238" V="0.5271" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_238_300.h5 </path>
+      </nuclide>
+      <nuclide name="U-235" N="6.9915e-4" A="235" V="0.5271" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/U_235.h5 </path>
+      </nuclide>
+      <nuclide name="O-16" N="0.0455" A="16" V="0.5271" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/O_16.h5 </path>
+      </nuclide>
+    </material>
+    <material>
+      <type> moderator </type>
+      <V> 1.06053 </V>
+      <nuclide name="H-1" N="0.0666" A="1" V="0.878778" thermal="true" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/H_1.h5 </path>
+      </nuclide>
+      <nuclide name="O-16" N="0.0333" A="16" V="0.878778" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/O_16.h5 </path>
+      </nuclide>
+      <nuclide name="Zr-90" N="0.0439" A="90" V="0.160435" thermal="false" >
+        <path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/Zr_90.h5 </path>
+      </nuclide>
+    </material>
+  </materials>
+
+  <tallies>
+    <tally type="flux" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="total" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="absorption" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="scattering" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="fission" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="nufission" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="flux" dv="true">
+      <Ebins> 1e-11 0.1e-6 0.5e-6 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1e-3 1e-2 0.1 0.5 10 </Ebins>
+    </tally>
+  </tallies>
+
+</input>
