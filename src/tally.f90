@@ -138,7 +138,7 @@ contains
     this%E(2) = emax
 
     ! set reaction type
-    this%react_type = 3
+    this%react_type = 4
 
     ! preallocate vectors
     if(.not.allocated(this%val)) allocate(this%val(1,n_materials))
