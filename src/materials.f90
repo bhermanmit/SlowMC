@@ -35,6 +35,7 @@ module materials
     real(8)               :: N           ! number density
     real(8)               :: A           ! atomic weight
     real(8)               :: alpha       ! (A-1)^2/(A+1)^2
+    real(8)               :: mubar       ! average cosine scattering angle
     real(8), allocatable  :: xs_capt(:)  ! capture micro xs
     real(8), allocatable  :: xs_scat(:)  ! scattering micro xs
     real(8), allocatable  :: xs_fiss(:)  ! fission micro xs
@@ -130,7 +131,8 @@ contains
     ! set parameters
     this%isotopes(this%curr_iso)%N = N
     this%isotopes(this%curr_iso)%A = A
-    this%isotopes(this%curr_iso)%alpha = ((A-1)/(A+1))**2 
+    this%isotopes(this%curr_iso)%mubar = 2._8/(3._8*A) 
+    this%isotopes(this%curr_iso)%alpha = ((A-1._8)/(A+1._8))**2 
     this%isotopes(this%curr_iso)%thermal = thermal
     this%isotopes(this%curr_iso)%name = name
 

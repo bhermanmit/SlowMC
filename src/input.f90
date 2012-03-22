@@ -173,8 +173,12 @@ contains
           react_type = 4
         case('fission')
           react_type = 5
-        case('micro_capture')
+        case('diffusion')
           react_type = 6
+        case('transport')
+          react_type = 7
+        case('micro_capture')
+          react_type = 8
           isotope = tallies_%tally(i)%isotope
           region = tallies_%tally(i)%region
         case DEFAULT

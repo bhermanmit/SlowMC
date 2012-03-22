@@ -60,6 +60,12 @@
     <tally type="nufission" >
       <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
     </tally>
+    <tally type="diffusion" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="transport">
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
     <tally type="flux" dv="true">
       <Ebins> 1e-11 0.1e-6 0.5e-6 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1e-3 1e-2 0.1 0.5 10 </Ebins>
     </tally>

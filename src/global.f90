@@ -150,6 +150,7 @@ contains
     integer :: i            ! loop counter
     real(8) :: fact = 1.0_8 ! multiplier factor
     real(8) :: totxs        ! total macroscopic xs of material
+    real(8) :: mubar        ! average cosine scattering angle
 
     ! compute macroscopic cross section
     totxs = sum(mat(neut%region)%totalxs(eidx,:))
@@ -184,13 +185,24 @@ contains
         case(5)
           fact = sum(mat(neut%region)%fissixs(eidx,:))
 
-        ! micro capture
+        ! diffusion coefficient
         case(6)
+          mubar = mat(neut%region)%isotopes(neut%isoidx)%mubar
+          fact = 1._8/(3._8*(totxs - mubar*                                    &
+         &                          sum(mat(neut%region)%scattxs(eidx,:)))) 
+
+        ! transport 
+        case(7)
+          mubar = mat(neut%region)%isotopes(neut%isoidx)%mubar
+          fact = totxs - mubar*sum(mat(neut%region)%scattxs(eidx,:))
+
+        ! micro capture
+        case(8)
           if (neut%region == tal(i)%region) then
             fact = mat(neut%region)%isotopes(tal(i)%isotope)%xs_capt(eidx)
           else
             cycle
-          end if
+          end if 
 
         ! default is flux tally
         case DEFAULT
@@ -256,9 +268,11 @@ contains
     end do
 
     ! compute k_inf
-    ana_kinf_mean = dble(n_fiss)*nubar/dble(n_abs)
-!   ana_kinf_std  = sqrt((ana_kinf_mean/dble(n_) - ana_kinf_mean**2)/dble(n-1)) 
-    ana_kinf_std  = 0.0_8
+    ana_kinf_mean = dble(n_fiss)*nubar/dble(nhistories)
+    ana_kinf_std  = nubar*sqrt((dble(n_fiss)/dble(nhistories) -                &
+   &                (dble(n_fiss)/dble(nhistories))**2)/dble(nhistories-1))
+
+!   ana_kinf_std  = 0.0_8
     col_kinf_mean = sum(tal(n_tallies)%mean)
     col_kinf_std  = sum(tal(n_tallies)%std)
 

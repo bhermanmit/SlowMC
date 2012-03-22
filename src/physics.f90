@@ -58,11 +58,11 @@ contains
     ! sample region
     neut%region = sample_region()
 
-    ! a collision has now occurred in a region at an energy, add to tally
-    call add_to_tallies()
-
     ! sample isotope
     neut%isoidx = sample_isotope(neut%region)
+
+    ! a collision has now occurred in a region at an energy, add to tally
+    call add_to_tallies()
 
     ! sample reaction in isotope
     neut%reactid = sample_reaction(neut%region,neut%isoidx)
