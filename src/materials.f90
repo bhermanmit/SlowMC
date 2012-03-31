@@ -62,6 +62,7 @@ module materials
     real(8), allocatable        :: absorxs(:,:)  ! array of macroscopic abs xs
     real(8), allocatable        :: captuxs(:,:)  ! array of macroscopic capt xs
     real(8), allocatable        :: fissixs(:,:)  ! array of macroscopic fiss xs
+    real(8), allocatable        :: transxs(:,:)  ! array of macro transport xs
 
   end type material_type
 
@@ -313,7 +314,8 @@ contains
    &                            allocate(this%captuxs(this%npts,this%nisotopes))
     if (.not.allocated(this%fissixs))                                          &
    &                            allocate(this%fissixs(this%npts,this%nisotopes))
-
+    if (.not.allocated(this%transxs))                                          &
+   &                            allocate(this%transxs(this%npts,this%nisotopes))
 
     ! zero out total xs
     this%totalxs = 0.0_8
@@ -326,10 +328,11 @@ contains
 
       ! multiply microscopic cross section by number density and append
       this%captuxs(:,i) = iso%N*(iso%xs_capt)
-      this%fissixs(:,I) = iso%N*(iso%xs_fiss)
+      this%fissixs(:,i) = iso%N*(iso%xs_fiss)
       this%scattxs(:,i) = iso%N*(iso%xs_scat)
       this%absorxs(:,i) = iso%N*(iso%xs_capt + iso%xs_fiss)
       this%totalxs(:,i) = iso%N*(iso%xs_capt + iso%xs_fiss + iso%xs_scat)
+      this%transxs(:,i) = this%totalxs(:,i) - iso%mubar*this%scattxs(:,i)
 
     end do
 
@@ -378,6 +381,7 @@ contains
     if (allocated(this%absorxs)) deallocate(this%absorxs)
     if (allocated(this%captuxs)) deallocate(this%captuxs)
     if (allocated(this%fissixs)) deallocate(this%fissixs)
+    if (allocated(this%transxs)) deallocate(this%transxs)
 
   end subroutine deallocate_material
 

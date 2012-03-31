@@ -3,8 +3,8 @@
 
 <!-- Settings Information -->
   <settings>
-    <histories> 1000000 </histories>
-    <seed> 5 </seed>
+    <histories> 10000000 </histories>
+    <seed> 11 </seed>
     <source_type> 1 </source_type>
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
     <Dancoff> 0.277 </Dancoff>

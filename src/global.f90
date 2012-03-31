@@ -187,14 +187,11 @@ contains
 
         ! diffusion coefficient
         case(6)
-          mubar = mat(neut%region)%isotopes(neut%isoidx)%mubar
-          fact = 1._8/(3._8*(totxs - mubar*                                    &
-         &                          sum(mat(neut%region)%scattxs(eidx,:)))) 
+          fact = 1._8/(3._8*sum(mat(neut%region)%transxs(eidx,:)))
 
         ! transport 
         case(7)
-          mubar = mat(neut%region)%isotopes(neut%isoidx)%mubar
-          fact = totxs - mubar*sum(mat(neut%region)%scattxs(eidx,:))
+          fact = sum(mat(neut%region)%transxs(eidx,:))
 
         ! micro capture
         case(8)

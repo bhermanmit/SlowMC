@@ -39,7 +39,7 @@ flux2 = h5read('output.h5',horzcat('/tally_',num2str(9),'/mean'));
 flux_rat = flux2(:,2)./flux2(:,1);
 
 % extract energy and spectrum mean
-E_spec = logspace(-11,log10(20.0),1000);
+E_spec = logspace(-11,log10(20.0),5000);
 mean_spec = h5read('output.h5',horzcat('/tally_',num2str(10),'/mean'));
 
 % plot spectrum

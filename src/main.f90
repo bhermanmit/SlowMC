@@ -122,14 +122,14 @@ contains
       ! begin transport of neutron
       do while (neut%alive)
 
+        ! check for energy cutoff
+        if (neut%E < emin) neut%E = 1.1e-11_8
+
         ! call index routine for first tally
         eidx = get_eidx(neut%E)
 
         ! perform physics and also records collision tally
         call perform_physics()
-
-        ! check for energy cutoff
-        if (neut%E < emin) neut%E = 1.1e-11_8 
 
       end do
 

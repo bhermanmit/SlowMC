@@ -102,19 +102,19 @@ contains
 
     ! set up automatic flux tally
     this%flux_tally = .true.
-    this%nbins = 1000
+    this%nbins = 5000
     this%emax = emax
     this%emin = emin
     this%width = (log10(emax) - log10(emin))/dble(this%nbins)
 
     ! preallocate vectors
-    if(.not.allocated(this%val)) allocate(this%val(1000,n_materials))
-    if(.not.allocated(this%sum)) allocate(this%sum(1000,n_materials))
-    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(1000,n_materials))
+    if(.not.allocated(this%val)) allocate(this%val(5000,n_materials))
+    if(.not.allocated(this%sum)) allocate(this%sum(5000,n_materials))
+    if(.not.allocated(this%sum_sq)) allocate(this%sum_sq(5000,n_materials))
 
     ! preallocate mean and stdev
-    if (.not.allocated(this%mean)) allocate(this%mean(1000,n_materials))
-    if (.not.allocated(this%std))  allocate(this%std(1000,n_materials))
+    if (.not.allocated(this%mean)) allocate(this%mean(5000,n_materials))
+    if (.not.allocated(this%std))  allocate(this%std(5000,n_materials))
 
     ! zero out tallies
     this%val = 0.0_8
@@ -189,7 +189,10 @@ contains
     else
 
       ! check for output bounds
-      if (E < minval(this%E) .or. E > maxval(this%E)) return
+      if (E < minval(this%E) .or. E > maxval(this%E)) then
+        print *,'energy out of tally bounds'
+        return
+      end if
 
       ! begin loop around energy vector to get index
       do i = 1,size(this%E)
