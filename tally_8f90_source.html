@@ -142,19 +142,19 @@
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103     <span class="comment">! set up automatic flux tally</span>
 <a name="l00104"></a>00104     this%flux_tally = .true.
-<a name="l00105"></a>00105     this%nbins = 1000
+<a name="l00105"></a>00105     this%nbins = 5000
 <a name="l00106"></a>00106     this%emax = emax
 <a name="l00107"></a>00107     this%emin = emin
 <a name="l00108"></a>00108     this%width = (log10(emax) - log10(emin))/dble(this%nbins)
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110     <span class="comment">! preallocate vectors</span>
-<a name="l00111"></a>00111     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%val)) <span class="keyword">allocate</span>(this%val(1000,n_materials))
-<a name="l00112"></a>00112     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%sum)) <span class="keyword">allocate</span>(this%sum(1000,n_materials))
-<a name="l00113"></a>00113     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%sum_sq)) <span class="keyword">allocate</span>(this%sum_sq(1000,n_materials))
+<a name="l00111"></a>00111     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%val)) <span class="keyword">allocate</span>(this%val(5000,n_materials))
+<a name="l00112"></a>00112     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%sum)) <span class="keyword">allocate</span>(this%sum(5000,n_materials))
+<a name="l00113"></a>00113     <span class="keyword">if</span>(.not.<span class="keyword">allocated</span>(this%sum_sq)) <span class="keyword">allocate</span>(this%sum_sq(5000,n_materials))
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115     <span class="comment">! preallocate mean and stdev</span>
-<a name="l00116"></a>00116     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(this%mean)) <span class="keyword">allocate</span>(this%mean(1000,n_materials))
-<a name="l00117"></a>00117     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(this%std))  <span class="keyword">allocate</span>(this%std(1000,n_materials))
+<a name="l00116"></a>00116     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(this%mean)) <span class="keyword">allocate</span>(this%mean(5000,n_materials))
+<a name="l00117"></a>00117     <span class="keyword">if</span> (.not.<span class="keyword">allocated</span>(this%std))  <span class="keyword">allocate</span>(this%std(5000,n_materials))
 <a name="l00118"></a>00118 
 <a name="l00119"></a>00119     <span class="comment">! zero out tallies</span>
 <a name="l00120"></a>00120     this%val = 0.0_8
@@ -225,77 +225,80 @@
 <a name="l00189"></a>00189     <span class="keyword">else</span>
 <a name="l00190"></a>00190 
 <a name="l00191"></a>00191       <span class="comment">! check for output bounds</span>
-<a name="l00192"></a>00192       <span class="keyword">if</span> (E &lt; minval(this%E) .or. E &gt; maxval(this%E)) return
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194       <span class="comment">! begin loop around energy vector to get index</span>
-<a name="l00195"></a>00195       <span class="keyword">do</span> i = 1,<span class="keyword">size</span>(this%E)
-<a name="l00196"></a>00196         <span class="keyword">if</span> (E &lt; this%E(i)) <span class="keyword">then</span>
-<a name="l00197"></a>00197           idx = i - 1
-<a name="l00198"></a>00198           exit
-<a name="l00199"></a>00199         <span class="keyword">end if</span>
-<a name="l00200"></a>00200       <span class="keyword">end do</span>
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202     <span class="keyword">end if</span>
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204     <span class="comment">! add to tally</span>
-<a name="l00205"></a>00205     <span class="keyword">if</span> (idx /= 0) this%val(idx,region) = this%val(idx,region) + fact/totxs
+<a name="l00192"></a>00192       <span class="keyword">if</span> (E &lt; minval(this%E) .or. E &gt; maxval(this%E)) <span class="keyword">then</span>
+<a name="l00193"></a>00193         print *,<span class="stringliteral">&#39;energy out of tally bounds&#39;</span>
+<a name="l00194"></a>00194         return
+<a name="l00195"></a>00195       <span class="keyword">end if</span>
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197       <span class="comment">! begin loop around energy vector to get index</span>
+<a name="l00198"></a>00198       <span class="keyword">do</span> i = 1,<span class="keyword">size</span>(this%E)
+<a name="l00199"></a>00199         <span class="keyword">if</span> (E &lt; this%E(i)) <span class="keyword">then</span>
+<a name="l00200"></a>00200           idx = i - 1
+<a name="l00201"></a>00201           exit
+<a name="l00202"></a>00202         <span class="keyword">end if</span>
+<a name="l00203"></a>00203       <span class="keyword">end do</span>
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205     <span class="keyword">end if</span>
 <a name="l00206"></a>00206 
-<a name="l00207"></a>00207 <span class="keyword">  end subroutine add_to_tally</span>
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209 <span class="comment">!===============================================================================</span>
-<a name="l00210"></a>00210 <span class="comment">! BANK_TALLY</span>
-<a name="l00213"></a>00213 
-<a name="l00214"></a><a class="code" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">00214</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">bank_tally</a>(this)
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216     <span class="comment">! formal variables</span>
-<a name="l00217"></a>00217     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
+<a name="l00207"></a>00207     <span class="comment">! add to tally</span>
+<a name="l00208"></a>00208     <span class="keyword">if</span> (idx /= 0) this%val(idx,region) = this%val(idx,region) + fact/totxs
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210 <span class="keyword">  end subroutine add_to_tally</span>
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212 <span class="comment">!===============================================================================</span>
+<a name="l00213"></a>00213 <span class="comment">! BANK_TALLY</span>
+<a name="l00216"></a>00216 
+<a name="l00217"></a><a class="code" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">00217</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a340ac839b4b22266d919ed2117b5bd8a">bank_tally</a>(this)
 <a name="l00218"></a>00218 
-<a name="l00219"></a>00219     <span class="comment">! record to sums</span>
-<a name="l00220"></a>00220     this%sum    = this%sum    + this%val
-<a name="l00221"></a>00221     this%sum_sq = this%sum_sq + this%val**2
-<a name="l00222"></a>00222 
-<a name="l00223"></a>00223     <span class="comment">! zero out temp value</span>
-<a name="l00224"></a>00224     this%val = 0.0_8
+<a name="l00219"></a>00219     <span class="comment">! formal variables</span>
+<a name="l00220"></a>00220     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222     <span class="comment">! record to sums</span>
+<a name="l00223"></a>00223     this%sum    = this%sum    + this%val
+<a name="l00224"></a>00224     this%sum_sq = this%sum_sq + this%val**2
 <a name="l00225"></a>00225 
-<a name="l00226"></a>00226 <span class="keyword">  end subroutine bank_tally</span>
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228 <span class="comment">!===============================================================================</span>
-<a name="l00229"></a>00229 <span class="comment">! CALCULATE_STATISTICS</span>
-<a name="l00232"></a>00232 
-<a name="l00233"></a><a class="code" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">00233</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">calculate_statistics</a>(this,n)
-<a name="l00234"></a>00234 
-<a name="l00235"></a>00235     <span class="comment">! formal variables</span>
-<a name="l00236"></a>00236     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
-<a name="l00237"></a>00237     <span class="keywordtype">integer</span>          :: n    <span class="comment">! number of histories run</span>
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239     <span class="comment">! compute mean</span>
-<a name="l00240"></a>00240     this%mean =  this%sum / dble(n)
+<a name="l00226"></a>00226     <span class="comment">! zero out temp value</span>
+<a name="l00227"></a>00227     this%val = 0.0_8
+<a name="l00228"></a>00228 
+<a name="l00229"></a>00229 <span class="keyword">  end subroutine bank_tally</span>
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231 <span class="comment">!===============================================================================</span>
+<a name="l00232"></a>00232 <span class="comment">! CALCULATE_STATISTICS</span>
+<a name="l00235"></a>00235 
+<a name="l00236"></a><a class="code" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">00236</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a4a21e92b0ecf0351a1bf89f754b07d8d">calculate_statistics</a>(this,n)
+<a name="l00237"></a>00237 
+<a name="l00238"></a>00238     <span class="comment">! formal variables</span>
+<a name="l00239"></a>00239     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
+<a name="l00240"></a>00240     <span class="keywordtype">integer</span>          :: n    <span class="comment">! number of histories run</span>
 <a name="l00241"></a>00241 
-<a name="l00242"></a>00242     <span class="comment">! compute standard deviation</span>
-<a name="l00243"></a>00243     this%std = sqrt((this%sum_sq/dble(n) - this%mean**2)/dble(n-1))
+<a name="l00242"></a>00242     <span class="comment">! compute mean</span>
+<a name="l00243"></a>00243     this%mean =  this%sum / dble(n)
 <a name="l00244"></a>00244 
-<a name="l00245"></a>00245 <span class="keyword">  end subroutine calculate_statistics</span>
-<a name="l00246"></a>00246 
-<a name="l00247"></a>00247 <span class="comment">!===============================================================================</span>
-<a name="l00248"></a>00248 <span class="comment">! DEALLOCATE_TALLY</span>
-<a name="l00251"></a>00251 
-<a name="l00252"></a><a class="code" href="namespacetally.html#a542903033ade511ef77c32491352df5b">00252</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a542903033ade511ef77c32491352df5b">deallocate_tally</a>(this)
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254     <span class="comment">! formal variables</span>
-<a name="l00255"></a>00255     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
+<a name="l00245"></a>00245     <span class="comment">! compute standard deviation</span>
+<a name="l00246"></a>00246     this%std = sqrt((this%sum_sq/dble(n) - this%mean**2)/dble(n-1))
+<a name="l00247"></a>00247 
+<a name="l00248"></a>00248 <span class="keyword">  end subroutine calculate_statistics</span>
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250 <span class="comment">!===============================================================================</span>
+<a name="l00251"></a>00251 <span class="comment">! DEALLOCATE_TALLY</span>
+<a name="l00254"></a>00254 
+<a name="l00255"></a><a class="code" href="namespacetally.html#a542903033ade511ef77c32491352df5b">00255</a>   <span class="keyword">subroutine </span><a class="code" href="namespacetally.html#a542903033ade511ef77c32491352df5b">deallocate_tally</a>(this)
 <a name="l00256"></a>00256 
-<a name="l00257"></a>00257     <span class="comment">! deallocate all</span>
-<a name="l00258"></a>00258     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%E)) <span class="keyword">deallocate</span>(this%E)
-<a name="l00259"></a>00259     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%val)) <span class="keyword">deallocate</span>(this%val)
-<a name="l00260"></a>00260     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%sum)) <span class="keyword">deallocate</span>(this%sum)
-<a name="l00261"></a>00261     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%sum_sq)) <span class="keyword">deallocate</span>(this%sum_sq)
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263 <span class="keyword">  end subroutine deallocate_tally</span>
-<a name="l00264"></a>00264 
-<a name="l00265"></a>00265 <span class="keyword">end module tally</span>
+<a name="l00257"></a>00257     <span class="comment">! formal variables</span>
+<a name="l00258"></a>00258     <span class="keywordtype">type(tally_type)</span> :: this <span class="comment">! a tally</span>
+<a name="l00259"></a>00259 
+<a name="l00260"></a>00260     <span class="comment">! deallocate all</span>
+<a name="l00261"></a>00261     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%E)) <span class="keyword">deallocate</span>(this%E)
+<a name="l00262"></a>00262     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%val)) <span class="keyword">deallocate</span>(this%val)
+<a name="l00263"></a>00263     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%sum)) <span class="keyword">deallocate</span>(this%sum)
+<a name="l00264"></a>00264     <span class="keyword">if</span> (<span class="keyword">allocated</span>(this%sum_sq)) <span class="keyword">deallocate</span>(this%sum_sq)
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266 <span class="keyword">  end subroutine deallocate_tally</span>
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268 <span class="keyword">end module tally</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 20 2012 18:15:19 for SlowMC by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 2 2012 09:40:40 for SlowMC by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
