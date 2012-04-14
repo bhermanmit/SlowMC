@@ -9,6 +9,8 @@
     <source_path> /home/bherman/Documents/Spring2012/211/SlowMC/lib/fission.h5 </source_path>
   </settings>
 
+
+<!-- Homogeneous mixture of H-1, U-238 and a 2b 1/v absorber -->
   <materials>
     <material>
       <type> homogeneous </type> 
@@ -24,12 +26,32 @@
     </material>
   </materials>
 
+
+<!-- Generation of 2-grp macros -->
   <tallies>
-    <tally type="micro_capture" isotope="3" region="1">
-      <Ebins> 1e-11 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1000e-6 </Ebins>
-    </tally>
     <tally type="flux" >
-      <Ebins> 1e-11 1e-6 6e-6 10e-6 25e-6 50e-6 100e-6 1000e-6 </Ebins>
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="total" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="absorption" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="scattering" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="fission" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="nufission" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="diffusion" >
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
+    </tally>
+    <tally type="transport">
+      <Ebins> 1e-11 0.625e-6 20.0 </Ebins>
     </tally>
   </tallies>
 

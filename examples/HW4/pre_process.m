@@ -9,7 +9,8 @@ rho_clad = 6.549; % Zr-90
 rho_cool = 0.9966; % H2O
 
 % Enrichment (w% U235/w% U)
-enr = 0.03035;
+% enr = 0.03035;
+enr = 0.016;
 
 % Molar Masses
 M25 = 235.0439231;

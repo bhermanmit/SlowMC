@@ -190,8 +190,8 @@ contains
 
       ! check for output bounds
       if (E < minval(this%E) .or. E > maxval(this%E)) then
-        print *,'energy out of tally bounds'
-        return
+        print *,'FATAL: Energy out of tally bounds, check input bounds!'
+        stop
       end if
 
       ! begin loop around energy vector to get index

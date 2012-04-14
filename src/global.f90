@@ -268,8 +268,6 @@ contains
     ana_kinf_mean = dble(n_fiss)*nubar/dble(nhistories)
     ana_kinf_std  = nubar*sqrt((dble(n_fiss)/dble(nhistories) -                &
    &                (dble(n_fiss)/dble(nhistories))**2)/dble(nhistories-1))
-
-!   ana_kinf_std  = 0.0_8
     col_kinf_mean = sum(tal(n_tallies)%mean)
     col_kinf_std  = sum(tal(n_tallies)%std)
 
